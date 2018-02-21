@@ -1,5 +1,0 @@
-# Ignore workspace.xml
-
-workspace.xml
-
-Mice_tro/.idea/workspace.xml
