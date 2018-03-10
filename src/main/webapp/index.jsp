@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>KICK-ASS_INDEX_PAGE</title>
+
   </head>
   <body>
-  $END$
+  This is a kick-ass index page and should be treated as such.
   </body>
 </html>
