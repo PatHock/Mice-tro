@@ -8,7 +8,25 @@
 package com.micetr0.model;
 
 public class Measure {
-
+        
+    private int maxBeats;
     //TODO: Implement
 
+
+    /**
+     *
+     * @param beats
+     */
+    void setMaxNumBeats(int beats) {
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    int getMaxNumBeats() {
+
+        return 0; //todo: fix
+    }
 }
