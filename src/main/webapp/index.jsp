@@ -10,6 +10,26 @@
   <head>
     <title>Mice-tr0 - Home Page</title>
 
+    <style type="text/css">
+      .button {
+        background-color: #ff0000; /* Red */
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 4px;
+        margin: 4px 2px;
+      }
+      .button:hover{
+        background-color: white;
+        border: 2px solid red;
+        color: red;
+      }
+    </style>
+
   </head>
   <body>
   <h1> Welcome to Mice-tr0!</h1>
@@ -25,6 +45,7 @@
   <p> - Save compositions as audio or pdf files </p>
   <p> - Share your music with other mice-tr0 accounts</p>
 
+  <button class="button">Log-in</button>
 
 
   </body>
