@@ -33,21 +33,18 @@
 
   </head>
   <body>
-  <h1> Welcome to Mice-tr0!</h1>
+  <h1>Enter Desired Account Information:</h1>
 
-  <p> Mice-tr0 is a web application that will allow you to compose music right on your computer!
-  Not only will editing be a breeze, but you, the composer, will also be able to play back the piece
-  as you write it! Create an account to start composing.</p>
+  <form action="${pageContext.servletContext.contextPath}/profile" method="get">
+    Username:<br>
+    <input type="text" name="username" value=${usrnm}><br>
+    Password:<br>
+    <input type="password" name="password" value=${psw}><br><br>
+    <input type="submit" value="Create Account">
+  </form>
 
-  <h2> Mice-tr0 Features:</h2>
-
-  <p> - Create unlimited compositions</p>
-  <p> - Listen to your music at any time during the composing process</p>
-  <p> - Save compositions as audio or pdf files </p>
-  <p> - Share your music with other mice-tr0 accounts</p>
-
-  <form action="${pageContext.servletContext.contextPath}/login" method="get">
-    <input name="goToLogIn" type="submit" value="Login" />
+  <form action="${pageContext.servletContext.contextPath}/index" method="get">
+    <input name="goToIndex" type="submit" value="I Changed My Mind" />
   </form>
 
   </body>
