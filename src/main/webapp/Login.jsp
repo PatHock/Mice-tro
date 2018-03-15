@@ -2,10 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Mice-tr0 - Home Page</title>
+    <title>Mice-tr0 - Login</title>
 
     <style type="text/css">
-
       input[type=submit]{
         background-color: darkred; /* Red */
         border: 2px solid darkred;
@@ -29,7 +28,7 @@
   <body>
     <h1> Please Enter Your Account Information</h1>
 
-    <form action="">
+    <form action="${pageContext.servletContext.contextPath}/profile" method="get">
       Username:<br>
       <input type="text" name="username" value=${usrnm}><br>
       Password:<br>

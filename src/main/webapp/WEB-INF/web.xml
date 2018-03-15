@@ -17,6 +17,18 @@
         <servlet-name>CreateAccountServlet</servlet-name>
         <servlet-class>com.micetr0.servlets.CreateAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.micetr0.servlets.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+    <servlet-name>CompositionServlet</servlet-name>
+    <servlet-class>com.micetr0.servlets.CompositionServlet</servlet-class>
+</servlet>
+    <servlet>
+        <servlet-name>CreateCompositionServlet</servlet-name>
+        <servlet-class>com.micetr0.servlets.CreateCompositionServlet</servlet-class>
+    </servlet>
 
     <!-- Servlet mappings -->
     <servlet-mapping>
@@ -30,6 +42,18 @@
     <servlet-mapping>
         <servlet-name>CreateAccountServlet</servlet-name>
         <url-pattern>/createAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompositionServlet</servlet-name>
+        <url-pattern>/composition</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateCompositionServlet</servlet-name>
+        <url-pattern>/createComposition</url-pattern>
     </servlet-mapping>
 
 </web-app>

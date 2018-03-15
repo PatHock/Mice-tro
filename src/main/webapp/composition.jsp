@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Mice-tr0 - Create Account</title>
+    <title>Mice-tr0 - Composition 1</title>
 
     <style type="text/css">
       input[type=submit]{
@@ -23,22 +23,27 @@
           color: darkred;
       }
 
+
     </style>
 
   </head>
   <body>
-  <h1>Enter Desired Account Information:</h1>
+  <h1>Composition 1</h1>
+
+  <form action="${pageContext.servletContext.contextPath}/composition" method="get">
+    <input name="goToIndex" type="submit" value="Save" />
+  </form>
 
   <form action="${pageContext.servletContext.contextPath}/profile" method="get">
-    Username:<br>
-    <input type="text" name="username" value=${usrnm}><br>
-    Password:<br>
-    <input type="password" name="password" value=${psw}><br><br>
-    <input type="submit" value="Create Account">
+    <input name="goToIndex" type="submit" value="Save and Exit Composition 1" />
+  </form>
+
+  <form action="${pageContext.servletContext.contextPath}/profile" method="get">
+    <input name="goToProfile" type="submit" value="Exit Composition 1" />
   </form>
 
   <form action="${pageContext.servletContext.contextPath}/index" method="get">
-    <input name="goToIndex" type="submit" value="I Changed My Mind" />
+    <input name="goToIndex" type="submit" value="Log Out" />
   </form>
 
   </body>
