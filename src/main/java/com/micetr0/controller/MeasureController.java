@@ -5,9 +5,22 @@
  *     Insert Description Here
  */
 package com.micetr0.controller;
+import com.micetr0.model.Note;
+import com.micetr0.model.Measure;
 
 public class MeasureController {
 
-    //TODO: Implement
+    Measure measure = new Measure();
 
+    //TODO: Implement
+    void addNote(float pitch, Note.Type Type, int index) {
+        Note note = new Note();
+
+        try{
+            // insert code here
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.err.println("IndexOutOfBoundsException" + e.getMessage());
+        }
+    }
 }

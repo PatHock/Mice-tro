@@ -6,27 +6,41 @@
  */
 
 package com.micetr0.model;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Measure {
-        
-    private int maxBeats;
-    //TODO: Implement
 
+    private int maxBeats;
+    private LinkedList<Note> notes = new LinkedList<>();
 
     /**
+     * @param note A Note object
      *
-     * @param beats
      */
-    void setMaxNumBeats(int beats) {
-
+    public void addNote (Note note, int index) {
+        notes.add(index, note);
     }
 
     /**
-     *
-     * @return
+     * @param index The index in a LinkedList where notes are stored
      */
-    int getMaxNumBeats() {
+    public void deleteNote (int index) {
+    }
 
-        return 0; //todo: fix
+
+    /**
+     * @param beats The number of beats in a measure per the time signature
+     */
+    public void setMaxNumBeats(int beats) {
+        maxBeats = beats;
+    }
+
+    /**
+     * @return maxBeats The number of beats in a measure per the time signature
+     */
+    public int getMaxNumBeats() {
+
+        return maxBeats;
     }
 }
