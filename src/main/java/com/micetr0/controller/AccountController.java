@@ -12,15 +12,18 @@ public class AccountController {
     Account account = new Account();
     List<Pair<String,String>> accounts = new ArrayList<>();
 
+    public void setModel(Account account) {
+        this.account = account;
+    }
+
     private boolean checkCredentials(String username, String Password, List<Pair<String,String>> accounts){
         boolean validAccount = false;
-        
+
         return validAccount;
     }
 
-    private void initAccounts()
+    public void initAccounts()
     {
-        accounts = account.getAccounts();
         account.setPassword("password");
         account.setUsername("uber_user");
         accounts.add(new Pair<String,String>(account.getUsername(),account.getPassword()));
@@ -30,17 +33,29 @@ public class AccountController {
         account.setAccounts(accounts);
     }
 
-    public void createAccount(String username, String password, List<Pair<String,String>> accounts){
-        account.setPassword("password");
-        account.setUsername("user1");
-        username = account.getUsername();
-        password = account.getPassword();
+    public boolean createAccount(String username, String password, List<Pair<String,String>> accounts){
+        accounts = account.getAccounts();
+        for (Pair<String,String> account: accounts) {
+            if(account.getKey().equals(username)) {
+                return false;
+            }
+        }
         accounts.add(new Pair<String,String>(username,password));
+
+        return true;
     }
 
-    public void deleteAccount(Account account)
+    public boolean deleteAccount(String username)
     {
-        throw new UnsupportedOperationException();
+        for (Pair<String,String> account : accounts)
+        {
+            if(account.getKey().equals(username))
+            {
+                accounts.remove(account);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addComposition()

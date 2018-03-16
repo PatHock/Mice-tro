@@ -11,11 +11,11 @@ public class Account {
     public Account(){
         // empty constructor
     }
-    String password = null;
-    String username = null;
-    List<Composition> compositions = new ArrayList<Composition>();
-    List<Pair<String,String>> accounts = new ArrayList<>();
-    Composition currComposition = null;
+    String password;
+    String username;
+    List<Composition> compositions = new ArrayList<>();
+    List<Pair<String,String>> accounts;
+    Composition currComposition;
 
     public String getPassword() {
         return password;
