@@ -10,17 +10,20 @@ import com.micetr0.model.Measure;
 
 public class MeasureController {
 
-    Measure measure = new Measure();
-
-    //TODO: Implement
-    void addNote(float pitch, Note.Type Type, int index) {
-        Note note = new Note();
-
-        try{
-            // insert code here
-        }
-        catch (IndexOutOfBoundsException e) {
-            System.err.println("IndexOutOfBoundsException" + e.getMessage());
-        }
-    }
+//    private Measure measure = new Measure();
+//    public Note note = new Note();
+//
+//    //TODO: Implement
+//    void addNote(Double pitch, Note.Type type, int index) {
+//
+//        note.setType(type);
+//        note.setPitch(pitch);
+//
+//        try{
+//            // insert code here
+//        }
+//        catch (IndexOutOfBoundsException e) {
+//            System.err.println("IndexOutOfBoundsException" + e.getMessage());
+//        }
+//    }
 }
