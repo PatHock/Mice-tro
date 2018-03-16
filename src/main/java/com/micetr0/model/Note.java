@@ -65,10 +65,10 @@ public class Note {
     /*
      * Note Constructor
      */
-    public Note(Pitch pitch, Type type) {
-        this.type = type;
-        this.pitch = pitch;
+    public Note() {
+    //empty constructor
     }
+
 
     /**
      * @param type The type of the note (SIXTEENTH, EIGHTH etc)

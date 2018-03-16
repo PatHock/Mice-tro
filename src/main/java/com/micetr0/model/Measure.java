@@ -6,88 +6,39 @@
  */
 
 package com.micetr0.model;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.lang.Exception;
+import java.util.List;
 
 public class Measure {
-
     private Double sizeLimit;
-    private LinkedList<Note> notes = new LinkedList<>();
+    private List<Note> notes = new ArrayList<Note>();
+    private int currIndex;
 
 
-    /*TODO: Measure must take time signature as an argument (two integers)
-     * Measure Constructor
-     */
-    public Measure(Double size){
-        this.size = size;
-        // take num Beats as an argument and populate with rests
+    public Double getSizeLimit() {
+        return sizeLimit;
     }
 
-    /**
-     *
-     * @param pitch the frequency of the note in Hertz
-     * @param type the length of the note (sixteenth, eighth etc)
-     * @param index the position of the note in the measure, starts at 0
-     */
-    public void addNote (Note.Pitch pitch, Note.Type type, int index) {
-        // Check if index is valid
-//        try {
-//            if (index)
-//            notes.add(index, new Note(pitch, type));
-//        }catch(IndexOutOfBoundsException e){
-//            System.err.println("IndexOutOfBoundsException" + e.getMessage());
-//        }
-//
-//        if(index <= notes.size()-1){
-//            try {
-//                notes.add(index, new Note(pitch, type));
-//            } catch(IndexOutOfBoundsException e){
-//
-//            }
-//        }
-
-        // need to check if the index is valid
-        // need to check if the measure is full or not
+    public List<Note> getNotes() {
+        return notes;
     }
 
-    /**
-     * @param index The index in a LinkedList where notes are stored
-     */
-    public void deleteNote (int index) {
-
-        // need to
+    public void setSizeLimit(Double sizeLimit) {
+        this.sizeLimit = sizeLimit;
     }
 
-
-//    /**
-//     * @param beats The number of beats in a measure per the time signature
-//     */
-//    public void setMaxNumBeats(int beats) {
-//        maxBeats = beats;
-//    }
-
-//    /**
-//     * @return maxBeats The number of beats in a measure per the time signature
-//     */
-//    public int getMaxNumBeats() {
-//
-//        return maxBeats;
-//    }
-
-    /**
-     *
-     * @return Returns the size of the LinkedList of notes within a measure
-     */
-    public int getNumNotes() {
-        return notes.size();
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
-//    /**
-//     *
-//     * @param index - Index of note array, starts at zero
-//     * @return Note object
-//     */
-//    public Note getNote(int index) {
-//        return
-//    }
+    public int getCurrIndex() {
+        return currIndex;
+    }
+
+    public void setCurrIndex(int currIndex){
+        this.currIndex = currIndex;
+    }
+
 }
