@@ -20,11 +20,12 @@ public class Composition {
         //empty constructor
     }
 
-    private String title = null;
+    private String title = "Untitled";
     private String account = null;
     private List<Section> sections = new ArrayList<Section>();
     private Pair<String,Boolean> editable;
     private String viewer = null;
+    private Section currSection = null;
     public enum Mode{
         view,edit,play
     }
@@ -79,9 +80,12 @@ public class Composition {
     {
         return viewer;
     }
-
-
-
-
-
+    public Section getCurrSection()
+    {
+        return currSection;
+    }
+    public void setCurrSection(Section section)
+    {
+        this.currSection = section;
+    }
 }

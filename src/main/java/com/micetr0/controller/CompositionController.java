@@ -16,6 +16,10 @@ public class CompositionController {
 
     Composition composition = new Composition();
 
+    public void setModel(Composition composition) {
+        this.composition = composition;
+    }
+
     public boolean deleteSection(int index)
     {
       List<Section> sections = composition.getSections();
