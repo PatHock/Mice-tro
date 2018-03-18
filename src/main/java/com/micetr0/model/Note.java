@@ -15,11 +15,13 @@ public class Note {
     private Integer measureId;
     private Integer sectionId;
     private Integer compositionId;
+    private Integer noteID;
 
 
     /**
      * Note Constructor
      * Every Note object should have all of these attributes to be stored in the database
+     * @param noteID        The index of Note in database
      * @param type          The type of the note (ex: Sixteenth)
      * @param pitch         The specific Note, with reference A0 = 440 Hz
      * @param measureIndex  The position of a note within a measure, 0 being the first note in the measure
@@ -27,7 +29,8 @@ public class Note {
      * @param sectionId     The unique ID of the section that contains this note
      * @param compositionId The unique ID of the composition that contains this note
      */
-    public Note(Defs.NoteType type, Defs.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
+    public Note(Integer noteID, Defs.NoteType type, Defs.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
+        setNoteID(noteID);
         setType(type);
         setPitch(pitch);
         setMeasureIndex(measureIndex);
@@ -36,6 +39,14 @@ public class Note {
         setCompositionId(compositionId);
     }
 
+    public void setNoteID(Integer noteID)
+    {
+        this.noteID = noteID;
+    }
+
+    public Integer getNoteID(){
+        return noteID;
+    }
 
     /**
      * @param noteType The type of the note (SIXTEENTH, EIGHTH etc)
