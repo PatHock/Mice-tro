@@ -17,7 +17,6 @@ public class mock_DB {
     public void FakeDatabase()
     {
         readInitialData();
-
         //System.out.println(accounts.size() + "accounts");
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
