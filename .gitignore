@@ -24,6 +24,8 @@
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
+.gradle/**/fileHashes.bin
+.gradle/**/fileHashes.lock
 /target
 */target
 /build
