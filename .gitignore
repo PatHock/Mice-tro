@@ -10,7 +10,7 @@
 .idea/**/tasks.xml
 .idea/dictionaries
 .idea/**/Mice-tro.iml
-.idea/
+.idea
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
@@ -24,7 +24,7 @@
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
-.gradle/*
+.gradle
 /target
 */target
 /build
