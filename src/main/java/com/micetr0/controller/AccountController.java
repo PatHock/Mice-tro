@@ -53,7 +53,7 @@ public class AccountController {
     }
 
     public void logOut(Account account){
-        // jsp
+        // jsp method?
     }
 
     public Account logIn(String username, String password, List<Account> accounts){

@@ -44,7 +44,9 @@ public class AuthorTest {
 
     @Test
     public void getViewableComps(){
-        model.viewableComps.add("comp1");
+        List<Object> comps = new ArrayList<>();
+        comps.add("comp1");
+        model.setViewableComps(comps);
         assertTrue(model.getViewableComps().get(0).equals("comp1"));
     }
     @Test
@@ -59,7 +61,9 @@ public class AuthorTest {
     }
     @Test
     public void setEditableComps(){
-        model.viewableComps.add("comp1");
+        List<Object> comps = new ArrayList<>();
+        comps.add("comp1");
+        model.setViewableComps(comps);
         assertTrue(model.getViewableComps().get(0).equals("comp1"));
 
     }

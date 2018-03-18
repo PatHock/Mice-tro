@@ -12,11 +12,11 @@ public class Account {
         // empty constructor
     }
 
-    String password;
-    String username;
+    private String password;
+    private String username;
 
-    List<Object> viewableComps = new ArrayList<>();
-    List<Object> editableComps = new ArrayList<>();
+    private List<Object> viewableComps = new ArrayList<>();
+    private List<Object> editableComps = new ArrayList<>();
 
     public String getPassword() {
         return password;
