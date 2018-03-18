@@ -1,7 +1,9 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.model.*;
+import com.sun.org.apache.xml.internal.security.Init;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +30,15 @@ public class mock_DB {
 
         try{
             //accounts.addAll();
-            //compositions.addAll();
-            //sections.addAll();
-            //measures.addAll();
-            //notes.addAll()
+            compositions.addAll(InitialData.getCompositions());
+            sections.addAll(InitialData.getSections());
+            measures.addAll(InitialData.getMeasusres());
+            notes.addAll(InitialData.getNotes());
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-
+            throw new IllegalStateException("Couldn't read initial data", e);
         }
     }
-
 
 }
