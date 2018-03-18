@@ -37,7 +37,7 @@ public class MeasureController {
     }
 
 
-//     public void addNote(Note.Pitch pitch, Note.Type type, int index) {
+//     public void addNote(Defs.Pitch pitch, Defs.NoteType type, int index) {
 //        List<Note> notes = measure.getNotes();
 //        Note note = new Note();
 //        note.setPitch(pitch);
@@ -54,7 +54,7 @@ public class MeasureController {
 //         if(notes.size() > 0 && index <= notes.size() - 1) {
 //             Note rest = new Note();
 //             double len = notes.get(index).getType().getSize();
-//             rest.setPitch(Note.Pitch.REST);
+//             rest.setPitch(Defs.Pitch.REST);
 //             rest.setType(notes.get(index).getType());
 //             notes.remove(index);
 //             notes.add(index,rest);

@@ -41,44 +41,44 @@ public class MeasureControllerTest {
 
 //    @Test
 //    public void addNoteTest() {
-//        controller.addNote(Note.Pitch.D0,Note.Type.HALF,0);
-//        controller.addNote(Note.Pitch.A1,Note.Type.HALF,1);
-//        controller.addNote(Note.Pitch.B0,Note.Type.HALF,2);
+//        controller.addNote(Defs.Pitch.D0,Defs.NoteType.HALF,0);
+//        controller.addNote(Defs.Pitch.A1,Defs.NoteType.HALF,1);
+//        controller.addNote(Defs.Pitch.B0,Defs.NoteType.HALF,2);
 //
 //        assertTrue(model.getNotes().size() == 2);
-//        assertTrue(model.getNotes().get(1).getPitch().equals(Note.Pitch.A1));
+//        assertTrue(model.getNotes().get(1).getPitch().equals(Defs.Pitch.A1));
 //    }
 
 //    @Test
 //    public void deleteNoteTest()
 //    {
 //        int index = 3;
-//        controller.addNote(Note.Pitch.D0,Note.Type.QUARTER,0);
-//        controller.addNote(Note.Pitch.A1,Note.Type.REST_QUARTER,1);
-//        controller.addNote(Note.Pitch.B0,Note.Type.QUARTER,2);
-//        controller.addNote(Note.Pitch.C1,Note.Type.QUARTER,3);
+//        controller.addNote(Defs.Pitch.D0,Defs.NoteType.QUARTER,0);
+//        controller.addNote(Defs.Pitch.A1,Defs.NoteType.REST_QUARTER,1);
+//        controller.addNote(Defs.Pitch.B0,Defs.NoteType.QUARTER,2);
+//        controller.addNote(Defs.Pitch.C1,Defs.NoteType.QUARTER,3);
 //
 //        controller.deleteNote(2);
 //
 //        List<Note> notes = model.getNotes();
 //
-//        assertTrue(notes.get(2).getPitch().equals(Note.Pitch.REST));
+//        assertTrue(notes.get(2).getPitch().equals(Defs.Pitch.REST));
 //    }
 
 //    @Test
 //    public void isValidNoteTest() {
 //        List<Note> notes = new ArrayList<Note>();
 //        Note note1 = new Note();
-//        note1.setPitch(Note.Pitch.A1);
-//        note1.setType(Note.Type.HALF);
+//        note1.setPitch(Defs.Pitch.A1);
+//        note1.setType(Defs.NoteType.HALF);
 //        Note note2 = new Note();
-//        note2.setPitch(Note.Pitch.A1);
-//        note2.setType(Note.Type.HALF);
+//        note2.setPitch(Defs.Pitch.A1);
+//        note2.setType(Defs.NoteType.HALF);
 //        notes.add(notes.size(),note1);
 //        notes.add(notes.size(),note2);
 //        Note note3 = new Note();
-//        note3.setPitch(Note.Pitch.B0);
-//        note3.setType(Note.Type.REST_EIGHTH);
+//        note3.setPitch(Defs.Pitch.B0);
+//        note3.setType(Defs.NoteType.REST_EIGHTH);
 //        controller.updateNoteArray(notes);
 //        boolean valid = controller.isValidNote(note3);
 //
