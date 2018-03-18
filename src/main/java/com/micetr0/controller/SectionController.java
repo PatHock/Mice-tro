@@ -7,8 +7,20 @@
 
 package com.micetr0.controller;
 
+import com.micetr0.definitions.Defs;
+import com.micetr0.model.Section;
+
 public class SectionController {
 
-    //TODO: Implement
+    /**
+     * @param: TimeSignature enum type TimeSignature
+     * @param: Key enum type Key
+     * @param: Clef enum type clef
+     * @return:
+     */
+    public Section createSection(){
+        Section newSection = new Section();
 
+        return newSection;
+    }
 }
