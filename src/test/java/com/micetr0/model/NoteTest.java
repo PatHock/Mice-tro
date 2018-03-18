@@ -70,7 +70,6 @@ public class NoteTest {
 
     @Test
     public void testSize() {
-        //TODO: Add more test cases
         assertTrue(Note.Type.SIXTEENTH.getSize() == .0625);
         assertTrue(Note.Type.EIGHTH.getSize() == 0.125);
     }
@@ -114,10 +113,26 @@ public class NoteTest {
 
     @Test
     public void getSectionId() {
+        note.setSectionId(0);
+        assertEquals(note.getSectionId(), (Integer) 0);
+
+        note.setSectionId(20000);
+        assertEquals(note.getSectionId(), (Integer)20000);
+
+        note.setSectionId(99999999);
+        assertEquals(note.getSectionId(), (Integer)99999999);
     }
 
     @Test
     public void setCompositionId() {
+        note.setCompositionId(0);
+        assertEquals(note.getCompositionId(), (Integer) 0);
+
+        note.setCompositionId(20000);
+        assertEquals(note.getCompositionId(), (Integer)20000);
+
+        note.setCompositionId(99999999);
+        assertEquals(note.getCompositionId(), (Integer)99999999);
     }
 
     @Test
@@ -126,9 +141,25 @@ public class NoteTest {
 
     @Test
     public void setMeasureIndex() {
+        note.setMeasureIndex(2000);
+        assertEquals(note.getMeasureIndex(), (Integer)2000);
+
+        note.setMeasureIndex(0);
+        assertEquals(note.getMeasureIndex(), (Integer)0);
+
+        note.setMeasureIndex(99999999);
+        assertEquals(note.getMeasureIndex(), (Integer)99999999);
     }
 
     @Test
     public void setSectionId() {
+        note.setMeasureId(0);
+        assertEquals(note.getMeasureId(), (Integer) 0);
+
+        note.setMeasureId(20000);
+        assertEquals(note.getMeasureId(), (Integer)20000);
+
+        note.setMeasureId(999999);
+        assertEquals(note.getMeasureId(), (Integer)999999);
     }
 }
