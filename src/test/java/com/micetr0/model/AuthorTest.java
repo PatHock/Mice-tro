@@ -12,7 +12,6 @@ import static junit.framework.TestCase.assertTrue;
 
 public class AuthorTest {
     private Account model;
-    List<Pair<String,String>> accounts = new ArrayList<>();
     @Before
     public void setUp()
     {
@@ -21,59 +20,57 @@ public class AuthorTest {
 
     @Test
     public void getPasswordTest() {
-        throw new UnsupportedOperationException();
+        model.setPassword("pASSword");
+        assertTrue(model.getPassword().equals("pASSword"));
     }
 
     @Test
     public void setPasswordTest(){
-        throw new UnsupportedOperationException();
+        model.setPassword("pASSword");
+        assertTrue(model.getPassword().equals("pASSword"));
     }
 
     @Test
     public void getUsernameTest() {
-        throw new UnsupportedOperationException();
+        model.setUsername("Drop Table Accounts");
+        assertTrue(model.getUsername().equals("Drop Table Accounts"));
     }
 
     @Test
     public void setUsernameTest() {
-        throw new UnsupportedOperationException();
+        model.setUsername("Drop Table Accounts");
+        assertTrue(model.getUsername().equals("Drop Table Accounts"));
     }
 
     @Test
-    public void getCompositionTest() {
-        throw new UnsupportedOperationException();
+    public void getViewableComps(){
+        model.viewableComps.add("comp1");
+        assertTrue(model.getViewableComps().get(0).equals("comp1"));
     }
-
     @Test
-    public void setCompositionTest() {
-        throw new UnsupportedOperationException();
-    }
+    public void setViewableComps(){
+        List<Object> comps = new ArrayList<>();
+        comps.add(1);
+        comps.add(2);
+        comps.add(3);
+        model.setViewableComps(comps);
+        assertTrue(model.getViewableComps().size() == 3);
 
+    }
     @Test
-    public void getAccountsTest() {
-        accounts.add(new Pair<String,String>("user","password"));
-        accounts.add(new Pair<String,String>("hoodlum","drowssap"));
-        model.setAccounts(accounts);
-        assertTrue(accounts.get(0).getKey().equals(model.getAccounts().get(0).getKey()));
-        assertTrue(accounts.get(1).getKey().equals(model.getAccounts().get(1).getKey()));
-    }
+    public void setEditableComps(){
+        model.viewableComps.add("comp1");
+        assertTrue(model.getViewableComps().get(0).equals("comp1"));
 
+    }
     @Test
-    public void setAccountsTest() {
-        accounts.add(new Pair<String,String>("user","password"));
-        accounts.add(new Pair<>("hoodlum","drowssap"));
-        assertTrue(accounts.get(0).getKey().equals(model.getAccounts().get(0).getKey()));
-        assertTrue(accounts.get(1).getKey().equals(model.getAccounts().get(1).getKey()));
-
+    public void getEditableComps(){
+        List<Object> comps = new ArrayList<>();
+        comps.add(1);
+        comps.add(2);
+        comps.add(3);
+        model.setEditableComps(comps);
+        assertTrue(model.getEditableComps().size() == 3);
     }
 
-    @Test
-    public void getCurrCompositionTest(){
-        throw new UnsupportedOperationException();
-    }
-
-    @Test
-    public void setCurrCompositionTest() {
-        throw new UnsupportedOperationException();
-    }
 }

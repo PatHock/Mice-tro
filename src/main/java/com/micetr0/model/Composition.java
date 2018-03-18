@@ -21,15 +21,8 @@ public class Composition {
     }
 
     private String title = "Untitled";
+    private Integer year;
     private String account = null;
-    private List<Section> sections = new ArrayList<Section>();
-    private Pair<String,Boolean> editable;
-    private String viewer = null;
-    private Section currSection = null;
-    public enum Mode{
-        view,edit,play
-    }
-    private Mode mode;
 
 
     public String getTitle() {
@@ -40,52 +33,15 @@ public class Composition {
         this.title = title;
     }
 
-    public String getUser() {
+    public Integer getYear() {return year;}
+
+    public void setYear(Integer year) {this.year = year;}
+
+    public String getAuthor() {
         return account;
     }
-    public void setUser(String account) {
+
+    public void setAuthor(String account) {
         this.account = account;
-    }
-
-    public List<Section> getSections() {
-        return sections;
-    }
-
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
-    }
-
-    public Pair<String,Boolean> getEditable()
-    {
-        return editable;
-    }
-
-    public void setEditable(Pair<String,Boolean> editable) {
-        this.editable = editable;
-    }
-
-    public Mode getMode()
-    {
-        return mode;
-    }
-    public void setMode(Mode mode)
-    {
-        this.mode = mode;
-    }
-    public void setViewer(String viewer)
-    {
-        this.viewer = viewer;
-    }
-    public String getViewer()
-    {
-        return viewer;
-    }
-    public Section getCurrSection()
-    {
-        return currSection;
-    }
-    public void setCurrSection(Section section)
-    {
-        this.currSection = section;
     }
 }

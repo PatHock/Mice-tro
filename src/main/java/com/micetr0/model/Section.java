@@ -9,6 +9,13 @@ package com.micetr0.model;
 
 public class Section {
 
-    //TODO: Implement
+    private String owningComp = null;
+    private String ID = null;
 
+    //more fields needed
+
+    public String getOwningComp(){return owningComp;}
+    public void setOwningComp(String owningComp) {this.owningComp = owningComp;}
+    public String getID(){return ID;}
+    public void setID(String ID){this.ID = ID;}
 }

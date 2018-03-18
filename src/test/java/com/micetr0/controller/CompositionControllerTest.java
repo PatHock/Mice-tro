@@ -24,32 +24,6 @@ public class CompositionControllerTest {
     }
 
     @Test
-    public void deleteSectionTest()
-    {
-        List<Section> sections = new ArrayList<Section>();
-        Section section1 = new Section();
-        Section section2 = new Section();
-        sections.add(section1);
-        sections.add(section2);
-        model.setSections(sections);
-        sections = model.getSections();
-
-        boolean deleted = controller.deleteSection(0);
-        assertTrue(deleted == true);
-        assertTrue(sections.get(0).equals(section2));
-    }
-
-    @Test
-    public void addSectionTest()
-    {
-        controller.addSection();
-        assertTrue(model.getSections().size()==1);
-        controller.addSection();
-        assertTrue(model.getSections().size()==2);
-
-    }
-
-    @Test
     public void changeTitleTest()
     {
         String title = "My first composition";
@@ -62,4 +36,16 @@ public class CompositionControllerTest {
         assertTrue(model.getTitle().equals(title));
     }
 
+    @Test
+    public void changeYearTest()
+    {
+        Integer year = 1996;
+        controller.changeYear(year);
+        assertTrue(model.getYear() == year);
+        controller.changeYear(1996);
+        assertTrue(model.getYear().equals(year));
+        year = 2018;
+        controller.changeYear(year);
+        assertTrue(model.getYear() == year);
+    }
 }

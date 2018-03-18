@@ -23,73 +23,52 @@ public class CompositionTest {
     }
 
     @Test
-    public void getModeTest()
-    {
-        composition.setMode(Composition.Mode.edit);
-        Composition.Mode mode = composition.getMode();
-        assertTrue(mode.equals(Composition.Mode.edit));
-    }
-
-    @Test
-    public void setMode() {
-        composition.setMode(Composition.Mode.play);
-        Composition.Mode mode = Composition.Mode.play;
-        assertTrue(mode.equals(composition.getMode()));
-    }
-
-    @Test
-    public void getUser(){
+    public void getUserTest(){
         Account account = new Account();
         account.setUsername("Pat Sucks");
         account.setPassword("loljk");
-        composition.setUser(account.getUsername());
-        assertTrue(composition.getUser().equals("Pat Sucks"));
+        composition.setAuthor(account.getUsername());
+        assertTrue(composition.getAuthor().equals("Pat Sucks"));
     }
     @Test
-    public void setUser(){
+    public void setUserTest(){
         Account account = new Account();
         account.setUsername("My Milkshakes");
         account.setPassword("Bring all the boys");
-        composition.setUser(account.getUsername());
-        assertTrue(composition.getUser().equals("My Milkshakes"));
+        composition.setAuthor(account.getUsername());
+        assertTrue(composition.getAuthor().equals("My Milkshakes"));
     }
 
     @Test
-    public void getTitle() {
+    public void getTitleTest() {
         String title = "Sixth Symphony";
         composition.setTitle(title);
         assertTrue(composition.getTitle().equals(title));
     }
 
     @Test
-    public void setTitle() {
+    public void setTitleTest() {
         String title = "Sixth Symphony";
         composition.setTitle(title);
         assertTrue(composition.getTitle().equals(title));
     }
 
     @Test
-    public void setSections() {
-        throw new UnsupportedOperationException();
+    public void setYearTest(){
+        Integer year = 1996;
+        composition.setYear(year);
+
+        assertTrue(composition.getYear() == 1996);
     }
 
     @Test
-    public void getSections() {
-        throw new UnsupportedOperationException();
-    }
+    public void getYearTest()
+    {
+        Integer year = 1996;
+        composition.setYear(year);
 
-    @Test
-    public void getViewer(){
-        composition.setViewer("viewer");
-        assertTrue(composition.getViewer().equals("viewer"));
+        assertTrue(composition.getYear() == 1996);
     }
-
-    @Test
-    public void setViewer() {
-        composition.setViewer("viewer");
-        assertTrue(composition.getViewer().equals("viewer"));
-    }
-
 
 
 }

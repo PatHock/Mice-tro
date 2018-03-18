@@ -1,6 +1,7 @@
 package com.micetr0.controller;
 
 import com.micetr0.model.Account;
+import com.micetr0.model.Composition;
 import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,11 +10,13 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 public class AuthorControllerTest {
 
     private Account model;
     private AccountController controller;
+    List<Account> accounts = new ArrayList<Account>();
 
     @Before
     public void createModel() {
@@ -23,52 +26,28 @@ public class AuthorControllerTest {
     }
 
     @Test
-    public void initAccountsTest()
-    {
-        List<Pair<String,String>> accounts = new ArrayList<>();
-        controller.initAccounts();
-        accounts = model.getAccounts();
-        assertTrue(accounts.get(0).getKey().equals("uber_user"));
-        assertTrue(accounts.get(1).getKey().equals("Rick"));
-        assertTrue(accounts.get(0).getValue().equals("password"));
-        assertTrue(accounts.get(1).getValue().equals("pASSword"));
-    }
-
-    @Test
     public void createAccountTest()
     {
-        List<Pair<String,String>> accounts = new ArrayList<>();
-        controller.initAccounts();
-        boolean newAccount = controller.createAccount("Pat","password",accounts);
-        accounts = model.getAccounts();
-        assertTrue(newAccount == true);
-        assertTrue(accounts.get(2).getKey().equals("Pat"));
-        newAccount = controller.createAccount("uber_user", "notGonnaHappen", accounts);
-        assertTrue(newAccount == false);
-        assertFalse(accounts.size() == 4);
+        Account newAccount = controller.createAccount("Pat", "password", accounts);
+        assertTrue(newAccount.getUsername().equals("Pat"));
+        assertTrue(newAccount.getPassword().equals("password"));
+
+        Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen", accounts);
+        assertTrue(newAccount2.getUsername().equals("uber_user"));
+        assertTrue(newAccount2.getPassword().equals("notGonnaHappen"));
     }
 
     @Test
     public void deleteAccountTest()
     {
-        List<Pair<String,String>> accounts = new ArrayList<>();
-        controller.initAccounts();
-        boolean deleted = controller.deleteAccount("uber_user");
-        assertTrue(model.getAccounts().get(0).getKey().equals("Rick"));
-        assertTrue(deleted == true);
-        assertTrue(model.getAccounts().size() == 1);
-    }
+        Account newAccount = controller.createAccount("Pat", "password", accounts);
+        Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen", accounts);
+        accounts.add(newAccount);
+        accounts.add(newAccount2);
+        controller.deleteAccount("Pat", accounts);
+        assertTrue(accounts.size() == 1);
+        controller.deleteAccount("jay-z",accounts);
 
-    @Test
-    public void addCompositionTest()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    @Test
-    public void removeCompositionTest()
-    {
-        throw new UnsupportedOperationException();
     }
 
     @Test
@@ -80,6 +59,21 @@ public class AuthorControllerTest {
     @Test
     public void logInTest()
     {
-        throw new UnsupportedOperationException();
+        List<Account> accounts =  new ArrayList<>();
+        Account a1 = new Account();
+        a1.setUsername("sad_Keanu");
+        a1.setPassword("sad_Keanu_is_Sad");
+        Account a2 = new Account();
+        a2.setUsername("sad_Keanu");
+        a2.setPassword("sad_Keanu");
+        accounts.add(a1);
+        accounts.add(a2);
+        Account sad_Keanu = controller.logIn("sad_Keanu", "sad_Keanu_is_Sad", accounts);
+        assertTrue(sad_Keanu.getUsername().equals("sad_Keanu"));
+        Account sad_Keanu2 = controller.logIn("sad_Keanu", "sad_Keanu_is", accounts);
+        assertNull(sad_Keanu2);
+        Account sad_Keanu3 = controller.logIn("sad_Keanu", "sad_Keanu", accounts);
+        assertTrue(sad_Keanu.getUsername().equals("sad_Keanu"));
+
     }
 }

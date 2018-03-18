@@ -2,7 +2,6 @@ package com.micetr0.controller;
 
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,46 +9,41 @@ import java.util.List;
 public class AccountController {
 
     Account account = new Account();
-    List<Pair<String,String>> accounts = new ArrayList<>();
 
     public void setModel(Account account) {
         this.account = account;
     }
 
-    private boolean checkCredentials(String username, String Password, List<Pair<String,String>> accounts){
+    private boolean checkCredentials(String username, String password, List<Account> accounts) {
         boolean validAccount = false;
 
-        return validAccount;
-    }
-
-    public void initAccounts()
-    {
-        account.setPassword("password");
-        account.setUsername("uber_user");
-        accounts.add(new Pair<String,String>(account.getUsername(),account.getPassword()));
-        account.setUsername("Rick");
-        account.setPassword("pASSword");
-        accounts.add(new Pair<String,String>(account.getUsername(),account.getPassword()));
-        account.setAccounts(accounts);
-    }
-
-    public boolean createAccount(String username, String password, List<Pair<String,String>> accounts){
-        accounts = account.getAccounts();
-        for (Pair<String,String> account: accounts) {
-            if(account.getKey().equals(username)) {
-                return false;
+        for (Account account : accounts) {
+            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
+                validAccount = true;
+                return validAccount;
             }
-        }
-        accounts.add(new Pair<String,String>(username,password));
-
-        return true;
+        }   return validAccount;
     }
 
-    public boolean deleteAccount(String username)
-    {
-        for (Pair<String,String> account : accounts)
+    public Account createAccount(String username, String password, List<Account> accounts) {
+        try {
+            Account newAccount = new Account();
+            newAccount.setUsername(username);
+            newAccount.setPassword(password);
+            return newAccount;
+        }
+        catch(Exception e)
         {
-            if(account.getKey().equals(username))
+            throw e;
+        }
+
+}
+
+    public boolean deleteAccount(String username, List<Account> accounts)
+    {
+        for (Account account : accounts)
+        {
+            if(account.getUsername() == username)
             {
                 accounts.remove(account);
                 return true;
@@ -58,33 +52,19 @@ public class AccountController {
         return false;
     }
 
-    public void addComposition()
-    {
-        throw new UnsupportedOperationException();
-    }
-    public void removeComposition()
-    {
-        throw new UnsupportedOperationException();
-    }
     public void logOut(Account account){
-        throw new UnsupportedOperationException();
+        // jsp
     }
-    public void logIn(String username, String password, List<Pair<String,String>> accounts){
-        initAccounts();
-        int retry = 0;
-        int maxRetry = 3;
-        boolean validAccount = checkCredentials(username,password, accounts);
-        if(retry < maxRetry) {
+
+    public Account logIn(String username, String password, List<Account> accounts){
+        boolean validAccount = checkCredentials(username, password, accounts);
             if (validAccount) {
-
-            } else {
-
+                Account currAccount = accounts.get(accounts.indexOf(username)+1);
+                return currAccount;
             }
-            retry ++;
+            else {
+                //should throw some exception ie(account does not exist)
+            }
+            return null;
         }
     }
-
-    private void openComposition(List<Composition> compositions){
-        throw new UnsupportedOperationException();
-    }
-}

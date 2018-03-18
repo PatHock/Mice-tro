@@ -20,30 +20,6 @@ public class CompositionController {
         this.composition = composition;
     }
 
-    public boolean deleteSection(int index)
-    {
-      List<Section> sections = composition.getSections();
-
-      if(sections.size() < 1 || (sections.size() < index+1))
-      {
-          // don't do anything, theres nothing to remove
-          return false;
-      }
-      else{
-          sections.remove(index);
-          composition.setSections(sections);
-          return true;
-      }
-    }
-    public boolean addSection()
-    {
-        List<Section> sections = composition.getSections();
-        Section section = new Section();
-        sections.add(section);
-        composition.setSections(sections);
-        return true;
-    }
-
     public void changeTitle(String newTitle)
     {
         if(!newTitle.equals(composition.getTitle())) {
@@ -54,4 +30,26 @@ public class CompositionController {
             // title shouldn't change
         }
     }
+
+    public void changeYear(Integer year)
+    {
+        if(!year.equals(composition.getYear())) {
+            composition.setYear(year);
+        }
+
+        else{
+            // title shouldn't change
+        }
+    }
+
+    public Composition createComposition(String title, Integer year, String author)
+    {
+        Composition newComp = new Composition();
+        newComp.setYear(year);
+        newComp.setAuthor(author);
+
+        return newComp;
+    }
+
+
 }
