@@ -22,7 +22,8 @@ public class Composition {
 
     private String title = "Untitled";
     private Integer year;
-    private String account = null;
+    private Integer accountID = null;
+    private Integer compositionID;
 
 
     public String getTitle() {
@@ -37,11 +38,21 @@ public class Composition {
 
     public void setYear(Integer year) {this.year = year;}
 
-    public String getAuthor() {
-        return account;
+    public Integer getAuthor() {
+        return accountID;
     }
 
-    public void setAuthor(String account) {
-        this.account = account;
+    public void setAuthor(Integer accountID) {
+        this.accountID = accountID;
+    }
+
+    public Integer getCompositionID()
+    {
+        return compositionID;
+    }
+
+    public void setCompositionID(Integer compositionID)
+    {
+        this.compositionID = compositionID;
     }
 }

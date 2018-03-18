@@ -10,12 +10,14 @@ package com.micetr0.model;
 public class Section {
 
     private String owningComp = null;
-    private String ID = null;
+    private String sectionID = null;
+
+
 
     //more fields needed
 
     public String getOwningComp(){return owningComp;}
     public void setOwningComp(String owningComp) {this.owningComp = owningComp;}
-    public String getID(){return ID;}
-    public void setID(String ID){this.ID = ID;}
+    public String getsectionID(){return sectionID;}
+    public void setSectionID(String ID){this.sectionID = ID;}
 }

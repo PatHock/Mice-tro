@@ -77,4 +77,11 @@ public class AuthorTest {
         assertTrue(model.getEditableComps().size() == 3);
     }
 
+    @Test
+    public void setAuthorIDTest()
+    {
+        Integer authorID = 1;
+        model.setAccountID(authorID);
+        assertTrue(model.getAccountID().equals(authorID));
+    }
 }

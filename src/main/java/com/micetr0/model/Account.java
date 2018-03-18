@@ -18,6 +18,8 @@ public class Account {
     private List<Object> viewableComps = new ArrayList<>();
     private List<Object> editableComps = new ArrayList<>();
 
+    private Integer accountID;
+
     public String getPassword() {
         return password;
     }
@@ -41,4 +43,14 @@ public class Account {
     public List<Object> getEditableComps(){ return editableComps; }
 
     public void setEditableComps(List<Object> editableComps) { this.editableComps = editableComps; }
+
+    public Integer getAccountID()
+    {
+        return accountID;
+    }
+
+    public void setAccountID(Integer accountID)
+    {
+        this.accountID = accountID;
+    }
 }

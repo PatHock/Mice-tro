@@ -9,16 +9,16 @@ import static org.junit.Assert.*;
 public class NoteTest {
 
     // Create new note object
-    private Note note = new Note(Defs.NoteType.REST_SIXTEENTH, Defs.Pitch.REST, 0, 0, 0, 0);
+    private Note note = new Note(1,Defs.NoteType.REST_SIXTEENTH, Defs.Pitch.REST, 0, 0, 0, 0);
 
     @Test
     public void initTest(){
         Defs.NoteType type = Defs.NoteType.QUARTER;
         Defs.Pitch pitch = Defs.Pitch.D1;
-        Integer measureIndex = 1, measureId = 2, sectionId = 3, compositionId = 4;
+        Integer noteId = 1, measureIndex = 1, measureId = 2, sectionId = 3, compositionId = 4;
 
-        Note testNote = new Note(type, pitch, measureIndex, measureId, sectionId, compositionId);
-
+        Note testNote = new Note(noteId,type, pitch, measureIndex, measureId, sectionId, compositionId);
+        assertEquals(testNote.getNoteID(),noteId);
         assertEquals(testNote.getType(), type);
         assertEquals(testNote.getPitch(), pitch);
         assertEquals(testNote.getCompositionId(), compositionId);

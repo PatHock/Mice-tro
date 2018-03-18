@@ -27,16 +27,18 @@ public class CompositionTest {
         Account account = new Account();
         account.setUsername("Pat Sucks");
         account.setPassword("loljk");
-        composition.setAuthor(account.getUsername());
-        assertTrue(composition.getAuthor().equals("Pat Sucks"));
+        account.setAccountID(1);
+        composition.setAuthor(account.getAccountID());
+        assertTrue(composition.getAuthor() == 1);
     }
     @Test
     public void setUserTest(){
         Account account = new Account();
         account.setUsername("My Milkshakes");
         account.setPassword("Bring all the boys");
-        composition.setAuthor(account.getUsername());
-        assertTrue(composition.getAuthor().equals("My Milkshakes"));
+        account.setAccountID(2);
+        composition.setAuthor(account.getAccountID());
+        assertTrue(composition.getAuthor().equals(2));
     }
 
     @Test
