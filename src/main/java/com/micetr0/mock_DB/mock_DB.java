@@ -1,7 +1,6 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.model.*;
-import com.sun.org.apache.xml.internal.security.Init;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class mock_DB {
     public void FakeDatabase()
     {
         readInitialData();
-
         //System.out.println(accounts.size() + "accounts");
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
