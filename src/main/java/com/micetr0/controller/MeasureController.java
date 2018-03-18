@@ -37,30 +37,30 @@ public class MeasureController {
     }
 
 
-     public void addNote(Note.Pitch pitch, Note.Type type, int index) {
-        List<Note> notes = measure.getNotes();
-        Note note = new Note();
-        note.setPitch(pitch);
-        note.setType(type);
-        if(isValidNote(note)) {
-            notes.add(index, note);
-        }
-     }
+//     public void addNote(Note.Pitch pitch, Note.Type type, int index) {
+//        List<Note> notes = measure.getNotes();
+//        Note note = new Note();
+//        note.setPitch(pitch);
+//        note.setType(type);
+//        if(isValidNote(note)) {
+//            notes.add(index, note);
+//        }
+//     }
 
 
-     public void deleteNote(int index)
-     {
-         List<Note> notes = measure.getNotes();
-         if(notes.size() > 0 && index <= notes.size() - 1) {
-             Note rest = new Note();
-             double len = notes.get(index).getType().getSize();
-             rest.setPitch(Note.Pitch.REST);
-             rest.setType(notes.get(index).getType());
-             notes.remove(index);
-             notes.add(index,rest);
-         }
-         measure.setNotes(notes);
-     }
+//     public void deleteNote(int index)
+//     {
+//         List<Note> notes = measure.getNotes();
+//         if(notes.size() > 0 && index <= notes.size() - 1) {
+//             Note rest = new Note();
+//             double len = notes.get(index).getType().getSize();
+//             rest.setPitch(Note.Pitch.REST);
+//             rest.setType(notes.get(index).getType());
+//             notes.remove(index);
+//             notes.add(index,rest);
+//         }
+//         measure.setNotes(notes);
+//     }
 
     public boolean isValidNote(Note newNote)
     {

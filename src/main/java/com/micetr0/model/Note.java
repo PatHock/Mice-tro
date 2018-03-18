@@ -68,11 +68,24 @@ public class Note {
 
     }
 
-    /*
+    /**
      * Note Constructor
+     * Every Note object should have all of these attributes to be stored in the database
+     * @param type          The type of the note (ex: Sixteenth)
+     * @param pitch         The specific Note, with reference A0 = 440 Hz
+     * @param measureIndex  The position of a note within a measure, 0 being the first note in the measure
+     * @param measureId     The unique ID of the measure that contains this note
+     * @param sectionId     The unique ID of the section that contains this note
+     * @param compositionId The unique ID of the composition that contains this note
      */
-    public Note() {
+    public Note(Type type, Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
     //empty constructor
+        setType(type);
+        setPitch(pitch);
+        setMeasureIndex(measureIndex);
+        setMeasureId(measureId);
+        setSectionId(sectionId);
+        setCompositionId(compositionId);
     }
 
 

@@ -7,7 +7,24 @@ import static org.junit.Assert.*;
 
 public class NoteTest {
 
-    private Note note = new Note();
+    // Create new note object
+    private Note note = new Note(Note.Type.REST_SIXTEENTH, Note.Pitch.REST, 0, 0, 0, 0);
+
+    @Test
+    public void initTest(){
+        Note.Type type = Note.Type.QUARTER;
+        Note.Pitch pitch = Note.Pitch.D1;
+        Integer measureIndex = 1, measureId = 2, sectionId = 3, compositionId = 4;
+
+        Note testNote = new Note(type, pitch, measureIndex, measureId, sectionId, compositionId);
+
+        assertEquals(testNote.getType(), type);
+        assertEquals(testNote.getPitch(), pitch);
+        assertEquals(testNote.getCompositionId(), compositionId);
+        assertEquals(testNote.getMeasureId(), measureId);
+        assertEquals(testNote.getMeasureIndex(), measureIndex);
+        assertEquals(testNote.getSectionId(), sectionId);
+    }
 
     @Test
     public void setType(){
@@ -50,11 +67,68 @@ public class NoteTest {
         note.setPitch(Note.Pitch.F1);
         assertEquals(Note.Pitch.F1.getFrequency(), note.getFrequency());
     }
+
     @Test
     public void testSize() {
+        //TODO: Add more test cases
         assertTrue(Note.Type.SIXTEENTH.getSize() == .0625);
-        Note note = new Note();
-        note.setType(Note.Type.QUARTER);
-        assertTrue(note.getType().getSize() == .25);
+        assertTrue(Note.Type.EIGHTH.getSize() == 0.125);
+    }
+
+
+    @Test
+    public void getMeasureIndex() {
+        note.setMeasureIndex(2000);
+        assertEquals(note.getMeasureIndex(), (Integer)2000);
+
+        note.setMeasureIndex(0);
+        assertEquals(note.getMeasureIndex(), (Integer)0);
+
+        note.setMeasureIndex(99999999);
+        assertEquals(note.getMeasureIndex(), (Integer)99999999);
+    }
+
+    @Test
+    public void getCompositionId() {
+        note.setCompositionId(0);
+        assertEquals(note.getCompositionId(), (Integer) 0);
+
+        note.setCompositionId(20000);
+        assertEquals(note.getCompositionId(), (Integer)20000);
+
+        note.setCompositionId(99999999);
+        assertEquals(note.getCompositionId(), (Integer)99999999);
+    }
+
+    @Test
+    public void getMeasureId() {
+        note.setMeasureId(0);
+        assertEquals(note.getMeasureId(), (Integer) 0);
+
+        note.setMeasureId(20000);
+        assertEquals(note.getMeasureId(), (Integer)20000);
+
+        note.setMeasureId(999999);
+        assertEquals(note.getMeasureId(), (Integer)999999);
+    }
+
+    @Test
+    public void getSectionId() {
+    }
+
+    @Test
+    public void setCompositionId() {
+    }
+
+    @Test
+    public void setMeasureId() {
+    }
+
+    @Test
+    public void setMeasureIndex() {
+    }
+
+    @Test
+    public void setSectionId() {
     }
 }
