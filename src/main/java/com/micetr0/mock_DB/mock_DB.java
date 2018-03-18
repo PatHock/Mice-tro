@@ -12,7 +12,6 @@ public class mock_DB {
    // private List<Account> accounts = new ArrayList<>();
     private List<Section> sections = new ArrayList<>();
     private List<Composition> compositions = new ArrayList<>();
-    private List<Measure> measures = new ArrayList<>();
     private List<Note> notes = new ArrayList<>();
 
     public void FakeDatabase()
@@ -22,7 +21,6 @@ public class mock_DB {
         //System.out.println(accounts.size() + "accounts");
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
-        System.out.println(measures.size() + "measures");
         System.out.println(notes.size() + "notes");
     }
 
@@ -32,7 +30,6 @@ public class mock_DB {
             //accounts.addAll();
             compositions.addAll(InitialData.getCompositions());
             sections.addAll(InitialData.getSections());
-            measures.addAll(InitialData.getMeasusres());
             notes.addAll(InitialData.getNotes());
         }
         catch (IOException e)

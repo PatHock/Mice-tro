@@ -87,31 +87,6 @@ public class InitialData {
         }
     }
 
-    public static List<Measure> getMeasusres() throws IOException{
-        List<Measure> measures = new ArrayList<>();
-
-        CSVParse parseMeasures = new CSVParse("measures.csv");
-        try{
-            Integer measureID = 1;
-            while (true)
-            {
-                List<String> tuple = parseMeasures.next();
-                if(tuple == null)
-                {
-                    break;
-                }
-                Iterator<String> i = tuple.iterator();
-                Measure measure = new Measure();
-                //set fields
-                measures.add(measure);
-            }
-            return measures;
-        }
-        finally {
-            parseMeasures.close();
-        }
-    }
-
     public static List<Note> getNotes() throws IOException{
         List<Note> notes = new ArrayList<>();
         CSVParse parseNotes = new CSVParse("notes.csv");
