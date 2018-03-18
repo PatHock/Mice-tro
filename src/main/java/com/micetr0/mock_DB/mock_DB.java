@@ -41,4 +41,20 @@ public class mock_DB {
         }
     }
 
+    /**
+     *
+     * @param section
+     * @param composition
+     * @param measure
+     * @return
+     */
+    public Note findNote(String section, String composition, String measure)
+    {
+     for(Note note:notes){
+
+         //determine how to find note
+         return note;
+     }
+     return null;
+    }
 }
