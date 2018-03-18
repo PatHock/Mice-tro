@@ -18,40 +18,5 @@ public class MeasureController {
         //empty constructor
     }
 
-    public void setUp(Measure measure) {
-        this.measure = measure;
-    }
-    public void setMaxLen(int len)
-    {
 
-    }
-
-    public void updateMaxLen(double maxlen)
-    {
-        measure.setSizeLimit(maxlen);
-    }
-
-    public void updateNoteArray(List<Note> notes)
-    {
-        measure.setNotes(notes);
-    }
-
-
-
-    public boolean isValidNote(Note newNote)
-    {
-        List<Note> notes = measure.getNotes();
-        double len = 0;
-
-        for (Note note: notes) {
-            len += note.getType().getSize();
-        }
-
-        if((len+newNote.getType().getSize())<= measure.getSizeLimit())
-        {
-            return true;
-        }
-
-        return false;
-    }
 }

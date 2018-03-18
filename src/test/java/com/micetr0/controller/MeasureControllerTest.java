@@ -19,9 +19,6 @@ public class MeasureControllerTest {
     public void setUp()
     {
         controller = new MeasureController();
-        model = new Measure();
-        controller.setUp(model);
-        controller.updateMaxLen(1);
     }
 
 

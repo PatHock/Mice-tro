@@ -28,7 +28,6 @@ public class Note {
      * @param compositionId The unique ID of the composition that contains this note
      */
     public Note(Defs.NoteType type, Defs.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
-    //empty constructor
         setType(type);
         setPitch(pitch);
         setMeasureIndex(measureIndex);

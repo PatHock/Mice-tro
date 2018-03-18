@@ -246,15 +246,27 @@ public class Defs {
         private final ArrayList<Pitch> pitches;
 
         /**
-         *
+         * Key Constructor
          * @param pitches An ArrayList of the pitches contained within a key
          */
         Key(ArrayList<Pitch> pitches) {
             this.pitches = pitches;
         }
 
+        /**
+         * @return An ArrayList of pitch objects within a key
+         */
         public ArrayList<Pitch> getPitches() {
             return pitches;
+        }
+
+        /**
+         *
+         * @param pitch A pitch object
+         * @return  Boolean, representing whether or not the pitch is contained in this key. Used for verification by Note Controller
+         */
+        public Boolean isValidPitch(Pitch pitch) {
+            return getPitches().contains(pitch);
         }
     }
 
