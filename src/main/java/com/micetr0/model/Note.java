@@ -10,6 +10,11 @@ public class Note {
 
     private Type type;
     private Pitch pitch;
+    private Integer measureIndex;
+    private Integer measureId;
+    private Integer sectionId;
+    private Integer compositionId;
+
     public enum Type {
         SIXTEENTH (0.0625),
         EIGHTH (0.125),
@@ -21,6 +26,7 @@ public class Note {
         REST_QUARTER (0.25),
         REST_HALF (0.5),
         REST_WHOLE (1.0);
+
         private final Double size;  // fraction of a whole note
 
         Type(Double size) {
@@ -107,4 +113,59 @@ public class Note {
         return this.pitch.getFrequency();
     }
 
+    /**
+     * @return  Index (position) of note in its measure, 0 being the leftmost position
+     */
+    public Integer getMeasureIndex() {
+        return measureIndex;
+    }
+
+    /**
+     * @return Unique database ID for the composition this note is associated with
+     */
+    public Integer getCompositionId() {
+        return compositionId;
+    }
+
+    /**
+     * @return Unique database ID for the measure this note is associated with
+     */
+    public Integer getMeasureId() {
+        return measureId;
+    }
+
+    /**
+     * @return Unique database ID for the section this note is associated with
+     */
+    public Integer getSectionId() {
+        return sectionId;
+    }
+
+    /**
+     * @param compositionId Unique database ID for the composition this note is associated with
+     */
+    public void setCompositionId(Integer compositionId) {
+        this.compositionId = compositionId;
+    }
+
+    /**
+     * @param measureId Unique database ID for the measure this note is associated with
+     */
+    public void setMeasureId(Integer measureId) {
+        this.measureId = measureId;
+    }
+
+    /**
+     * @param measureIndex Index (position) of note in its measure, 0 being the leftmost position
+     */
+    public void setMeasureIndex(Integer measureIndex) {
+        this.measureIndex = measureIndex;
+    }
+
+    /**
+     * @param sectionId Unique database ID for the section this note is associated with
+     */
+    public void setSectionId(Integer sectionId) {
+        this.sectionId = sectionId;
+    }
 }

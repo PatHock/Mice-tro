@@ -6,9 +6,17 @@
  */
 
 package com.micetr0.controller;
+import com.micetr0.model.Note;
 
 public class NoteController {
 
-    //TODO: Implement
+    public NoteController() {
+        //empty constructor
+    }
+    public void addNote(Note.Type type, Note.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
+        //TODO: check to see if note exists in db? Interact with NoteFactory.java
+        //TODO: Implement rule checking for the creation of notes
+        throw new UnsupportedOperationException("Not supported yet fam");
+    }
 
 }
