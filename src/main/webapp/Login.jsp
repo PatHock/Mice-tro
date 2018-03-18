@@ -30,9 +30,9 @@
 
     <form action="${pageContext.servletContext.contextPath}/profile" method="get">
       Username:<br>
-      <input type="text" name="username" value=${usrnm}><br>
+      <input type="text" name="username" value=${login.usrnm}><br>
       Password:<br>
-      <input type="password" name="password" value=${psw}><br><br>
+      <input type="password" name="password" value=${login.psw}><br><br>
       <input type="submit" value="Login">
     </form>
 

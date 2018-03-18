@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import com.micetr0.definitions.*;
 
 public class InitialData {
 
@@ -100,7 +101,7 @@ public class InitialData {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
-                Note note = new Note();
+                Note note = new Note(Defs.NoteType.EIGHTH, Defs.Pitch.A0, 1,1,1, 1);
                 //set fields
                 notes.add(note);
             }
