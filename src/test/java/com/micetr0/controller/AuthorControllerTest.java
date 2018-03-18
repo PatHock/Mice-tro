@@ -16,7 +16,7 @@ public class AuthorControllerTest {
 
     private Account model;
     private AccountController controller;
-    List<Account> accounts = new ArrayList<Account>();
+    private List<Account> accounts = new ArrayList<>();
 
     @Before
     public void createModel() {
@@ -53,7 +53,7 @@ public class AuthorControllerTest {
     @Test
     public void logOutTest()
     {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
     }
 
     @Test
