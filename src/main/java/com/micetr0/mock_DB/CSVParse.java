@@ -10,7 +10,7 @@ public class CSVParse implements Closeable{
     private BufferedReader reader;
 
     public CSVParse(String resourceName) throws IOException {
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("com/micetr0/mock_DB/res/" + resourceName);
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(resourceName);
         if (in == null) {
             throw new IOException("Couldn't open " + resourceName);
         }
