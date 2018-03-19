@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mock_DB {
+public class mock_DB implements IDatabase{
 
    // private List<Account> accounts = new ArrayList<>();
     private List<Section> sections = new ArrayList<>();
@@ -51,5 +51,27 @@ public class mock_DB {
          return note;
      }
      return null;
+    }
+
+
+    @Override
+    public void insertNote(String pitch, String type, String compositionId, String sectionId, String measureId, Integer measureIndex) {
+        throw new UnsupportedOperationException("Please implement insertNote()");
+    }
+
+    /**
+     * Multiple notes can exist in the same index in a measure (for a chord), so noteId is the only way
+     * to properly distinguish notes
+     *
+     * @param noteId Unique database ID for note
+     */
+    @Override
+    public void deleteNote(String noteId) {
+        throw new UnsupportedOperationException("Please implement deleteNote()");
+    }
+
+    @Override
+    public List<Note> findNotesByMeasureId(String measureId) {
+        throw new UnsupportedOperationException("Please implement findNotesByMeasureId()");
     }
 }

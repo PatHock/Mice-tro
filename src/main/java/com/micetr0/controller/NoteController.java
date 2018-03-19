@@ -15,10 +15,19 @@ public class NoteController {
         //empty constructor
     }
 
-    public void addNote(Defs.NoteType noteType, Defs.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
+    public void addNote(Defs.NoteType noteType, Defs.Pitch pitch, Defs.Key key, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
         //TODO: check to see if note exists in db? Interact with NoteFactory.java
         //TODO: Implement rule checking for the creation of notes
-        throw new UnsupportedOperationException("Not supported yet fam");
+
+        // Check if the pitch of the note is valid
+        if (!key.isValidPitch(pitch)) {
+            throw new IllegalArgumentException("Note pitch is not contained within specified key");
+        }
+
+        // Does note exist in db?
+
+
+        // assuming all went well with the database, put the note into the database
 
     }
 
