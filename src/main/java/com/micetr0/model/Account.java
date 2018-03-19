@@ -1,6 +1,5 @@
 package com.micetr0.model;
 
-import javafx.util.Pair;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Iterator;

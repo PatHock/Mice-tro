@@ -7,8 +7,6 @@
 
 package com.micetr0.model;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

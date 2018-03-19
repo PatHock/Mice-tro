@@ -1,7 +1,6 @@
 package com.micetr0.model;
 
 import com.micetr0.controller.AccountController;
-import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
