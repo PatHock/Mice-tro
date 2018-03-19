@@ -14,6 +14,6 @@ public interface IDatabase {
      */
     void deleteNote(String noteId);
 
-    List<Note> findNotesByMeasureId(String measureId);
+    List<Note> findNotesByMeasureIdAndMeasureIndex(String measureId, Integer measureIndex);
 
 }

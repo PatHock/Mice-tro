@@ -9,6 +9,9 @@ package com.micetr0.controller;
 import com.micetr0.model.Note;
 import com.micetr0.definitions.Defs;
 
+/**
+ * adds notes from database
+ */
 public class NoteController {
 
     public NoteController() {
@@ -24,7 +27,7 @@ public class NoteController {
             throw new IllegalArgumentException("Note pitch is not contained within specified key");
         }
 
-        // Does note exist in db?
+        // Cannot add two notes in the same measure, section, index that have the same pitch
 
 
         // assuming all went well with the database, put the note into the database

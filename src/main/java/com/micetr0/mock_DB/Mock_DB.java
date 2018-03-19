@@ -78,7 +78,15 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public List<Note> findNotesByMeasureId(String measureId) {
-        throw new UnsupportedOperationException("Please implement findNotesByMeasureId()");
+    public List<Note> findNotesByMeasureIdAndMeasureIndex(String measureId, Integer measureIndex) {
+        List<Note> resultList = new ArrayList<Note>();
+        for (Note note : notes) {
+            if (note.getMeasureId().equals(Integer.parseInt(measureId)) && note.getMeasureIndex().equals(measureIndex)) {
+                resultList.add(note);
+            }
+        }
+
+        return resultList;
+        //throw new UnsupportedOperationException("Please implement findNotesByMeasureId()");
     }
 }
