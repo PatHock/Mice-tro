@@ -33,6 +33,9 @@ public class NoteControllerTest {
         } catch(IllegalArgumentException e) {
         }
 
+        // Add another note with different pitch to same measure index, should not throw exception
+        controller.addNote(note.getType(), Defs.Pitch.A4, Defs.Key.D_MAJOR, note.getMeasureIndex(), note.getMeasureId());
+
         // try to add note with invalid pitch based on key
         try {
             controller.addNote(note.getType(), Defs.Pitch.A0_FLAT, Defs.Key.D_MAJOR, note.getMeasureIndex(), note.getMeasureId());
