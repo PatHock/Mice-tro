@@ -42,11 +42,13 @@ public class CompositionController {
         }
     }
 
-    public Composition createComposition(String title, Integer year, Integer authorID)
+    public Composition createComposition(String title, Integer year, String desc, Integer compID)
     {
         Composition newComp = new Composition();
         newComp.setYear(year);
-        newComp.setAuthor(authorID);
+        newComp.setTitle(title);
+        newComp.setCompositionID(compID);
+        newComp.setDesc(desc);
 
         return newComp;
     }
