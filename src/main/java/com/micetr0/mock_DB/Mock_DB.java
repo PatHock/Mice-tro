@@ -6,26 +6,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mock_DB {
+public class Mock_DB {
 
-   // private List<Account> accounts = new ArrayList<>();
-    private List<Section> sections = new ArrayList<>();
-    private List<Composition> compositions = new ArrayList<>();
-    private List<Note> notes = new ArrayList<>();
+    private List<Account> accounts;
+    private List<Section> sections;
+    private List<Composition> compositions;
+    private List<Note> notes;
 
-    public void FakeDatabase()
+    public Mock_DB()
     {
+        accounts = new ArrayList<>();
+        notes = new ArrayList<>();
+        sections = new ArrayList<>();
+        compositions = new ArrayList<>();
+
         readInitialData();
-        //System.out.println(accounts.size() + "accounts");
+
+        System.out.println(accounts.size() + "accounts");
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
         System.out.println(notes.size() + "notes");
+
     }
 
-    public void readInitialData() {
+    private void readInitialData() {
 
         try{
-            //accounts.addAll();
+            accounts.addAll(InitialData.getAccounts());
             compositions.addAll(InitialData.getCompositions());
             sections.addAll(InitialData.getSections());
             notes.addAll(InitialData.getNotes());
@@ -43,7 +50,7 @@ public class mock_DB {
      * @param measure
      * @return
      */
-    public Note findNote(String section, String composition, String measure)
+    public Note findNote(String section, String composition, String measure, String index)
     {
      for(Note note:notes){
 
