@@ -23,25 +23,6 @@ public class CompositionTest {
     }
 
     @Test
-    public void getUserTest(){
-        Account account = new Account();
-        account.setUsername("Pat Sucks");
-        account.setPassword("loljk");
-        account.setAccountID(1);
-        composition.setAuthor(account.getAccountID());
-        assertTrue(composition.getAuthor() == 1);
-    }
-    @Test
-    public void setUserTest(){
-        Account account = new Account();
-        account.setUsername("My Milkshakes");
-        account.setPassword("Bring all the boys");
-        account.setAccountID(2);
-        composition.setAuthor(account.getAccountID());
-        assertTrue(composition.getAuthor().equals(2));
-    }
-
-    @Test
     public void getTitleTest() {
         String title = "Sixth Symphony";
         composition.setTitle(title);
@@ -71,6 +52,4 @@ public class CompositionTest {
 
         assertTrue(composition.getYear() == 1996);
     }
-
-
 }
