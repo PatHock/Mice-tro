@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IDatabase {
 
-    void insertNote(String pitch, String type, String compositionId, String sectionId, String measureId, Integer measureIndex);
+    void insertNote(Note note);
 
     /**
      * Multiple notes can exist in the same index in a measure (for a chord), so noteId is the only way
@@ -14,6 +14,6 @@ public interface IDatabase {
      */
     void deleteNote(String noteId);
 
-    List<Note> findNotesByMeasureId(String measureId);
+    List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex);
 
 }
