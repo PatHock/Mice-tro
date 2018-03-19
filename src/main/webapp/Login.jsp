@@ -28,7 +28,7 @@
   <body>
     <h1> Please Enter Your Account Information</h1>
 
-    <form action="${pageContext.servletContext.contextPath}/profile" method="post">
+    <form action="${pageContext.servletContext.contextPath}/login" method="post">
       Username:<br>
       <input type="text" name="username" value=${login.username}><br>
       Password:<br>
@@ -36,17 +36,10 @@
       <input type="submit" value="Login">
     </form>
 
-    <p id="demo"></p>
-
-    <script>
-        if (test="${! empty failedLoginError}") {
-            document.getElementById("demo").innerHTML = ${failedLoginError};
-        }
-    </script>
-
     <if test="${! empty failedLoginError}">
       ${failedLoginError}<br>
     </if>
+
     <h2>Don't Have an Account?</h2>
 
     <form action="${pageContext.servletContext.contextPath}/createAccount" method="get">

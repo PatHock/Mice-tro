@@ -2,7 +2,6 @@ package com.micetr0.controller;
 
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
-import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;

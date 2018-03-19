@@ -44,7 +44,8 @@
   </form>
 
   <form action="${pageContext.servletContext.contextPath}/index" method="get">
-    <input name="goToIndex" type="submit" value="Delete Account" />
+    <input name="goToIndex" type="submit" value="Delete Account
+" />
   </form>
 
   </body>

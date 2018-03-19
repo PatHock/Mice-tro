@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
-//import com.micetr0.controller.AccountController;
-//import com.micetr0.controller.Account;
+import com.micetr0.controller.AccountController;
+import com.micetr0.model.Account;
 
 public class LoginServlet extends HttpServlet {
 
@@ -21,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
         req.getRequestDispatcher("/Login.jsp").forward(req, resp);
     }
-    /*@Override
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -32,38 +34,61 @@ public class LoginServlet extends HttpServlet {
         controller.setModel(model);
 
         String failedLoginError = null;
+        String tried = "false";
+        String correctLogin = null;
 
-        //get username and password from entered data
-        String curUsername = getString(req, "usrnm");
-        String curPassword = getString(req, "psw");
+        try{
+            //get username and password from entered data
+            String curUsername = getString(req, "username");
+            String curPassword = getString(req, "password");
+            System.out.println(curUsername);
+            System.out.println(curPassword);
 
-        //set password and username
-        model.setUsername(curUsername);
-        model.setPassword(curPassword);
+            //set password and username
+            model.setUsername(curUsername);
+            model.setPassword(curPassword);
 
-        List<Account> accountsList= new ArrayList<Account>;
-        Account tempAccount = new Account();
-        tempAccount.setUsername(aredhouse);
-        tempAccount.setPassword(pass);
-        accountsList.add(tempAccount);
+            List<Account> accountsList= new ArrayList<>();
+            Account tempAccount = new Account();
+            tempAccount.setUsername("aredhouse");
+            tempAccount.setPassword("pass");
+            accountsList.add(tempAccount);
 
+            Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
 
-        boolean validAccount = controller.checkCredentials(curUsername, curPassword, accountsList);
-
-        if (validAccount == true){
-            resp.sendRedirect("profile.jsp"); //correct login information
+            if (validAccount != null){
+                tried = "true";
+                correctLogin = "You have successfully logged in, Click below to go to Profile";
+                //resp.sendRedirect("profile.jsp");
+                //System.out.println(validAccount);
+            }
+            else{
+                //resp.sendRedirect("Login.jsp");
+                failedLoginError = "Username and Password Combination Invalid";
+            }
         }
-        else{
-            resp.sendRedirect("login.jsp");
-            failedLoginError = "Username and Password Combination Invalid";
+       catch(InvalidParameterException e){
+
         }
 
         req.setAttribute("login", model);
+        req.setAttribute("failedLoginError", failedLoginError);
+        req.setAttribute("tried", tried);
+        req.setAttribute("correctLogin", correctLogin);
+
+
+        if(tried == "true"){
+            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+        }
+        else{
+            req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+        }
+
     }
 
     private String getString(HttpServletRequest req, String name) {
         return req.getParameter(name);
-    }*/
+    }
 
 
 }
