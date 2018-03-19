@@ -1,33 +1,28 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: patrick
-  Date: 3/8/18
-  Time: 5:22 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
     <title>Mice-tr0 - Home Page</title>
 
     <style type="text/css">
-      .button {
-        background-color: #ff0000; /* Red */
-        border: none;
-        color: black;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        border-radius: 4px;
-        margin: 4px 2px;
+      input[type=submit]{
+          background-color: darkred; /* Red */
+          border: 2px solid darkred;
+          color: white;
+          padding: 10px 25px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          border-radius: 4px;
+          margin: 4px 2px;
       }
-      .button:hover{
-        background-color: white;
-        border: 2px solid red;
-        color: red;
+      input[type=submit]:hover{
+          background-color: white;
+          border: 2px solid darkred;
+          color: darkred;
       }
+
     </style>
 
   </head>
@@ -45,8 +40,9 @@
   <p> - Save compositions as audio or pdf files </p>
   <p> - Share your music with other mice-tr0 accounts</p>
 
-  <button class="button">Log-in</button>
-
+  <form action="${pageContext.servletContext.contextPath}/login" method="get">
+    <input name="goToLogIn" type="submit" value="Login" />
+  </form>
 
   </body>
 </html>

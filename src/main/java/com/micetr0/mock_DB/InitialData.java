@@ -13,19 +13,16 @@ public class InitialData {
 
     /**
      * @return List<Account></>
-     * @throws IOException
+     * @throws IOException We're Dealing with CSVs here
      */
 
     public static List<Account> getAccounts() throws IOException{
         List<Account> accounts = new ArrayList<>();
-        CSVParse parseAccounts = new CSVParse("accounts.csv");
-            try{
+        try (CSVParse parseAccounts = new CSVParse("accounts.csv")) {
             Integer accountID = 1;
-            while (true)
-            {
+            while (true) {
                 List<String> tuple = parseAccounts.next();
-                if(tuple == null)
-                {
+                if (tuple == null) {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
@@ -35,22 +32,16 @@ public class InitialData {
             }
             return accounts;
         }
-            finally {
-            parseAccounts.close();
-        }
     }
 
 
     public static List<Composition> getCompositions() throws IOException{
-        List<Composition> compositions = new ArrayList<Composition>();
-        CSVParse parseCompositions = new CSVParse("compositions.csv");
-        try{
+        List<Composition> compositions = new ArrayList<>();
+        try (CSVParse parseCompositions = new CSVParse("compositions.csv")) {
             Integer compositionID = 1;
-            while (true)
-            {
+            while (true) {
                 List<String> tuple = parseCompositions.next();
-                if(tuple == null)
-                {
+                if (tuple == null) {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
@@ -60,21 +51,15 @@ public class InitialData {
             }
             return compositions;
         }
-        finally {
-            parseCompositions.close();
-        }
     }
 
     public static List<Section> getSections() throws IOException{
         List<Section> sections = new ArrayList<>();
-        CSVParse parseSections = new CSVParse("sections.csv");
-        try{
+        try (CSVParse parseSections = new CSVParse("sections.csv")) {
             Integer sectionID = 1;
-            while (true)
-            {
+            while (true) {
                 List<String> tuple = parseSections.next();
-                if(tuple == null)
-                {
+                if (tuple == null) {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
@@ -84,32 +69,22 @@ public class InitialData {
             }
             return sections;
         }
-        finally {
-            parseSections.close();
-        }
     }
 
     public static List<Note> getNotes() throws IOException{
         List<Note> notes = new ArrayList<>();
-        CSVParse parseNotes = new CSVParse("notes.csv");
-        try{
+        try (CSVParse parseNotes = new CSVParse("notes.csv")) {
             Integer NoteID = 1;
-            while (true)
-            {
+            while (true) {
                 List<String> tuple = parseNotes.next();
-                if(tuple == null)
-                {
+                if (tuple == null) {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
-                Defs.NoteType.HALF.name();
-                Note note = new Note(Integer.parseInt(i.next()),setNoteType(i.next()),setPitch(i.next()),Integer.parseInt(i.next()),Integer.parseInt(i.next()),Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                Note note = new Note(Integer.parseInt(i.next()), setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
                 notes.add(note);
             }
             return notes;
-        }
-        finally {
-            parseNotes.close();
         }
     }
 

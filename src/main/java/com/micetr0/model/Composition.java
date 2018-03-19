@@ -7,8 +7,6 @@
 
 package com.micetr0.model;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,8 +20,8 @@ public class Composition {
 
     private String title = "Untitled";
     private Integer year;
-    private Integer accountID = null;
     private Integer compositionID;
+    private String desc = null;
 
 
     public String getTitle() {
@@ -38,14 +36,6 @@ public class Composition {
 
     public void setYear(Integer year) {this.year = year;}
 
-    public Integer getAuthor() {
-        return accountID;
-    }
-
-    public void setAuthor(Integer accountID) {
-        this.accountID = accountID;
-    }
-
     public Integer getCompositionID()
     {
         return compositionID;
@@ -54,5 +44,15 @@ public class Composition {
     public void setCompositionID(Integer compositionID)
     {
         this.compositionID = compositionID;
+    }
+
+    public String getDesc()
+    {
+        return desc;
+    }
+
+    public void setDesc(String desc)
+    {
+        this.desc = desc;
     }
 }
