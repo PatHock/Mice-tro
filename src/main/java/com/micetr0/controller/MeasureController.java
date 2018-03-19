@@ -5,9 +5,18 @@
  *     Insert Description Here
  */
 package com.micetr0.controller;
+import com.micetr0.model.Note;
+import com.micetr0.model.Measure;
+
+import java.util.List;
 
 public class MeasureController {
+    private Measure measure = new Measure();
 
-    //TODO: Implement
+    public MeasureController()
+    {
+        //empty constructor
+    }
+
 
 }

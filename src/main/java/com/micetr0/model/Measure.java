@@ -7,8 +7,10 @@
 
 package com.micetr0.model;
 
+import com.micetr0.definitions.Defs;
+
 public class Measure {
 
-    //TODO: Implement
+    // TODO: re-write
 
 }

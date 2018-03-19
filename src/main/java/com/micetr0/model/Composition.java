@@ -7,8 +7,52 @@
 
 package com.micetr0.model;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class Composition {
 
-    //TODO: Implement
+    public Composition() {
+        //empty constructor
+    }
 
+    private String title = "Untitled";
+    private Integer year;
+    private Integer compositionID;
+    private String desc = null;
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getYear() {return year;}
+
+    public void setYear(Integer year) {this.year = year;}
+
+    public Integer getCompositionID()
+    {
+        return compositionID;
+    }
+
+    public void setCompositionID(Integer compositionID)
+    {
+        this.compositionID = compositionID;
+    }
+
+    public String getDesc()
+    {
+        return desc;
+    }
+
+    public void setDesc(String desc)
+    {
+        this.desc = desc;
+    }
 }
