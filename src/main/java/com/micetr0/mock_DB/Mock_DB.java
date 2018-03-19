@@ -43,27 +43,13 @@ public class Mock_DB implements IDatabase{
         }
     }
 
-    /**
-     *
-     * @param section
-     * @param composition
-     * @param measure
-     * @return
-     */
-    public Note findNote(String section, String composition, String measure, String index)
-    {
-     for(Note note:notes){
-
-         //determine how to find note
-         return note;
-     }
-     return null;
-    }
-
-
     @Override
-    public void insertNote(String pitch, String type, String compositionId, String sectionId, String measureId, Integer measureIndex) {
-        throw new UnsupportedOperationException("Please implement insertNote()");
+    public void insertNote(Note note) {
+
+        Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
+        note.setNoteID(noteId);
+
+        notes.add(note);
     }
 
     /**
@@ -77,16 +63,20 @@ public class Mock_DB implements IDatabase{
         throw new UnsupportedOperationException("Please implement deleteNote()");
     }
 
+    /**
+     *
+     * @param measureId Unique ID for measure in database.
+     * @param measureIndex  Position of a note in a measure, 0 being the first position
+     * @return Arraylist of note objects that reside at a measure index
+     */
     @Override
-    public List<Note> findNotesByMeasureIdAndMeasureIndex(String measureId, Integer measureIndex) {
-        List<Note> resultList = new ArrayList<Note>();
+    public List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex) {
+        List<Note> resultList = new ArrayList<>();
         for (Note note : notes) {
-            if (note.getMeasureId().equals(Integer.parseInt(measureId)) && note.getMeasureIndex().equals(measureIndex)) {
+            if (note.getMeasureId().equals(measureId) && note.getMeasureIndex().equals(measureIndex)) {
                 resultList.add(note);
             }
         }
-
         return resultList;
-        //throw new UnsupportedOperationException("Please implement findNotesByMeasureId()");
     }
 }

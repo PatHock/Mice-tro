@@ -13,8 +13,6 @@ public class Note {
     private Defs.Pitch pitch;
     private Integer measureIndex;
     private Integer measureId;
-    private Integer sectionId;
-    private Integer compositionId;
     private Integer noteID;
 
 
@@ -26,17 +24,13 @@ public class Note {
      * @param pitch         The specific Note, with reference A0 = 440 Hz
      * @param measureIndex  The position of a note within a measure, 0 being the first note in the measure
      * @param measureId     The unique ID of the measure that contains this note
-     * @param sectionId     The unique ID of the section that contains this note
-     * @param compositionId The unique ID of the composition that contains this note
      */
-    public Note(Integer noteID, Defs.NoteType type, Defs.Pitch pitch, Integer measureIndex, Integer measureId, Integer sectionId, Integer compositionId) {
+    public Note(Integer noteID, Defs.NoteType type, Defs.Pitch pitch, Integer measureIndex, Integer measureId) {
         setNoteID(noteID);
         setType(type);
         setPitch(pitch);
         setMeasureIndex(measureIndex);
         setMeasureId(measureId);
-        setSectionId(sectionId);
-        setCompositionId(compositionId);
     }
 
     public void setNoteID(Integer noteID)
@@ -92,32 +86,13 @@ public class Note {
         return measureIndex;
     }
 
-    /**
-     * @return Unique database ID for the composition this note is associated with
-     */
-    public Integer getCompositionId() {
-        return compositionId;
-    }
+
 
     /**
      * @return Unique database ID for the measure this note is associated with
      */
     public Integer getMeasureId() {
         return measureId;
-    }
-
-    /**
-     * @return Unique database ID for the section this note is associated with
-     */
-    public Integer getSectionId() {
-        return sectionId;
-    }
-
-    /**
-     * @param compositionId Unique database ID for the composition this note is associated with
-     */
-    public void setCompositionId(Integer compositionId) {
-        this.compositionId = compositionId;
     }
 
     /**
@@ -134,10 +109,4 @@ public class Note {
         this.measureIndex = measureIndex;
     }
 
-    /**
-     * @param sectionId Unique database ID for the section this note is associated with
-     */
-    public void setSectionId(Integer sectionId) {
-        this.sectionId = sectionId;
-    }
 }
