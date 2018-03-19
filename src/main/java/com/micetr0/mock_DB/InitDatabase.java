@@ -11,7 +11,7 @@ public class InitDatabase {
         System.out.print("Which database (0 = Fake it till you make it, 1 = Tomcat): ");
         int which = Integer.parseInt(keyboard.nextLine());
         if (which == 0) {
-            DatabaseProvider.setInstance(new mock_DB());
+            DatabaseProvider.setInstance(new Mock_DB());
         } else if (which == 1) {
             throw new IllegalArgumentException("Tomcat is asleep. Come back later.");
             //DatabaseProvider.setInstance(new DerbyDatabase());
