@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface IDatabase {
 
-    List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex);
+void insertNote(Note note);
 
-    List<Composition> findCompositionsIdsByAccountId(Integer accountId);
+void deleteNote(String noteId);
+
+List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex);
+
+List<Composition> findCompositionsIdsByAccountId(Integer accountId);
 
 
 }

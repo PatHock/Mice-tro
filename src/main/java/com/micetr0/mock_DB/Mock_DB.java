@@ -42,6 +42,28 @@ public class Mock_DB implements IDatabase{
             throw new IllegalStateException("Couldn't read initial data", e);
         }
     }
+
+    @Override
+    public void insertNote(Note note) {
+
+        Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
+        note.setNoteID(noteId);
+
+        notes.add(note);
+    }
+
+    /**
+     * Multiple notes can exist in the same index in a measure (for a chord), so noteId is the only way
+     * to properly distinguish notes
+     *
+     * @param noteId Unique database ID for note
+     */
+    @Override
+    public void deleteNote(String noteId) {
+        throw new UnsupportedOperationException("Please implement deleteNote()");
+    }
+
+
     /**
      *
      */
@@ -57,7 +79,7 @@ public class Mock_DB implements IDatabase{
                 compList.add(account.getEditableComps());
                 compList.add(account.getViewableComps());
 
-               resultList = findCompositionsByCompIds(compList);
+                resultList = findCompositionsByCompIds(compList);
 
             }
         }
