@@ -58,7 +58,7 @@ public class CreateAccountServlet extends HttpServlet {
             tempAccount.setPassword(curPassword);
             accountsList.add(tempAccount);
 
-            if (curUsername.length() <2 || curPassword.length() < 2) {
+            if (curUsername.length() <4 || curPassword.length() < 4) {
                 failedCreation = "Please Enter a valid username and password";
                 //resp.sendRedirect("profile.jsp");
                 //System.out.println(validAccount);
