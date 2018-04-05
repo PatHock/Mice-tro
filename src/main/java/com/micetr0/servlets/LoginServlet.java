@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
             //tempAccount.setPassword("pass");
             //accountsList.add(tempAccount);
 
+
             Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
 
             if (validAccount != null){

@@ -23,7 +23,6 @@ public class CompositionController {
     List<Composition> dbcompositions = new ArrayList<>();
 
     public CompositionController(){
-        InitDatabase.init(true);
         db = DatabaseProvider.getInstance();
     }
 

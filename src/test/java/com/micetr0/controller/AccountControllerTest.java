@@ -1,5 +1,8 @@
 package com.micetr0.controller;
 
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
 import org.junit.Before;
@@ -11,17 +14,20 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
-public class AuthorControllerTest {
+public class AccountControllerTest {
 
     private Account model;
     private AccountController controller;
     private List<Account> accounts = new ArrayList<>();
+    private IDatabase db;
 
     @Before
     public void createModel() {
         model = new Account();
+        InitDatabase.init(true);
         controller = new AccountController();
         controller.setModel(model);
+        db = DatabaseProvider.getInstance();
     }
 
     @Test
