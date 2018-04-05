@@ -48,11 +48,12 @@ public class LoginServlet extends HttpServlet {
             model.setUsername(curUsername);
             model.setPassword(curPassword);
 
-            List<Account> accountsList= new ArrayList<>();
-            Account tempAccount = new Account();
-            tempAccount.setUsername("aredhouse");
-            tempAccount.setPassword("pass");
-            accountsList.add(tempAccount);
+            //List<Account> accountsList= new ArrayList<>();
+            List<Account> accountsList = controller.getAllAccounts();
+            //Account tempAccount = new Account();
+            //tempAccount.setUsername("aredhouse");
+            //tempAccount.setPassword("pass");
+            //accountsList.add(tempAccount);
 
             Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
 

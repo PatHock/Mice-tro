@@ -14,8 +14,8 @@ public class Account {
     private String password;
     private String username;
 
-    private List<Object> viewableComps = new ArrayList<>();
-    private List<Object> editableComps = new ArrayList<>();
+    private List<String> viewableComps = new ArrayList<>();
+    private List<String> editableComps = new ArrayList<>();
 
     private Integer accountID;
 
@@ -35,13 +35,13 @@ public class Account {
         this.username = username;
     }
 
-    public List<Object> getViewableComps(){ return viewableComps; }
+    public List<String> getViewableComps(){ return viewableComps; }
 
-    public void setViewableComps(List<Object> viewableComps) { this.viewableComps = viewableComps; }
+    public void setViewableComps(List<String> viewableComps) { this.viewableComps = viewableComps; }
 
-    public List<Object> getEditableComps(){ return editableComps; }
+    public List<String> getEditableComps(){ return editableComps; }
 
-    public void setEditableComps(List<Object> editableComps) { this.editableComps = editableComps; }
+    public void setEditableComps(List<String> editableComps) { this.editableComps = editableComps; }
 
     public Integer getAccountID()
     {

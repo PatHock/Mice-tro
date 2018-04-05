@@ -63,6 +63,55 @@ public class Mock_DB implements IDatabase{
         throw new UnsupportedOperationException("Please implement deleteNote()");
     }
 
+
+    /**
+     *
+     */
+    @Override
+    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
+    {
+        List<Composition> resultList = new ArrayList<>();
+        List<String> compList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            if(account.getAccountID() == accountId)
+            {
+                compList.addAll(account.getViewableComps());
+                compList.addAll(account.getEditableComps());
+            }
+        }
+        resultList = findCompositionsByCompIds(compList);
+        return resultList;
+    }
+
+    private List<Composition> findCompositionsByCompIds(List<String> compIds)
+    {
+        List<Composition> resultList = new ArrayList<>();
+
+        for (Composition comp : compositions)
+        {
+            for(String compId : compIds)
+            {
+                if(compId.equals(String.valueOf(comp.getCompositionID())))
+                {
+                    resultList.add(comp);
+                }
+            }
+        }
+        return resultList;
+    }
+
+    public List<Account> findAllAccounts()
+    {
+        List<Account> resultList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            resultList.add(account);
+        }
+        return resultList;
+    }
+
+
     /**
      *
      * @param measureId Unique ID for measure in database.
