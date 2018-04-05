@@ -20,6 +20,7 @@ apply plugin: 'java'
 //apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
 apply plugin: 'com.bmuschko.tomcat'
+apply plugin: "jacoco"
 
 sourceCompatibility = 1.9
 
@@ -43,4 +44,29 @@ tomcat {
     httpsPort = 8091
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/JacocoCodeCoverageReports")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.7
+            }
+        }
+    }
 }
