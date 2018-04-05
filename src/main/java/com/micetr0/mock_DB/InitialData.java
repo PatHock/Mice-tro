@@ -5,6 +5,7 @@ import com.micetr0.model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import com.micetr0.definitions.*;
@@ -27,8 +28,17 @@ public class InitialData {
                 }
                 Iterator<String> i = tuple.iterator();
                 Account account = new Account();
-                //set fields
+                account.setUsername(i.next());
+                account.setPassword(i.next());
+                account.setAccountID(accountID);
+                String editableComps[] = i.next().split(" ");
+                List<String> editable = Arrays.asList(editableComps);
+                String viewableComps[] = i.next().split(" ");
+                List<String> viewable = Arrays.asList(viewableComps);
+                account.setEditableComps(editable);
+                account.setViewableComps(viewable);
                 accounts.add(account);
+                accountID++;
             }
             return accounts;
         }
@@ -47,6 +57,11 @@ public class InitialData {
                 Iterator<String> i = tuple.iterator();
                 Composition composition = new Composition();
                 //setfields
+                composition.setTitle(i.next());
+                composition.setYear(Integer.parseInt(i.next()));
+                composition.setCompositionID(compositionID);
+                compositionID++;
+                composition.setDesc(i.next());
                 compositions.add(composition);
             }
             return compositions;

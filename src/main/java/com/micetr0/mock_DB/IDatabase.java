@@ -15,5 +15,4 @@ List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measur
 
 List<Composition> findCompositionsIdsByAccountId(Integer accountId);
 
-
 }

@@ -71,29 +71,28 @@ public class Mock_DB implements IDatabase{
     public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
     {
         List<Composition> resultList = new ArrayList<>();
-        List<Object> compList = new ArrayList<>();
+        List<String> compList = new ArrayList<>();
         for (Account account : accounts)
         {
             if(account.getAccountID() == accountId)
             {
-                compList.add(account.getEditableComps());
-                compList.add(account.getViewableComps());
-
-                resultList = findCompositionsByCompIds(compList);
-
+                compList.addAll(account.getViewableComps());
+                compList.addAll(account.getEditableComps());
             }
         }
+        resultList = findCompositionsByCompIds(compList);
         return resultList;
     }
 
-    private List<Composition> findCompositionsByCompIds(List<Object> compIds)
+    private List<Composition> findCompositionsByCompIds(List<String> compIds)
     {
         List<Composition> resultList = new ArrayList<>();
+
         for (Composition comp : compositions)
         {
-            for(Object compId : compIds)
+            for(String compId : compIds)
             {
-                if(comp.getCompositionID() == compId)
+                if(compId.equals(String.valueOf(comp.getCompositionID())))
                 {
                     resultList.add(comp);
                 }

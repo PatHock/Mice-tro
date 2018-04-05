@@ -43,24 +43,24 @@ public class AuthorTest {
 
     @Test
     public void getViewableComps(){
-        List<Object> comps = new ArrayList<>();
+        List<String> comps = new ArrayList<>();
         comps.add("comp1");
         model.setViewableComps(comps);
         assertTrue(model.getViewableComps().get(0).equals("comp1"));
     }
     @Test
     public void setViewableComps(){
-        List<Object> comps = new ArrayList<>();
-        comps.add(1);
-        comps.add(2);
-        comps.add(3);
+        List<String> comps = new ArrayList<>();
+        comps.add("1");
+        comps.add("2");
+        comps.add("3");
         model.setViewableComps(comps);
         assertTrue(model.getViewableComps().size() == 3);
 
     }
     @Test
     public void setEditableComps(){
-        List<Object> comps = new ArrayList<>();
+        List<String> comps = new ArrayList<>();
         comps.add("comp1");
         model.setViewableComps(comps);
         assertTrue(model.getViewableComps().get(0).equals("comp1"));
@@ -68,10 +68,10 @@ public class AuthorTest {
     }
     @Test
     public void getEditableComps(){
-        List<Object> comps = new ArrayList<>();
-        comps.add(1);
-        comps.add(2);
-        comps.add(3);
+        List<String> comps = new ArrayList<>();
+        comps.add("1");
+        comps.add("2");
+        comps.add("3");
         model.setEditableComps(comps);
         assertTrue(model.getEditableComps().size() == 3);
     }
