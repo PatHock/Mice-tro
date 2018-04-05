@@ -24,4 +24,15 @@ List<Composition> findCompositionsIdsByAccountId(Integer accountId);
 //List<Note> findNotesByMeasureId(Integer measureId);
 
 List<Account> findAllAccounts();
+List<Account> findCurrentAccount(Integer accountId);
+
+void insertComposition(Composition composition);
+
+void deleteComposition(Integer compositionId);
+
+void deleteAccount(Integer accountId);
+
+List<Composition> findAllComps();
+
+void insertAccount(Account account);
 }

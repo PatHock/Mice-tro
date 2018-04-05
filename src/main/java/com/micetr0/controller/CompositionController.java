@@ -7,14 +7,25 @@
 
 package com.micetr0.controller;
 
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Composition;
 import com.micetr0.model.Section;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompositionController {
 
     Composition composition = new Composition();
+    private IDatabase db;
+    List<Composition> dbcompositions = new ArrayList<>();
+
+    public CompositionController(){
+        InitDatabase.init(true);
+        db = DatabaseProvider.getInstance();
+    }
 
     public void setModel(Composition composition) {
         this.composition = composition;

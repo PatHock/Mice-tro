@@ -57,21 +57,6 @@ public class Mock_DBtest {
     @Test
     public void findCompositionsIdsByAccountIdTest()
     {
-        /**
-        Account user = new Account();
-        user.setAccountID(2);
-        user.setUsername("rbosse");
-        List<String> viewableComps = new ArrayList<>();
-        List<String> editableComps = new ArrayList<>();
-        viewableComps.add("1");
-        viewableComps.add("2");
-        viewableComps.add("3");
-        editableComps.add("4");
-        editableComps.add("5");
-        editableComps.add("6");
-        user.setViewableComps(viewableComps);
-        user.setEditableComps(editableComps);
-        **/
 
         List<Composition> comps = db.findCompositionsIdsByAccountId(2);
 
@@ -80,10 +65,50 @@ public class Mock_DBtest {
     }
 
     @Test
+    public void findCurrentAccountTest()
+    {
+        List<Account> Account = db.findCurrentAccount(1);
+        assertTrue(Account.get(0).getUsername().equals("sad_Keanu"));
+    }
+
+    @Test
     public void findAllAccountsTest()
     {
         List<Account> accounts = db.findAllAccounts();
         assertTrue(accounts.size() == 4);
+    }
+
+    @Test
+    public void deleteCompositionTest()
+    {
+        Integer compositionId = 4;
+        db.deleteComposition(compositionId);
+
+        List<Composition> comps = db.findAllComps();
+        assertTrue(comps.size() == 4);
+        assertTrue(comps.get(comps.size()-1).getTitle().equals("Hump De Bump"));
+    }
+
+    @Test
+    public void findAllCompsTest()
+    {
+        List<Composition> allComps = db.findAllComps();
+
+        assertTrue(allComps.size() == 5);
+    }
+
+    @Test
+    public void insertAccountTest()
+    {
+        Account newUser = new Account();
+        newUser.setUsername("Morty_Ruelz");
+        newUser.setPassword("Rick_Sux");
+        db.insertAccount(newUser);
+
+        List<Account> accnts = db.findAllAccounts();
+
+        assertTrue(accnts.size() == 5);
+        assertTrue(accnts.get(accnts.size()-1).getUsername().equals("Morty_Ruelz"));
     }
 
 }
