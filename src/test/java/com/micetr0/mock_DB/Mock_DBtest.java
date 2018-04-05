@@ -79,5 +79,11 @@ public class Mock_DBtest {
 
     }
 
+    @Test
+    public void findAllAccountsTest()
+    {
+        List<Account> accounts = db.findAllAccounts();
+        assertTrue(accounts.size() == 4);
+    }
 
 }

@@ -75,4 +75,12 @@ public class AuthorControllerTest {
         assertTrue(sad_Keanu.getUsername().equals("sad_Keanu"));
 
     }
+
+    @Test
+    public void findAllAccountsTest()
+    {
+        List<Account> accounts = new ArrayList<>();
+        accounts = controller.getAllAccounts();
+        assertTrue(accounts.size() == 4);
+    }
 }

@@ -101,6 +101,16 @@ public class Mock_DB implements IDatabase{
         return resultList;
     }
 
+    public List<Account> findAllAccounts()
+    {
+        List<Account> resultList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            resultList.add(account);
+        }
+        return resultList;
+    }
+
 
     /**
      *
