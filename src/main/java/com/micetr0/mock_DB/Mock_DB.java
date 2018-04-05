@@ -128,4 +128,20 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
+
+    /**
+     *
+     * @param measureId
+     */
+    @Override
+    public List<Note> findNotesByMeasureId(Integer measureId) {
+        List<Note> resultList = new ArrayList<>();
+        for (Note note : notes) {
+            if (note.getMeasureId().equals(measureId)) {
+                resultList.add(note);
+            }
+        }
+        return resultList;
+
+    }
 }

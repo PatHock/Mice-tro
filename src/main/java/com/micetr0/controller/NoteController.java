@@ -35,17 +35,45 @@ public class NoteController {
      * @param measureIndex position of note in measure, 0 being the first note
      * @param measureId Unique ID of the measure as stored in the measure database table
      */
-    public void addNote(Defs.NoteType noteType, Defs.Pitch pitch, Defs.Key key, Integer measureIndex, Integer measureId) {
+    public void addNote(Defs.NoteType noteType, Defs.Pitch pitch, Defs.Key key, Defs.TimeSignature timeSignature , Integer measureIndex, Integer measureId) {
         // Check if the pitch of the note is valid
-        if (!key.isValidPitch(pitch)) {
+        if (!key.isValidPitch(pitch))
+        {
             throw new IllegalArgumentException("Note pitch is not contained within specified key");
         }
 
 
+//        // use current measure and both adjacent measures to find overlapping notes
+//        dbNotes.addAll(db.findNotesByMeasureId(measureId - 1));
+//        dbNotes.addAll(db.findNotesByMeasureId(measureId));
+//        dbNotes.addAll(db.findNotesByMeasureId(measureId + 1));
+//        for (Note note: dbNotes)
+//        {
+//            if (note.getPitch().equals(pitch)) {
+//                if (note.getMeasureId().equals(measureId))
+//                {
+//                    if(note.getMeasureIndex() <= measureIndex && note.)
+//                }
+//                if(note.getMeasureIndex() < measureIndex)
+//                {
+//                    if()
+//                }
+//                else if(note.getMeasureIndex() == measureIndex)
+//                {
+//
+//                }
+//                else
+//                {
+//
+//                }
+//            }
+//        }
+
         // Cannot add two notes in the same measure, section, index that have the same pitch
         dbNotes = db.findNotesByMeasureIdAndMeasureIndex(measureId, measureIndex);
 
-        if (!dbNotes.isEmpty()) {
+        if (!dbNotes.isEmpty())
+        {
             for (Note note: dbNotes) {
                 if(note.getPitch().equals(pitch)){
                     throw new IllegalArgumentException("Note with this pitch already exists in database");
