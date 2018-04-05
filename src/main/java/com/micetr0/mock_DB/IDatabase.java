@@ -14,6 +14,7 @@ void deleteNote(String noteId);
 List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex);
 
 List<Composition> findCompositionsIdsByAccountId(Integer accountId);
+//List<Note> findNotesByMeasureId(Integer measureId);
 
 List<Account> findAllAccounts();
 }
