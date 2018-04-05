@@ -4,8 +4,6 @@ import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Account;
-import com.micetr0.model.Composition;
-import com.micetr0.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
