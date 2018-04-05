@@ -43,31 +43,31 @@ public class NoteController {
         }
 
 
-//        // use current measure and both adjacent measures to find overlapping notes
-//        dbNotes.addAll(db.findNotesByMeasureId(measureId - 1));
-//        dbNotes.addAll(db.findNotesByMeasureId(measureId));
-//        dbNotes.addAll(db.findNotesByMeasureId(measureId + 1));
-//        for (Note note: dbNotes)
-//        {
-//            if (note.getPitch().equals(pitch)) {
-//                if (note.getMeasureId().equals(measureId))
-//                {
-//                    if(note.getMeasureIndex() <= measureIndex && note.)
-//                }
-//                if(note.getMeasureIndex() < measureIndex)
-//                {
-//                    if()
-//                }
-//                else if(note.getMeasureIndex() == measureIndex)
-//                {
-//
-//                }
-//                else
-//                {
-//
-//                }
-//            }
-//        }
+        // use current measure and both adjacent measures to find overlapping notes
+        dbNotes.addAll(db.findNotesByMeasureId(measureId - 1));
+        dbNotes.addAll(db.findNotesByMeasureId(measureId));
+        dbNotes.addAll(db.findNotesByMeasureId(measureId + 1));
+        for (Note note: dbNotes)
+        {
+            if (note.getPitch().equals(pitch)) {
+                if (note.getMeasureId().equals(measureId))
+                {
+                    //if(note.getMeasureIndex() <= measureIndex && note.)
+                }
+                if(note.getMeasureIndex() < measureIndex)
+                {
+                    //if()
+                }
+                else if(note.getMeasureIndex() == measureIndex)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+        }
 
         // Cannot add two notes in the same measure, section, index that have the same pitch
         dbNotes = db.findNotesByMeasureIdAndMeasureIndex(measureId, measureIndex);
