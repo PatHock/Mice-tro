@@ -2,7 +2,6 @@ package com.micetr0.controller;
 
 import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
-import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Account;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class AccountController {
 
     public AccountController()
     {
-        InitDatabase.init(true);
         db = DatabaseProvider.getInstance();
     }
 
@@ -28,6 +26,11 @@ public class AccountController {
     {
         dbAccounts = db.findAllAccounts();
         return dbAccounts;
+    }
+
+    public void addAccount(Account account)
+    {
+        db.insertAccount(account);
     }
     private boolean checkCredentials(String username, String password, List<Account> accounts) {
         boolean validAccount = false;

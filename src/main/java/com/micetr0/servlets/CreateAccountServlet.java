@@ -52,13 +52,15 @@ public class CreateAccountServlet extends HttpServlet {
             model.setPassword(curPassword);
 
             //add new account info to list
-            List<Account> accountsList= new ArrayList<>();
-            Account tempAccount = new Account();
-            tempAccount.setUsername(curUsername);
-            tempAccount.setPassword(curPassword);
-            accountsList.add(tempAccount);
+            //List<Account> accountsList= new ArrayList<>();
+            //Account tempAccount = new Account();
+            //tempAccount.setUsername(curUsername);
+            //tempAccount.setPassword(curPassword);
+            //accountsList.add(tempAccount);
+            controller.addAccount(controller.createAccount(curUsername, curPassword, controller.getAllAccounts()));
 
-            if (curUsername.length() <4 || curPassword.length() < 4) {
+
+            if (curUsername.length() < 4  || curPassword.length() < 4) {
                 failedCreation = "Please Enter a valid username and password";
                 //resp.sendRedirect("profile.jsp");
                 //System.out.println(validAccount);
