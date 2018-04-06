@@ -1,18 +1,17 @@
 package com.micetr0.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import com.micetr0.definitions.Defs;
 
-import static org.junit.Assert.*;
 
-public class NoteTest {
+class NoteTest {
 
     // Create new note object
     private Note note = new Note(1,Defs.NoteType.REST_SIXTEENTH, Defs.Pitch.REST, 0, 0);
 
     @Test
-    public void initTest(){
+    void initTest(){
         Defs.NoteType type = Defs.NoteType.QUARTER;
         Defs.Pitch pitch = Defs.Pitch.D1;
         Integer noteId = 1, measureIndex = 1, measureId = 2, sectionId = 3, compositionId = 4;
@@ -26,7 +25,7 @@ public class NoteTest {
     }
 
     @Test
-    public void setType(){
+    void setType(){
         note.setType(Defs.NoteType.SIXTEENTH);
         assertEquals(Defs.NoteType.SIXTEENTH, note.getType());
 
@@ -35,7 +34,7 @@ public class NoteTest {
     }
 
     @Test
-    public void getTypeTest() {
+    void getTypeTest() {
         note.setType(Defs.NoteType.SIXTEENTH);
         assertEquals(Defs.NoteType.SIXTEENTH, note.getType());
 
@@ -44,7 +43,7 @@ public class NoteTest {
     }
 
     @Test
-    public void setPitch(){
+    void setPitch(){
         note.setPitch(Defs.Pitch.E0);
         assertEquals(Defs.Pitch.E0, note.getPitch());
         note.setPitch(Defs.Pitch.C1);
@@ -52,7 +51,7 @@ public class NoteTest {
     }
 
     @Test
-    public void getPitch(){
+    void getPitch(){
         note.setPitch(Defs.Pitch.E0);
         assertEquals(Defs.Pitch.E0, note.getPitch());
         note.setPitch(Defs.Pitch.C1);
@@ -60,7 +59,7 @@ public class NoteTest {
     }
 
     @Test
-    public void getFrequency() {
+    void getFrequency() {
         note.setPitch(Defs.Pitch.E0);
         assertEquals(Defs.Pitch.E0.getFrequency(), note.getFrequency());
         note.setPitch(Defs.Pitch.F1);
@@ -68,13 +67,13 @@ public class NoteTest {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         assertTrue(Defs.NoteType.SIXTEENTH.getSize() == .0625);
         assertTrue(Defs.NoteType.EIGHTH.getSize() == 0.125);
     }
 
     @Test
-    public void setMeasureId() {
+    void setMeasureId() {
         note.setMeasureId(0);
         assertEquals(note.getMeasureId(), (Integer) 0);
 
@@ -86,7 +85,7 @@ public class NoteTest {
     }
 
     @Test
-    public void setMeasureIndex() {
+    void setMeasureIndex() {
         note.setMeasureIndex(2000);
         assertEquals(note.getMeasureIndex(), (Integer)2000);
 

@@ -110,7 +110,18 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
-
+    public List<Account> findCurrentAccount(Integer accountId)
+    {
+        List<Account> resultList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            if(account.getAccountID().equals(accountId))
+            {
+                resultList.add(account);
+            }
+        }
+        return resultList;
+    }
 
     /**
      *
@@ -144,4 +155,51 @@ public class Mock_DB implements IDatabase{
         return resultList;
 
     }
+
+    @Override
+    public void insertComposition(Composition composition)
+    {
+        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
+        composition.setCompositionID(compositionId);
+        compositions.add(composition);
+    }
+
+    @Override
+    public void deleteComposition(Integer compositionId)
+    {
+        List<String> compId = new ArrayList<>();
+        compId.add(String.valueOf(compositionId));
+        List<Composition> comp = findCompositionsByCompIds(compId);
+        compositions.remove(comp.get(0));
+
+    }
+
+   @Override
+    public void deleteAccount(Integer accountId)
+   {
+       List<Account> acc = findCurrentAccount(accountId);
+       accounts.remove(acc.get(0));
+   }
+
+   @Override
+   public void insertAccount(Account account)
+   {
+       Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
+       account.setAccountID(accountId);
+       accounts.add(account);
+   }
+
+   @Override
+    public List<Composition> findAllComps()
+   {
+       List<Composition> comps = new ArrayList<>();
+       for (Composition comp : compositions)
+       {
+           comps.add(comp);
+       }
+       return comps;
+   }
+
+
 }
+

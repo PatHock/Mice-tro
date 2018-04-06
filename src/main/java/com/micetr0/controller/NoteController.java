@@ -22,8 +22,6 @@ public class NoteController {
     private List<Note> dbNotes = new ArrayList<>();
 
     public NoteController() {
-        //Fixme: database is instantiated here for testing purposes
-        InitDatabase.init(true);
         db = DatabaseProvider.getInstance();
     }
 
