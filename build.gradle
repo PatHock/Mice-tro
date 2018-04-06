@@ -28,9 +28,12 @@ apply plugin: "org.akhikhl.gretty"
 apply plugin: "jacoco"
 //apply plugin: 'application'
 
-sourceCompatibility = 1.8
 
 //mainClassName = "com.micetr0.Main"
+
+sourceCompatibility = 1.8
+
+
 
 dependencies {
 //    def tomcatVersion = '9.0.6'
@@ -53,6 +56,16 @@ dependencies {
 //    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 //}
 
+//war {
+//
+//    webXml = file('')
+////    manifest {
+////        attributes(
+////                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+////                'Main Class': 'com.micetr0.Main'
+////        )
+////    }
+//}
 jacoco {
     toolVersion = "0.8.1"
     reportsDir = file("$buildDir/JacocoCodeCoverageReports")
