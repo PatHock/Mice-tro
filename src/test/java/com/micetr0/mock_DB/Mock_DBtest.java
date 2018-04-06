@@ -3,32 +3,28 @@ package com.micetr0.mock_DB;
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
-import org.junit.Before;
-import org.junit.Test;
-import com.micetr0.mock_DB.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static com.micetr0.mock_DB.Mock_DB.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.micetr0.model.Note;
-import com.micetr0.definitions.Defs;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Mock_DBtest {
+class Mock_DBtest {
 
     private IDatabase db;
 
-    @Before
-    public void setUp()
+    @BeforeEach
+    void setUp()
     {
-        InitDatabase.init(true);
+        DatabaseProvider.setInstance(new Mock_DB());
         db = DatabaseProvider.getInstance();
     }
 
 
     @Test
-    public void findNotesByMeasureIdAndMeasureIndexTest() {
+    void findNotesByMeasureIdAndMeasureIndexTest() {
 
         assertTrue(db.findNotesByMeasureIdAndMeasureIndex(1, 1).size() == 1);
         assertTrue(db.findNotesByMeasureIdAndMeasureIndex(2, 1).size() == 1);
@@ -41,7 +37,7 @@ public class Mock_DBtest {
     }
 
     @Test
-    public void insertNoteTest() {
+    void insertNoteTest() {
         Defs.Pitch pitch =  Defs.Pitch.F8_SHARP;
         Defs.NoteType noteType = Defs.NoteType.EIGHTH;
         Integer measureId = 7;
@@ -55,7 +51,7 @@ public class Mock_DBtest {
     }
 
     @Test
-    public void findCompositionsIdsByAccountIdTest()
+    void findCompositionsIdsByAccountIdTest()
     {
 
         List<Composition> comps = db.findCompositionsIdsByAccountId(2);
@@ -65,21 +61,21 @@ public class Mock_DBtest {
     }
 
     @Test
-    public void findCurrentAccountTest()
+    void findCurrentAccountTest()
     {
         List<Account> Account = db.findCurrentAccount(1);
         assertTrue(Account.get(0).getUsername().equals("sad_Keanu"));
     }
 
     @Test
-    public void findAllAccountsTest()
+    void findAllAccountsTest()
     {
         List<Account> accounts = db.findAllAccounts();
         assertTrue(accounts.size() == 4);
     }
 
     @Test
-    public void deleteCompositionTest()
+    void deleteCompositionTest()
     {
         Integer compositionId = 4;
         db.deleteComposition(compositionId);
@@ -90,7 +86,7 @@ public class Mock_DBtest {
     }
 
     @Test
-    public void findAllCompsTest()
+    void findAllCompsTest()
     {
         List<Composition> allComps = db.findAllComps();
 
@@ -98,7 +94,7 @@ public class Mock_DBtest {
     }
 
     @Test
-    public void insertAccountTest()
+    void insertAccountTest()
     {
         Account newUser = new Account();
         newUser.setUsername("Morty_Ruelz");

@@ -2,36 +2,33 @@ package com.micetr0.controller;
 
 import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
-import com.micetr0.mock_DB.InitDatabase;
+import com.micetr0.mock_DB.Mock_DB;
 import com.micetr0.model.Account;
-import com.micetr0.model.Composition;
-import org.junit.Before;
-import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class AccountControllerTest {
+class AccountControllerTest {
 
     private Account model;
     private AccountController controller;
     private List<Account> accounts = new ArrayList<>();
     private IDatabase db;
 
-    @Before
-    public void createModel() {
+    @BeforeEach
+    void createModel() {
+        DatabaseProvider.setInstance(new Mock_DB());
+        db = DatabaseProvider.getInstance();
         model = new Account();
-        InitDatabase.init(true);
         controller = new AccountController();
         controller.setModel(model);
-        db = DatabaseProvider.getInstance();
     }
 
     @Test
-    public void createAccountTest()
+    void createAccountTest()
     {
         Account newAccount = controller.createAccount("Pat", "password", accounts);
         assertTrue(newAccount.getUsername().equals("Pat"));
@@ -43,7 +40,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void deleteAccountTest()
+    void deleteAccountTest()
     {
         Account newAccount = controller.createAccount("Pat", "password", accounts);
         Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen", accounts);
@@ -56,13 +53,13 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void logOutTest()
+    void logOutTest()
     {
         //throw new UnsupportedOperationException();
     }
 
     @Test
-    public void logInTest()
+    void logInTest()
     {
         List<Account> accounts =  new ArrayList<>();
         Account a1 = new Account();
@@ -83,7 +80,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void findAllAccountsTest()
+    void findAllAccountsTest()
     {
         List<Account> accounts = new ArrayList<>();
         accounts = controller.getAllAccounts();

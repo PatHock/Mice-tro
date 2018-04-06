@@ -1,55 +1,55 @@
 package com.micetr0.model;
 
-import com.micetr0.controller.AccountController;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
 
-public class AuthorTest {
+class AuthorTest {
     private Account model;
-    @Before
-    public void setUp()
+    @BeforeEach
+    void setUp()
     {
         model = new Account();
     }
 
     @Test
-    public void getPasswordTest() {
+    void getPasswordTest() {
         model.setPassword("pASSword");
         assertTrue(model.getPassword().equals("pASSword"));
     }
 
     @Test
-    public void setPasswordTest(){
+    void setPasswordTest(){
         model.setPassword("pASSword");
         assertTrue(model.getPassword().equals("pASSword"));
     }
 
     @Test
-    public void getUsernameTest() {
+    void getUsernameTest() {
         model.setUsername("Drop Table Accounts");
         assertTrue(model.getUsername().equals("Drop Table Accounts"));
     }
 
     @Test
-    public void setUsernameTest() {
+    void setUsernameTest() {
         model.setUsername("Drop Table Accounts");
         assertTrue(model.getUsername().equals("Drop Table Accounts"));
     }
 
     @Test
-    public void getViewableComps(){
+    void getViewableComps(){
         List<String> comps = new ArrayList<>();
         comps.add("comp1");
         model.setViewableComps(comps);
         assertTrue(model.getViewableComps().get(0).equals("comp1"));
     }
     @Test
-    public void setViewableComps(){
+    void setViewableComps(){
         List<String> comps = new ArrayList<>();
         comps.add("1");
         comps.add("2");
@@ -59,7 +59,7 @@ public class AuthorTest {
 
     }
     @Test
-    public void setEditableComps(){
+    void setEditableComps(){
         List<String> comps = new ArrayList<>();
         comps.add("comp1");
         model.setViewableComps(comps);
@@ -67,7 +67,7 @@ public class AuthorTest {
 
     }
     @Test
-    public void getEditableComps(){
+    void getEditableComps(){
         List<String> comps = new ArrayList<>();
         comps.add("1");
         comps.add("2");
@@ -77,7 +77,7 @@ public class AuthorTest {
     }
 
     @Test
-    public void setAuthorIDTest()
+    void setAuthorIDTest()
     {
         Integer authorID = 1;
         model.setAccountID(authorID);

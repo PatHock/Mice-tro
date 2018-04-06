@@ -6,13 +6,10 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-//        mavenCentral()
     }
 
     dependencies {
-        //classpath 'com.bmuschko:gradle-tomcat-plugin:2.4.2'
         classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
-//        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 }
 
@@ -24,48 +21,27 @@ apply plugin: 'java'
 //apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
 apply plugin: "org.akhikhl.gretty"
-//apply plugin: 'com.bmuschko.tomcat'
 apply plugin: "jacoco"
-//apply plugin: 'application'
-
-
-//mainClassName = "com.micetr0.Main"
 
 sourceCompatibility = 1.8
 
 
 
 dependencies {
-//    def tomcatVersion = '9.0.6'
-//    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-//            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-//            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-
-//    testCompile('org.junit.jupiter:junit-jupiter-api:5.1.0')
-//    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.1.0')
-
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    )
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    )
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-
 }
 
-//tomcat {
+war {
+    webXml = file('src/main/webapp/WEB-INF/web.xml')
+}
 
-//    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-//    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-//}
 
-//war {
-//
-//    webXml = file('')
-////    manifest {
-////        attributes(
-////                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-////                'Main Class': 'com.micetr0.Main'
-////        )
-////    }
-//}
 jacoco {
     toolVersion = "0.8.1"
     reportsDir = file("$buildDir/JacocoCodeCoverageReports")
@@ -99,4 +75,8 @@ gretty {
     httpsPort = 8091
     contextPath = '/'
     servletContainer = 'tomcat8'
+}
+
+test {
+    useJUnitPlatform()
 }

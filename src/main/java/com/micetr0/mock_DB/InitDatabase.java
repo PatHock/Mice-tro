@@ -5,14 +5,19 @@ public class InitDatabase {
 
     /**
      * Code based from CS320 Lab 06
-     * @param isUseFakeDatabase If true, uses fake db
+     * @param keyboard keyboard input from user to select database
      */
-    public static void init(Boolean isUseFakeDatabase) {
-        if (isUseFakeDatabase) {
+    public static void init(Scanner keyboard) {
+
+        System.out.println("Which Database? 0 = fake, 1 = real (unimplemented)");
+        int which = Integer.parseInt(keyboard.nextLine());
+
+        if (which == 0) {
             DatabaseProvider.setInstance(new Mock_DB());
-        }
-        else {
-            throw new IllegalArgumentException("Tomcat is asleep. Come back later.");
+        } else if (which == 1) {
+            throw new UnsupportedOperationException("Tomcat is asleep. Come back later.");
+        } else {
+            throw new IllegalArgumentException("Invalid choice: " + which);
         }
     }
 }
