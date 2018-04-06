@@ -39,6 +39,7 @@ public class MeasureController {
     }
 
     public boolean deleteMeasure(){
+        //add code to delete measure from database
         return false;
     }
 

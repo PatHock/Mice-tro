@@ -26,20 +26,28 @@
     </style>
 
   </head>
+
   <body>
+
   <h1>Enter Desired Composition Information:</h1>
 
-  <form action="${pageContext.servletContext.contextPath}/composition" method="get">
+  <form action="${pageContext.servletContext.contextPath}/createComposition" method="post">
     Title:<br>
-    <input type="text" name="username" value=${title}><br><br>
-    Time Signature:<br>
-    <input type="password" name="password" value=${timeSig}><br><br>
-    Key Signature:<br>
-    <input type="password" name="password" value=${keySig}><br><br>
-    Tempo:<br>
-    <input type="password" name="password" value=${tempo}><br><br>
-    <input type="submit" value="Create Composition">
+    <input type="text" name="title" value=${createC.title}><br>
+    Year Composed:<br>
+    <input type="text" name="year" value=${createC.year}><br>
+    Description:<br>
+    <input type="text" name="desc" value=${createC.desc}><br><br>
+      <input type="submit" value="Create Composition">
   </form>
+
+  <if test="${! empty invalidInput}">
+    ${invalidInput}<br>
+  </if>
+
+  <if test="${! empty invalidNum}">
+      ${invalidNum}<br>
+  </if>
 
   <form action="${pageContext.servletContext.contextPath}/profile" method="get">
     <input name="goToIndex" type="submit" value="I Changed My Mind" />
