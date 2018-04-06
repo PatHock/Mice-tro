@@ -3,8 +3,12 @@ package com.micetr0.controller;
 import com.micetr0.model.Measure;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class MeasureControllerTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+
+class MeasureControllerTest {
     private MeasureController controller;
     private Measure model;
 
@@ -17,7 +21,7 @@ public class MeasureControllerTest {
     }
 
     @Test
-    public void createMeasureTest(){
+    void createMeasureTest(){
         Measure testMeasure = controller.createMeasure(50,"1","2");
         assertTrue(testMeasure.getMaxNumBeats().equals(50));
         assertTrue(testMeasure.getMeasureID().equals("1"));
@@ -25,7 +29,7 @@ public class MeasureControllerTest {
     }
 
     @Test
-    public void deleteMeasureTest(){
+    void deleteMeasureTest(){
         //fix after implementing delete measure
         boolean result;
         result = controller.deleteMeasure();
@@ -33,7 +37,7 @@ public class MeasureControllerTest {
     }
 
     @Test
-    public void addMeasureTest(){
+    void addMeasureTest(){
         //add after implementing add measure
     }
 
