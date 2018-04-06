@@ -22,7 +22,6 @@ public class MeasureController {
 
     public MeasureController()
     {
-        InitDatabase.init(true);
         db = DatabaseProvider.getInstance();
     }
 
