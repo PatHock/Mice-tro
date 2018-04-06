@@ -45,6 +45,5 @@ public class MeasureController {
     public void addMeasure(Measure measure){
         //add code to add measure to database
     }
-    // test commit
 
 }
