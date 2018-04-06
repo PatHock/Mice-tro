@@ -8,9 +8,10 @@ public class InitDatabase {
      * @param keyboard keyboard input from user to select database
      */
     public static void init(Scanner keyboard) {
-
-        System.out.println("Which Database? 0 = fake, 1 = real (unimplemented)");
-        int which = Integer.parseInt(keyboard.nextLine());
+        //TODO: Actually get input from user
+//        System.out.println("Which Database? 0 = fake, 1 = real (unimplemented)");
+        Integer which = 0;
+                //= Integer.parseInt(keyboard.nextLine());
 
         if (which == 0) {
             DatabaseProvider.setInstance(new Mock_DB());
