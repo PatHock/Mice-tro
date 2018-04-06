@@ -55,7 +55,7 @@ public class AccountController {
             throw e;
         }
 
-}
+    }
 
     public boolean deleteAccount(String username, List<Account> accounts)
     {
@@ -86,3 +86,5 @@ public class AccountController {
             return null;
         }
     }
+
+    //Need to add method to add new account to database
