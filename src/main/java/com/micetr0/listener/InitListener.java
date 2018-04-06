@@ -1,0 +1,31 @@
+package com.micetr0.listener;
+import com.micetr0.mock_DB.InitDatabase;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import java.util.Scanner;
+
+@javax.servlet.annotation.WebListener
+    public class InitListener implements ServletContextListener {
+        @Override
+        public void contextInitialized(ServletContextEvent sce) {
+            // Initialize the database
+            Scanner keyboard = new Scanner(System.in);
+
+            try {
+                InitDatabase.init(keyboard);
+            } catch (UnsupportedOperationException e) {
+                System.out.println("UnsupportedOperationException: " + e.getMessage());
+            }
+
+            System.out.println("Database initialized successfully.");
+
+        }
+
+        @Override
+        public void contextDestroyed(ServletContextEvent sce) {
+            System.out.println("Micetr0 has been destroyed :(");
+        }
+
+    }

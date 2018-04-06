@@ -1,20 +1,20 @@
 package com.micetr0.definitions;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class DefsTest {
+class DefsTest {
 
-    @Before
-    public void setUp(){
+    @BeforeEach
+    void setUp(){
 
     }
 
     @Test
-    public void KeyTest() {
+    void KeyTest() {
         Defs.Pitch pitch = Defs.Pitch.A4;
         Defs.Pitch anotherPitch = Defs.Pitch.C3;
 
@@ -31,21 +31,21 @@ public class DefsTest {
     }
 
     @Test
-    public void NoteTypeTest() {
+    void NoteTypeTest() {
         assertTrue(Defs.NoteType.REST_WHOLE.getSize().equals(2 * Defs.NoteType.HALF.getSize()));
         assertFalse(Defs.NoteType.REST_EIGHTH.getSize().equals(Defs.NoteType.QUARTER.getSize()));
 
     }
 
     @Test
-    public void PitchTest() {
+    void PitchTest() {
         // TODO: Implement more rigorous testing
         assertTrue(Defs.Pitch.A4.getFrequency() == (2 * Defs.Pitch.A3.getFrequency()));
 
     }
 
-    @After
-    public void tearDown(){
+    @AfterEach
+    void tearDown(){
 
     }
 }
