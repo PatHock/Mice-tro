@@ -3,11 +3,15 @@ version '0.1'
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
 //        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.4.2'
+        //classpath 'com.bmuschko:gradle-tomcat-plugin:2.4.2'
+        classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
 //        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 }
@@ -19,19 +23,20 @@ repositories {
 apply plugin: 'java'
 //apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
+apply plugin: "org.akhikhl.gretty"
+//apply plugin: 'com.bmuschko.tomcat'
 apply plugin: "jacoco"
-apply plugin: 'application'
+//apply plugin: 'application'
 
-sourceCompatibility = 1.9
+sourceCompatibility = 1.8
 
-mainClassName = "com.micetr0.Main"
+//mainClassName = "com.micetr0.Main"
 
 dependencies {
-    def tomcatVersion = '9.0.6'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+//    def tomcatVersion = '9.0.6'
+//    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+//            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+//            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
 //    testCompile('org.junit.jupiter:junit-jupiter-api:5.1.0')
 //    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.1.0')
@@ -42,12 +47,11 @@ dependencies {
 
 }
 
-tomcat {
-    httpPort = 8082
-    httpsPort = 8091
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-}
+//tomcat {
+
+//    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+//    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+//}
 
 jacoco {
     toolVersion = "0.8.1"
@@ -62,7 +66,7 @@ jacocoTestReport {
     }
 }
 
-check.dependsOn jacocoTestReport
+//check.dependsOn jacocoTestReport
 
 jacocoTestCoverageVerification {
     violationRules {
@@ -72,4 +76,14 @@ jacocoTestCoverageVerification {
             }
         }
     }
+}
+
+// A workaround for a bug with gretty.
+// https://github.com/akhikhl/gretty/issues/425
+gretty {
+    jacocoEnabled false
+    httpPort = 8082
+    httpsPort = 8091
+    contextPath = '/'
+    servletContainer = 'tomcat8'
 }
