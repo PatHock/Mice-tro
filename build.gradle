@@ -1,5 +1,9 @@
 version '0.1'
 
+
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
 buildscript {
     repositories {
         jcenter()
@@ -10,6 +14,7 @@ buildscript {
 
     dependencies {
         classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
     }
 }
 
@@ -17,17 +22,22 @@ repositories {
     mavenCentral()
 }
 
-apply plugin: 'java'
+
 //apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
 apply plugin: "org.akhikhl.gretty"
-apply plugin: "jacoco"
+apply plugin: "jacoco" // for unit test code coverage reports
+apply plugin: "io.spring.dependency-management" // for AWS SDK
 
-sourceCompatibility = 1.8
 
-
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+    }
+}
 
 dependencies {
+    compile 'com.amazonaws:aws-java-sdk-s3'
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.1.0'
     )
