@@ -1,11 +1,17 @@
 package com.micetr0.servlets;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//@WebServlet(
+//        name = "Composition Servlet",
+//        description = "Does Composition things",
+//        urlPatterns = {"/composition"}
+//)
 public class CompositionServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

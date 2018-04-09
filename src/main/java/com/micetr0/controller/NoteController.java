@@ -10,12 +10,15 @@ import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Note;
 import com.micetr0.definitions.Defs;
+//import org.springframework.stereotype.Controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * adds notes from database
  */
+//@Controller
 public class NoteController {
 
     private IDatabase db;
