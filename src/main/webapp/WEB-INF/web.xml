@@ -27,10 +27,10 @@
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>com.micetr0.servlets.ProfileServlet</servlet-class>
     </servlet>
-    <servlet>
-    <servlet-name>CompositionServlet</servlet-name>
-    <servlet-class>com.micetr0.servlets.CompositionServlet</servlet-class>
-</servlet>
+    <!--<servlet>-->
+    <!--<servlet-name>CompositionServlet</servlet-name>-->
+    <!--<servlet-class>com.micetr0.servlets.CompositionServlet</servlet-class>-->
+<!--</servlet>-->
     <servlet>
         <servlet-name>CreateCompositionServlet</servlet-name>
         <servlet-class>com.micetr0.servlets.CreateCompositionServlet</servlet-class>
@@ -53,10 +53,10 @@
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CompositionServlet</servlet-name>
-        <url-pattern>/composition</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>CompositionServlet</servlet-name>-->
+        <!--<url-pattern>/composition</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>CreateCompositionServlet</servlet-name>
         <url-pattern>/createComposition</url-pattern>
