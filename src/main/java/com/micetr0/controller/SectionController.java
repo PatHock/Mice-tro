@@ -9,7 +9,9 @@ package com.micetr0.controller;
 
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.Section;
+//import org.springframework.stereotype.Controller;
 
+//@Controller
 public class SectionController {
 
     /**
