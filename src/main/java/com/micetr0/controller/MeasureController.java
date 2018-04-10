@@ -10,10 +10,11 @@ import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Measure;
+//import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//@Controller
 public class MeasureController {
 
     private Measure measure = new Measure();

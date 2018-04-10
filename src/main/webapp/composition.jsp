@@ -28,7 +28,7 @@
   <body>
   <h1>Composition 1</h1>
 
-  <script src="static/js/abcjs_plugin_latest-min.js" type="text/javascript"></script>
+  <script src="../static/js/abcjs_plugin_latest-min.js" type="text/javascript"></script>
   <script type="text/javascript">
       ABCJS.plugin.hide_abc = true;
   </script>
