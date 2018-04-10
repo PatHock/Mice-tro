@@ -37,9 +37,9 @@ sourceSets {
     main {
         java {
             srcDir 'src/main/java/'
-            exclude '**/config/**'
-            exclude '**/Application.java'
-            exclude '**/webapp/spring/**'
+            exclude '**/spring/**'
+//            exclude '**/Application.java'
+//            exclude '**/webapp/spring/**'
         }
         resources {
             srcDir 'src/main/resources'
@@ -89,7 +89,7 @@ war {
         attributes(
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
-    webXml = file('src/main/webapp/WEB-INF/web.xml')
+//    webXml = file('src/main/webapp/WEB-INF/web.xml')
 }
 
 //springBoot {

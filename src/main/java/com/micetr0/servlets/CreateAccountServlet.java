@@ -12,11 +12,13 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-//@WebServlet(
-//        name = "Create Account Servlet",
-//        description = "Creates Accounts",
-//        urlPatterns = {"/createAccount"}
-//)
+
+@WebServlet (
+        name = "CreateAccountServlet",
+        urlPatterns = {"/createAccount"},
+        description = "Creates Accounts",
+        loadOnStartup = 1
+)
 public class CreateAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
