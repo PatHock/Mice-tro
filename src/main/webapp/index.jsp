@@ -6,6 +6,13 @@
     <title>Mice-tr0 - Home Page</title>
 
     <link rel="stylesheet" href="styles/style.css">
+
+      <script src="../build/Tone.js"></script>
+      <script src="./scripts/jquery.min.js"></script>
+      <script src="./scripts/draggabilly.js"></script>
+      <script src="./scripts/StartAudioContext.js"></script>
+      <script src="./scripts/Interface.js"></script>
+      <script src="https://tonejs.github.io/Logo/build/Logo.js"></script>
   </head>
 
   <body>
@@ -25,6 +32,7 @@
   <form action="${pageContext.servletContext.contextPath}/login" method="get">
     <input name="goToLogIn" type="submit" value="Login" />
   </form>
+
 
   </body>
 </html>
