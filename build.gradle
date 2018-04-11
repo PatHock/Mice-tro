@@ -107,14 +107,13 @@ war {
 
 jacoco {
     toolVersion = "0.8.1"
-    reportsDir = file("$buildDir/JacocoCodeCoverageReports")
-}
+    reportsDir = file("$buildDir/JacocoCodeCoverageReports")}
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+        xml.enabled = true
+        csv.enabled = false
+//        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 
