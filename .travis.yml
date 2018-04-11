@@ -5,7 +5,7 @@ before_script:
   - chmod +x gradlew
 script:
   - ./gradlew check
-  - bash <(curl --data-binary @.codecov.yml https://codecov.io/validate)
+#  - bash <(curl --data-binary @.codecov.yml https://codecov.io/validate)
   - ./gradlew jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
