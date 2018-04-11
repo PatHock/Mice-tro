@@ -38,8 +38,6 @@ sourceSets {
         java {
             srcDir 'src/main/java/'
             exclude '**/spring/**'
-//            exclude '**/Application.java'
-//            exclude '**/webapp/spring/**'
         }
         resources {
             srcDir 'src/main/resources'
@@ -68,8 +66,7 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     implementation(
-            'com.amazonaws:aws-java-sdk-s3',
-//            "org.springframework.boot:spring-boot-starter-web"
+            'com.amazonaws:aws-java-sdk-s3'
     )
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.1.0',
@@ -80,30 +77,14 @@ dependencies {
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 war {
-//    mainClassName = 'com.micetr0.main'
     manifest {
         attributes(
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
-//    webXml = file('src/main/webapp/WEB-INF/web.xml')
 }
-
-//springBoot {
-//    mainClassName = 'com.micetr0.main'
-//}
-//
-//bootWar {
-//
-//    mainClassName = 'com.micetr0.Application'
-//    baseName = 'micetr0-spring-boot'
-//    version =  '0.1.0'
-//    launchScript()
-//}
-
 
 jacoco {
     toolVersion = "0.8.1"
@@ -113,7 +94,6 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         csv.enabled = false
-//        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 

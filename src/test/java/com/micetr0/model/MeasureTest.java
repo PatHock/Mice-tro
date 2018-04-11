@@ -1,48 +1,39 @@
 package com.micetr0.model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
 
 class MeasureTest {
-//    private Note note = new Note();
-    private Measure measure = new Measure();
 
-    @Test
-    void getMaxNumBeatsTest(){
-        measure.setMaxNumBeats(50);
-        assertTrue(measure.getMaxNumBeats().equals(50));
-    }
+    private Integer measureID;
+    private Integer sectionID;
+    private Measure measure;
 
-    @Test
-    void setMaxNumBeatsTest(){
-        measure.setMaxNumBeats(10);
-        assertTrue(measure.getMaxNumBeats().equals(10));
-    }
-
-    @Test
-    void getMeasureIDTest(){
-        measure.setMeasureID("12");
-        assertEquals(measure.getMeasureID(),"12");
+    @BeforeEach
+    void setUp() {
+        sectionID = 0;
+        measureID = 0;
+        measure = new Measure(measureID, sectionID);
     }
 
     @Test
     void setMeasureIDTest(){
-        measure.setMeasureID("15");
-        assertEquals(measure.getMeasureID(),"15");
-    }
+        measure.setMeasureID(248);
+        assertTrue(measure.getMeasureID().equals(248));
 
-    @Test
-    void getSectionIDTest(){
-        measure.setSectionID("3");
-        assertEquals(measure.getSectionID(),"3");
+        measure.setMeasureID(9);
+        assertTrue(measure.getMeasureID().equals(9));
     }
 
     @Test
     void setSectionIDTest(){
-        measure.setSectionID("5");
-        assertEquals(measure.getSectionID(),"5");
+        measure.setSectionID(248);
+        assertTrue(measure.getSectionID().equals(248));
+
+        measure.setSectionID(9);
+        assertTrue(measure.getSectionID().equals(9));
     }
 
 }
