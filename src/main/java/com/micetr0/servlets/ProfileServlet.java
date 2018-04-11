@@ -5,6 +5,7 @@ import com.micetr0.model.Composition;
 import com.micetr0.controller.CompositionController;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebServlet(
+        name = "ProfileServlet",
+        urlPatterns = {"/profile"},
+        description = "Whatever this servlet does, describe here",
+        loadOnStartup = 1
+)
 public class ProfileServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

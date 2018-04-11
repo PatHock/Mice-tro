@@ -4,6 +4,7 @@ import com.micetr0.model.Composition;
 import com.micetr0.controller.CompositionController;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,12 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 
 
+@WebServlet(
+        name = "CreateCompositionServlet",
+        urlPatterns = {"/createComposition"},
+        description = "Whatever this servlet does, describe here",
+        loadOnStartup = 1
+)
 public class CreateCompositionServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

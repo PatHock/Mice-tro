@@ -1,6 +1,7 @@
 package com.micetr0.servlets;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,12 @@ import java.util.List;
 import com.micetr0.controller.AccountController;
 import com.micetr0.model.Account;
 
+@WebServlet(
+        name = "LoginServlet",
+        urlPatterns = {"/login"},
+        description = "Whatever this servlet does, describe here",
+        loadOnStartup = 1
+)
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -23,14 +30,18 @@ public class LoginServlet extends HttpServlet {
 
         req.getRequestDispatcher("/Login.jsp").forward(req, resp);
     }
+
     @Override
+    // FIXME: a lot of this code should be handled in the Account controller. Also, do not create models...
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        //FIXME: BAD
         Account model = new Account();
 
         AccountController controller = new AccountController();
 
+        // FIXME: remove this, remove method setModel from account controller
         controller.setModel(model);
 
         String failedLoginError = null;
@@ -48,7 +59,10 @@ public class LoginServlet extends HttpServlet {
             model.setUsername(curUsername);
             model.setPassword(curPassword);
 
+
             //List<Account> accountsList= new ArrayList<>();
+
+            // FIXME: This should be taken care of in the Account controller
             List<Account> accountsList = controller.getAllAccounts();
             //Account tempAccount = new Account();
             //tempAccount.setUsername("aredhouse");
@@ -56,8 +70,11 @@ public class LoginServlet extends HttpServlet {
             //accountsList.add(tempAccount);
 
 
+            //FIXME: don't create models anywhere except in controller class
             Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
 
+            //FIXME: Account controller should be able to tell the servlet if the specified account is valid
+            //
             if (validAccount != null){
                 tried = "true";
                 correctLogin = "You have successfully logged in, Click below to go to Profile";
