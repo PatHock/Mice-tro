@@ -1,9 +1,9 @@
 package com.micetr0.model;
 
-import org.junit.Test;
-import com.micetr0.model.Note;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 
 public class MeasureTest {
 //    private Note note = new Note();

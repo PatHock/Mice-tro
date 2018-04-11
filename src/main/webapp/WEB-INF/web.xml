@@ -4,6 +4,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
+    <!-- Listeners -->
+    <display-name>InitListener</display-name>
+    <listener>
+        <listener-class>com.micetr0.listener.InitListener</listener-class>
+    </listener>
+
     <!-- Servlets -->
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
