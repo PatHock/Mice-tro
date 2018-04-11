@@ -1,31 +1,13 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
   <head>
     <title>Mice-tr0 - Home Page</title>
 
-    <style type="text/css">
-      input[type=submit]{
-          background-color: darkred; /* Red */
-          border: 2px solid darkred;
-          color: white;
-          padding: 10px 25px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          border-radius: 4px;
-          margin: 4px 2px;
-      }
-      input[type=submit]:hover{
-          background-color: white;
-          border: 2px solid darkred;
-          color: darkred;
-      }
-
-    </style>
-
+    <link rel="stylesheet" href="styles/style.css">
   </head>
+
   <body>
   <h1> Welcome to Mice-tr0!</h1>
 
