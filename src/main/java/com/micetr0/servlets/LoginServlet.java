@@ -36,13 +36,13 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        //FIXME: BAD
-        Account model = new Account();
+//        //FIXME: BAD
+//        Account model = new Account();
 
         AccountController controller = new AccountController();
 
-        // FIXME: remove this, remove method setModel from account controller
-        controller.setModel(model);
+//        // FIXME: remove this, remove method setModel from account controller
+//        controller.setModel(model);
 
         String failedLoginError = null;
         String tried = "false";
@@ -55,15 +55,15 @@ public class LoginServlet extends HttpServlet {
             System.out.println(curUsername);
             System.out.println(curPassword);
 
-            //set password and username
-            model.setUsername(curUsername);
-            model.setPassword(curPassword);
+//            //set password and username
+//            model.setUsername(curUsername);
+//            model.setPassword(curPassword);
 
 
             //List<Account> accountsList= new ArrayList<>();
 
-            // FIXME: This should be taken care of in the Account controller
-            List<Account> accountsList = controller.getAllAccounts();
+//            // FIXME: This should be taken care of in the Account controller
+//            List<Account> accountsList = controller.getAllAccounts();
             //Account tempAccount = new Account();
             //tempAccount.setUsername("aredhouse");
             //tempAccount.setPassword("pass");

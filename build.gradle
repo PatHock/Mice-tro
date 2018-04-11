@@ -53,6 +53,7 @@ sourceSets {
 dependencyManagement {
     imports {
         mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+        mavenBom 'io.spring.platform:platform-bom:1.1.1.RELEASE'
     }
 }
 
@@ -65,7 +66,8 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     implementation(
-            'com.amazonaws:aws-java-sdk-s3'
+            'com.amazonaws:aws-java-sdk-s3',
+            'org.springframework:spring-jdbc'
     )
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.1.0',
@@ -89,32 +91,33 @@ jacoco {
     toolVersion = "0.8.1"
     reportsDir = file("$buildDir/JacocoCodeCoverageReports")
 
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        csv.enabled = false
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            csv.enabled = false
+        }
     }
-}
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.7
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.7
+                }
             }
         }
     }
+
+    tomcat {
+        httpPort = 8082
+        httpsPort = 8091
+        httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+        ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    }
+
+
+    test {
+        useJUnitPlatform()
+    }
+
 }
-
-tomcat {
-    httpPort = 8082
-    httpsPort = 8091
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-}
-
-
-test {
-    useJUnitPlatform()
-}
-
