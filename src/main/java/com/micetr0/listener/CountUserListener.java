@@ -4,10 +4,12 @@ package com.micetr0.listener;
 // https://www.javatpoint.com/HttpSessionEvent
 
 import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 
+@WebListener
 public class CountUserListener implements HttpSessionListener{
 
     private ServletContext servletContext = null;

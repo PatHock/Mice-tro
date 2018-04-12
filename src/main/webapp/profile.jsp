@@ -1,5 +1,5 @@
-<jsp:useBean id="totalUsers" scope="session" type="java.lang.Integer"/>
-<jsp:useBean id="currentUsers" scope="session" type="java.lang.Integer"/>
+<%--@elvariable id="currentUsers" type=""--%>
+<%--@elvariable id="totalUsers" type=""--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -41,8 +41,8 @@
                    type="submit"
                    value="Delete Account" />
         </form>
-    ${totalUsers}
-    ${currentUsers}
+    <%--${totalUsers}--%>
+    <%--${currentUsers}--%>
   </body>
 
 </html>

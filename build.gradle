@@ -68,7 +68,9 @@ dependencies {
     implementation(
             'com.amazonaws:aws-java-sdk-s3',
             'org.springframework:spring-jdbc',
-            'javax.servlet:jstl:1.2'
+            'javax.servlet:jstl:1.2',
+            'javax.servlet:javax.servlet-api:3.1.0',
+            'javax.el:javax.el-api:3.0.0'
     )
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.1.0',
@@ -78,7 +80,7 @@ dependencies {
     testRuntimeOnly(
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+//    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
     compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
 }
@@ -89,6 +91,11 @@ war {
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
 //    webXml = file('src/main/webapp/WEB-INF/web.xml')
+}
+
+task explodedWar(type: Sync) {
+    into "$buildDir/explodedWar"
+    with war
 }
 
 jacoco {
