@@ -1,5 +1,7 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html>
     <head>
         <title>Mice-tr0 - Login</title>
@@ -9,17 +11,17 @@
     <body>
         <h1> Please Enter Your Account Information</h1>
 
-        <form action="${pageContext.servletContext.contextPath}/login" method="post">
+        <form action="login" method="post">
 
             Username:<br>
             <input type="text"
-                   name="username"
+                   name="username">
                    <%--value=${login.username}>--%>
             <br>
 
             Password:<br>
             <input type="password"
-                   name="password"
+                   name="password">
                    <%--value=${login.password}>--%>
             <br><br>
 
@@ -27,18 +29,19 @@
                    value="Login">
         </form>
 
-        <if test="${! empty failedLoginError}">
-            ${failedLoginError}<br>
-        </if>
+
+        <%--<c:if test="${not empty message}">--%>
+            <%--<h1>${message}</h1>--%>
+        <%--</c:if>--%>
+
 
         <h2>Don't Have an Account?</h2>
 
-        <form action="${pageContext.servletContext.contextPath}/createAccount" method="get">
+        <form action="createAccount" method="get">
             <input name="goToCreateAccount"
                    type="submit"
                    value="Create Account"/>
         </form>
-
   </body>
 
 </html>

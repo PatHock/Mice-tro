@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -26,25 +25,25 @@
         "G"g2ab3|"Em"gfeg2e|"D"fedB2A|"Em"e2e gfe|\
         "G"g2ab3|"Em"gfe"D"f2d|"Em"e3-e3:|
 
-        <form action="${pageContext.servletContext.contextPath}/composition" method="get">
+        <form action="composition" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Save"/>
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/profile" method="get">
+        <form action="profile" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Save and Exit Composition 1"/>
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/profile" method="get">
+        <form action="profile" method="get">
             <input name="goToProfile"
                    type="submit"
                    value="Exit Composition 1"/>
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/index" method="get">
+        <form action="index" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Log Out" />

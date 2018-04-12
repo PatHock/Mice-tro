@@ -26,7 +26,7 @@ class LoginServletTest {
 
     @Test
     void doGet() throws Exception {
-        when(request.getRequestDispatcher("/Login.jsp")).thenReturn(requestDispatcher);
+        when(request.getRequestDispatcher("/login.jsp")).thenReturn(requestDispatcher);
 
         new LoginServlet().doGet(request, response);
 

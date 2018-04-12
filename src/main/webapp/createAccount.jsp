@@ -10,29 +10,28 @@
   <body>
       <h1>Enter Desired Account Information:</h1>
 
-      <form action="${pageContext.servletContext.contextPath}/createAccount" method="post">
-
+      <form action="createAccount" method="post">
           Username:<br>
           <input type="text"
                  name="username"
-                 value=${createAcc.username}>
-          <br>
+                 <%--value=${createAcc.username}--%>
+          ><br>
 
           Password:<br>
           <input type="password"
                  name="password"
-                 value=${createAcc.password}>
-          <br><br>
+                 <%--value=${createAcc.password}--%>
+          ><br><br>
 
           <input type="submit"
                  value="Create Account">
       </form>
 
-      <if test="${! empty failedCreation}">
-          ${failedCreation}<br>
-      </if>
+      <%--<if test="${! empty failedCreation}">--%>
+          <%--${failedCreation}<br>--%>
+      <%--</if>--%>
 
-      <form action="${pageContext.servletContext.contextPath}/index" method="get">
+      <form action="index" method="get">
           <input name="goToIndex"
                  type="submit"
                  value="I Changed My Mind"/>

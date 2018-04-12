@@ -75,7 +75,7 @@ public class CreateAccountServlet extends HttpServlet {
                 //System.out.println(validAccount);
             }
             else{
-                //resp.sendRedirect("Login.jsp");
+                //resp.sendRedirect("login.jsp");
                 tried = "true";
             }
         }

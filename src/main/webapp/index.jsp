@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="styles/style.css">
 
-      <%--<script src="/micetr0/webapp/js/app.bundle.js"></script>--%>
+      <script src="/micetr0/webapp/js/app.bundle.js"></script>
 
   </head>
 
@@ -25,10 +25,9 @@
   <p> - Save compositions as audio or pdf files </p>
   <p> - Share your music with other mice-tr0 accounts</p>
 
-  <%--<form action="${pageContext.servletContext.contextPath}/login" method="get">--%>
-    <%--<input name="goToLogIn" type="submit" value="Login" />--%>
-  <%--</form>--%>
-
+  <form action="login" method="get">
+    <input name="goToLogIn" type="submit" value="Login" />
+  </form>
 
   </body>
 </html>

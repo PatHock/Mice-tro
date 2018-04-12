@@ -7,33 +7,32 @@
     </head>
 
     <body>
-        <h1>Welcome ${currUser}</h1>
-
+        <%--<h1>Welcome ${username}</h1>--%>
+        <h1>Welcome</h1>
         <h2>Select Composition to Edit:</h2>
 
-        <form action="${pageContext.servletContext.contextPath}/profile" method="post">
-
+        <form action="profile" method="post">
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/composition" method="get">
+        <form action="composition" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Composition 1" />
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/createComposition" method="get">
+        <form action="createComposition" method="get">
             <input name="goToCreateComposition"
                    type="submit"
                    value="Create New Composition " />
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/index" method="get">
+        <form action="index" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Log Out" />
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/index" method="get">
+        <form action="index" method="get">
             <input name="goToIndex"
                    type="submit"
                    value="Delete Account" />
