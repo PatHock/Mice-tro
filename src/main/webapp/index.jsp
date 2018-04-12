@@ -7,12 +7,8 @@
 
     <link rel="stylesheet" href="styles/style.css">
 
-      <script src="../build/Tone.js"></script>
-      <script src="./scripts/jquery.min.js"></script>
-      <script src="./scripts/draggabilly.js"></script>
-      <script src="./scripts/StartAudioContext.js"></script>
-      <script src="./scripts/Interface.js"></script>
-      <script src="https://tonejs.github.io/Logo/build/Logo.js"></script>
+      <script src="/micetr0/webapp/js/app.bundle.js"></script>
+
   </head>
 
   <body>
