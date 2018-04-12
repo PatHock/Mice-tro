@@ -160,10 +160,17 @@ public class Mock_DB implements IDatabase{
     }
 
    @Override
-    public void deleteAccount(Integer accountId)
+    public void deleteAccount(String username)
    {
-       List<Account> acc = findCurrentAccount(accountId);
-       accounts.remove(acc.get(0));
+       List<Integer> accId = findAccountIdByUsername(username);
+       for (Account acc : accounts)
+       {
+           if (acc.getAccountID().equals(accId.get(0)))
+           {
+               accounts.remove(acc);
+               break;
+           }
+       }
    }
 
    @Override

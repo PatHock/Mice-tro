@@ -65,9 +65,9 @@ public interface IDatabase {
 
     /**
      *
-     * @param accountId
+     * @param username
      */
-    void deleteAccount(Integer accountId);
+    void deleteAccount(String username);
 
     /**
      *
