@@ -1,11 +1,15 @@
 package com.micetr0.servlets;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.micetr0.controller.AccountController;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -38,6 +42,10 @@ public class LoginServlet extends HttpServlet {
 
             String username = req.getParameter("username");
             String password = req.getParameter("password");
+//            resp.setContentType("text/html");
+//            resp.setCharacterEncoding("UTF-8");
+            PrintWriter out = resp.getWriter();
+
             System.out.println(username);
             System.out.println(password);
 
@@ -51,6 +59,10 @@ public class LoginServlet extends HttpServlet {
 
 
             if(isValidCredentials) {
+                HttpSession session = req.getSession();
+                session.setAttribute("username", username);
+//                ServletContext context = getServletContext();
+
                 req.setAttribute("message", null);
                 req.getRequestDispatcher("/profile.jsp").forward(req, resp);
             }
