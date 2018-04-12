@@ -51,14 +51,8 @@ public class AccountController {
         }
     }
 
-    public Boolean deleteAccount(String username, List<Account> accounts) {
-        for (Account account : accounts) {
-            if (account.getUsername().equals(username)) {
-                accounts.remove(account);
-                return true;
-            }
-        }
-        return false;
+    public void deleteAccount(String username) {
+        db.deleteAccount(username);
     }
 
     public void logOut(Account account) {
