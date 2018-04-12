@@ -78,6 +78,7 @@ dependencies {
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
 }
 
 war {
