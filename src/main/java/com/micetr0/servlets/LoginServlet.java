@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    // FIXME: a lot of this code should be handled in the Account controller. Also, do not create models...
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 

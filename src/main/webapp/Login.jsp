@@ -14,13 +14,13 @@
             Username:<br>
             <input type="text"
                    name="username"
-                   value=${login.username}>
+                   <%--value=${login.username}>--%>
             <br>
 
             Password:<br>
             <input type="password"
                    name="password"
-                   value=${login.password}>
+                   <%--value=${login.password}>--%>
             <br><br>
 
             <input type="submit"
