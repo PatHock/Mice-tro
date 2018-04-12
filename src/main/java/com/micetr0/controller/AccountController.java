@@ -1,11 +1,15 @@
 package com.micetr0.controller;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Account;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.dao.*;
+
+
 public class AccountController {
 
     private Account account = new Account();
@@ -57,7 +61,6 @@ public class AccountController {
         return false;
     }
 
-    // TODO: log out without passing an account object into the controller
     public void logOut(Account account) {
         // jsp method?
     }

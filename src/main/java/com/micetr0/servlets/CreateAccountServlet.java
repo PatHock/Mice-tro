@@ -40,7 +40,8 @@ public class CreateAccountServlet extends HttpServlet {
 
         AccountController controller = new AccountController();
 
-        controller.setModel(model);
+        //FIXME commented out
+//        controller.setModel(model);
 
         String failedLoginError = null;
         String tried = "false";
@@ -64,7 +65,8 @@ public class CreateAccountServlet extends HttpServlet {
             //tempAccount.setUsername(curUsername);
             //tempAccount.setPassword(curPassword);
             //accountsList.add(tempAccount);
-            controller.addAccount(controller.createAccount(curUsername, curPassword, controller.getAllAccounts()));
+            //FIXME Commented out spaghet
+//            controller.addAccount(controller.createAccount(curUsername, curPassword, controller.getAllAccounts()));
 
 
             if (curUsername.length() < 4  || curPassword.length() < 4) {

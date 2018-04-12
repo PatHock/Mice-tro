@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.micetr0.controller.AccountController;
 import com.micetr0.model.Account;
+import org.springframework.dao.DataIntegrityViolationException;
 
 @WebServlet(
         name = "LoginServlet",
@@ -36,78 +37,55 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-//        //FIXME: BAD
-//        Account model = new Account();
-
         AccountController controller = new AccountController();
 
-//        // FIXME: remove this, remove method setModel from account controller
-//        controller.setModel(model);
+        Boolean isValidCredentials = false;
 
-        String failedLoginError = null;
-        String tried = "false";
-        String correctLogin = null;
+        //TODO: get rid of these
+//        String correctLogin;
+        String failedLoginError;
 
-        try{
+
+
             //get username and password from entered data
-            String curUsername = getString(req, "username");
-            String curPassword = getString(req, "password");
-            System.out.println(curUsername);
-            System.out.println(curPassword);
+//            String username = getString(req, "username");
+//            String password = getString(req, "password");
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            System.out.println(username);
+            System.out.println(password);
 
-//            //set password and username
-//            model.setUsername(curUsername);
-//            model.setPassword(curPassword);
-
-
-            //List<Account> accountsList= new ArrayList<>();
-
-//            // FIXME: This should be taken care of in the Account controller
-//            List<Account> accountsList = controller.getAllAccounts();
-            //Account tempAccount = new Account();
-            //tempAccount.setUsername("aredhouse");
-            //tempAccount.setPassword("pass");
-            //accountsList.add(tempAccount);
-
-
-            //FIXME: don't create models anywhere except in controller class
-            Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
-
-            //FIXME: Account controller should be able to tell the servlet if the specified account is valid
-            //
-            if (validAccount != null){
-                tried = "true";
-                correctLogin = "You have successfully logged in, Click below to go to Profile";
-                //resp.sendRedirect("profile.jsp");
-                //System.out.println(validAccount);
+            try {
+                isValidCredentials =  controller.logIn(username, password);
+            } catch(DataIntegrityViolationException e) {
+                // TODO: Redirect to failure page
+                System.out.println(e.getCause() + "More than one account with specified username and password");
             }
-            else{
-                //resp.sendRedirect("Login.jsp");
+
+
+
+//            if(isValidCredentials){
+//                correctLogin = "You have successfully logged in, Click below to go to Profile";
+//            }
+//            else {
+//                failedLoginError = "Username and Password Combination Invalid";
+//            }
+
+            if(isValidCredentials) {
+                req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+            }
+            else {
                 failedLoginError = "Username and Password Combination Invalid";
+                req.getRequestDispatcher("/Login.jsp").forward(req, resp);
             }
-        }
-       catch(InvalidParameterException e){
-
-        }
-
-        req.setAttribute("login", model);
-        req.setAttribute("failedLoginError", failedLoginError);
-        req.setAttribute("tried", tried);
-        req.setAttribute("correctLogin", correctLogin);
 
 
-        if(tried == "true"){
-            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
-        }
-        else{
-            req.getRequestDispatcher("/Login.jsp").forward(req, resp);
-        }
+//            req.setAttribute("login", model);
+//        req.setAttribute("failedLoginError", failedLoginError);
+//        req.setAttribute("tried", tried);
+//        req.setAttribute("correctLogin", correctLogin);
+
 
     }
-
-    private String getString(HttpServletRequest req, String name) {
-        return req.getParameter(name);
-    }
-
 
 }
