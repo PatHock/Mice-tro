@@ -1,7 +1,6 @@
 <%--@elvariable id="currentUsers" type=""--%>
 <%--@elvariable id="totalUsers" type=""--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -41,6 +40,7 @@
                    type="submit"
                    value="Delete Account" />
         </form>
+        <
     <%--${totalUsers}--%>
     <%--${currentUsers}--%>
   </body>

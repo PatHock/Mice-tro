@@ -27,9 +27,23 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        System.out.println("Login Servlet: doGet");
+        String text = "Very Dank, ajax works";
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        resp.getWriter().write(text);       // Write response body.
+
+
+        if (ajax) {
+            // Handle ajax (JSON or XML) response.
+            System.out.println("LoginServlet AJAX doGet");
+        } else {
+            System.out.println("LoginServlet doGet");
+            // Handle regular (JSP) response.
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        }
+
     }
 
     @Override
@@ -37,40 +51,47 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         AccountController controller = new AccountController();
-
         Boolean isValidCredentials = false;
 
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
-//            resp.setContentType("text/html");
-//            resp.setCharacterEncoding("UTF-8");
-            PrintWriter out = resp.getWriter();
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
 
-            System.out.println(username);
-            System.out.println(password);
+        System.out.println(username);
+        System.out.println(password);
 
-            try {
-                isValidCredentials =  controller.logIn(username, password);
-            } catch(DataIntegrityViolationException e) {
-                // TODO: Redirect to failure page
-                //resp.sendError(500, "Welp, something went wrong :(");
-                System.out.println(e.getCause() + "More than one account with specified username and password");
-            }
+        resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
 
 
-            if(isValidCredentials) {
-                HttpSession session = req.getSession();
-                session.setAttribute("username", username);
-//                ServletContext context = getServletContext();
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
+        if (ajax) {
+            // Handle ajax (JSON or XML) response.
+            System.out.println("Ajax request on LoginServlet doPost");
 
-                req.setAttribute("message", null);
-                req.getRequestDispatcher("/profile.jsp").forward(req, resp);
-            }
-            else {
-                req.setAttribute("message", "Invalid login");
-                req.getRequestDispatcher("/login.jsp").forward(req, resp);
-            }
+        } else {
+            System.out.println("doPost on LoginServlet, not Ajax");
+            // Handle regular (JSP) response.
+        }
 
+        try {
+            isValidCredentials =  controller.logIn(username, password);
+        } catch(DataIntegrityViolationException e) {
+            // TODO: Redirect to failure page
+            //resp.sendError(500, "Welp, something went wrong :(");
+            System.out.println(e.getCause() + "More than one account with specified username and password");
+        }
+
+
+        if(isValidCredentials) {
+            HttpSession session = req.getSession();
+            session.setAttribute("username", username);
+            //TODO: Let ajax know to redirect, currently prints contents of profile page
+            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+        }
+        else {
+            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
+        }
 
 
     }
