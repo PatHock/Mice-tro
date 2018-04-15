@@ -13,18 +13,18 @@
 
     <script type="text/javascript">
 
-        $(document).on("click", "#someButton", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("login", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                $("#buttonDiv").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
-            });
-        });
         //TODO: Add success/failure methods, use JSON to
         $(document).on("submit", "#loginForm", function(event) {
             var $form = $(this);
 
-            $.post($form.attr("action"), $form.serialize(), function(invalidCredentialsMsg) {
-                $("#loginDiv").text(invalidCredentialsMsg);
-                // ...
+            $.post($form.attr("action"), $form.serialize(), function (responseJson) {
+                if(responseJson.redirect) {
+                    window.location = responseJson.redirect;
+                }
+                else if(responseJson.messageerror) {
+                    $("#loginErrMessDiv").text(responseJson.messageerror);
+                }
+                return;
             });
             event.preventDefault(); // Important! Prevents submitting the form.
         });
@@ -53,11 +53,7 @@
         </form>
 
 
-        <div id="loginDiv"></div>
-
-        <button id="someButton"> Press Here</button>
-        <div id="buttonDiv"></div>
-
+        <div id="loginErrMessDiv"></div>
 
 
         <h2>Don't Have an Account?</h2>

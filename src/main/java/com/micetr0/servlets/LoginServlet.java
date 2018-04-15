@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import com.google.gson.Gson;
 
 import com.micetr0.controller.AccountController;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,7 +38,6 @@ public class LoginServlet extends HttpServlet {
 
 
         if (ajax) {
-            // Handle ajax (JSON or XML) response.
             System.out.println("LoginServlet AJAX doGet");
         } else {
             System.out.println("LoginServlet doGet");
@@ -51,27 +52,27 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         AccountController controller = new AccountController();
-        Boolean isValidCredentials = false;
 
+        Boolean isValidCredentials = false;
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
+        String redirectUrl = req.getContextPath() + "/profile";
 
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("Login attempt from user " + username + "Password: " + password);
 
-        resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        Map<String, String> data = new HashMap<>();
+        resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8");
 
 
+        // Println statements to show whether or not AJAX is working
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
         if (ajax) {
-            // Handle ajax (JSON or XML) response.
             System.out.println("Ajax request on LoginServlet doPost");
 
         } else {
             System.out.println("doPost on LoginServlet, not Ajax");
-            // Handle regular (JSP) response.
         }
 
         try {
@@ -86,13 +87,18 @@ public class LoginServlet extends HttpServlet {
         if(isValidCredentials) {
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
+            data.put("redirect", redirectUrl);
             //TODO: Let ajax know to redirect, currently prints contents of profile page
-            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+//            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
         }
         else {
-            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
+            data.put("messageerror", invalidCredentialsMsg);
+//            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
         }
 
+        String json = new Gson().toJson(data);
+        System.out.println(json);
+        resp.getWriter().write(json);
 
     }
 

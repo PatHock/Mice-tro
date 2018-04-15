@@ -29,9 +29,8 @@ apply plugin: "io.spring.dependency-management" // for AWS SDK
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'com.moowork.node'
 
-
-// The last straw for Gretty
-// https://github.com/akhikhl/gretty/issues/306
+configurations {
+}
 
 sourceSets {
     main {
@@ -57,8 +56,6 @@ dependencyManagement {
     }
 }
 
-
-
 dependencies {
     def tomcatVersion = '8.5.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
@@ -70,65 +67,79 @@ dependencies {
             'org.springframework:spring-jdbc',
             'javax.servlet:jstl:1.2',
             'javax.servlet:javax.servlet-api:3.1.0',
-            'javax.el:javax.el-api:3.0.0'
+            'javax.el:javax.el-api:3.0.0',
+            'com.google.code.gson:gson:2.8.2',
+            group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
     )
+
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.1.0',
             'org.mockito:mockito-core:2.7.19'
-
     )
+
     testRuntimeOnly(
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
-//    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
-    compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
+    providedCompile(
+            'javax.servlet:javax.servlet-api:3.1.0'
+    )
 }
 
 war {
+    // Default classpath for WAR plugin is project.configurations.runtime - project.configurations.providedRuntime
     manifest {
         attributes(
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
-//    webXml = file('src/main/webapp/WEB-INF/web.xml')
-}
-
-task explodedWar(type: Sync) {
-    into "$buildDir/explodedWar"
-    with war
 }
 
 jacoco {
     toolVersion = "0.8.1"
     reportsDir = file("$buildDir/JacocoCodeCoverageReports")
+}
 
-    jacocoTestReport {
-        reports {
-            xml.enabled = true
-            csv.enabled = false
-        }
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        csv.enabled = false
     }
+}
 
-    jacocoTestCoverageVerification {
-        violationRules {
-            rule {
-                limit {
-                    minimum = 0.7
-                }
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.7
             }
         }
     }
-
-    tomcat {
-        httpPort = 8082
-        httpsPort = 8091
-        httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-        ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
-    }
-
-
-    test {
-        useJUnitPlatform()
-    }
-
 }
+
+
+tomcat {
+    httpPort = 8082
+    httpsPort = 8091
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
+
+
+test {
+    useJUnitPlatform()
+}
+
+/**
+ * Custom Task
+ */
+task explodedWar(type: Sync) {
+    into "$buildDir/explodedWar"
+    with war
+}
+
+// The last straw for Gretty
+// https://github.com/akhikhl/gretty/issues/306
+
+
+
