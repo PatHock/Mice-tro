@@ -5,7 +5,7 @@
   <head>
     <title>Mice-tr0 - Home Page</title>
 
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
       <script src="/micetr0/webapp/js/app.bundle.js"></script>
 
