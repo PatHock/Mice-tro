@@ -71,7 +71,7 @@ public class Mock_DB implements IDatabase{
     @Override
     public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
     {
-        List<Composition> resultList = new ArrayList<>();
+        List<Composition> resultList;
         List<String> compList = new ArrayList<>();
         for (Account account : accounts)
         {
@@ -182,7 +182,7 @@ public class Mock_DB implements IDatabase{
    }
 
     /**
-     * FIXME: needs unit test
+     *
      * @param username unique username entered by user when logging in
      * @return List of Account ID's that have the specified username
      */
@@ -199,27 +199,6 @@ public class Mock_DB implements IDatabase{
         return accountIdList;
     }
 
-
-    /**
-     * FIXME: needs unit test
-     * @param accountId Unique integer ID for accounts in database
-     * @return List of passwords that are associated with this account ID
-     */
-    @Override
-    public List<Credential> findUsernameAndPasswordByAccountId(Integer accountId) {
-        List<Credential> credentialList = new ArrayList<>();
-        List<String> passwordList = new ArrayList<>();
-
-        for (Account acc : accounts) {
-            if(accountId.equals(acc.getAccountID())) {
-                credentialList.add(new Credential(acc.getUsername(), acc.getPassword()));
-            }
-        }
-
-        return credentialList;
-    }
-
-
     @Override
     public List<Composition> findAllComps()
    {
@@ -231,7 +210,6 @@ public class Mock_DB implements IDatabase{
        return comps;
    }
 
-   // Fixme needs unit test
    @Override
     public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
         List<Integer> accountIdList = new ArrayList<>();
@@ -244,6 +222,26 @@ public class Mock_DB implements IDatabase{
 
         return accountIdList;
    }
+
+    //    /**
+//     * FIXME: needs unit test
+//     * @param accountId Unique integer ID for accounts in database
+//     * @return List of passwords that are associated with this account ID
+//     */
+//    @Override
+//    public List<Credential> findUsernameAndPasswordByAccountId(Integer accountId) {
+//        List<Credential> credentialList = new ArrayList<>();
+//
+//        for (Account acc : accounts) {
+//            if(accountId.equals(acc.getAccountID())) {
+//                credentialList.add(new Credential(acc.getUsername(), acc.getPassword()));
+//            }
+//        }
+//
+//        return credentialList;
+//    }
+
+
 
 }
 

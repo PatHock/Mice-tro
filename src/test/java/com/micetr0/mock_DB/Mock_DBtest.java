@@ -26,14 +26,12 @@ class Mock_DBtest {
     @Test
     void findNotesByMeasureIdAndMeasureIndexTest() {
 
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(1, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(2, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(3, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(4, 1).size() == 1);
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(1, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(2, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(3, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(4, 1).size());
 
         assertFalse(db.findNotesByMeasureIdAndMeasureIndex(5, 1).size() > 0);
-
-        //assertEquals();
     }
 
     @Test
@@ -43,11 +41,10 @@ class Mock_DBtest {
         Integer measureId = 7;
         Integer measureIndex = 3;
 
-
         Note note = new Note(1, noteType, pitch, measureIndex, measureId);
         db.insertNote(note);
 
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch().equals(pitch));
+        assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
     }
 
     @Test
@@ -56,7 +53,7 @@ class Mock_DBtest {
 
         List<Composition> comps = db.findCompositionsIdsByAccountId(2);
 
-        assertTrue(comps.size() == 2);
+        assertEquals(2, comps.size());
 
     }
 
@@ -64,14 +61,14 @@ class Mock_DBtest {
     void findCurrentAccountTest()
     {
         List<Account> Account = db.findCurrentAccount(1);
-        assertTrue(Account.get(0).getUsername().equals("sad_Keanu"));
+        assertEquals("sad_Keanu", Account.get(0).getUsername());
     }
 
     @Test
     void findAllAccountsTest()
     {
         List<Account> accounts = db.findAllAccounts();
-        assertTrue(accounts.size() == 4);
+        assertEquals(4, accounts.size());
     }
 
     @Test
@@ -81,8 +78,8 @@ class Mock_DBtest {
         db.deleteComposition(compositionId);
 
         List<Composition> comps = db.findAllComps();
-        assertTrue(comps.size() == 4);
-        assertTrue(comps.get(comps.size()-1).getTitle().equals("Hump De Bump"));
+        assertEquals(4, comps.size());
+        assertEquals("Hump De Bump", comps.get(comps.size() - 1).getTitle());
     }
 
     @Test
@@ -90,7 +87,7 @@ class Mock_DBtest {
     {
         List<Composition> allComps = db.findAllComps();
 
-        assertTrue(allComps.size() == 5);
+        assertEquals(5, allComps.size());
     }
 
     @Test
@@ -103,8 +100,35 @@ class Mock_DBtest {
 
         List<Account> accnts = db.findAllAccounts();
 
-        assertTrue(accnts.size() == 5);
-        assertTrue(accnts.get(accnts.size()-1).getUsername().equals("Morty_Ruelz"));
+        assertEquals(5, accnts.size());
+        assertEquals("Morty_Ruelz", accnts.get(accnts.size() - 1).getUsername());
     }
 
+    @Test
+    void findAccountIdByUsernameAndPasswordTest() {
+        // See if the test can find sad Keanu
+        assertEquals(1, (int) db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").get(0));
+        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").size(), 1);
+
+        // Try checking for valid username but invalid password
+        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu").size(), 0);
+
+        // See if peppe is ok
+        assertEquals(2, (int) db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").get(0));
+        assertEquals(1, db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").size());
+
+    }
+
+
+    @Test
+    void findAccountIdByUsernameTest() {
+        // Test sad_Keanu
+        assertEquals(db.findAccountIdByUsername("sad_Keanu").size(), 1);
+        assertEquals(1, (int) db.findAccountIdByUsername("sad_Keanu").get(0));
+
+        //Test peppe
+        assertEquals(db.findAccountIdByUsername("peppe").size(), 1);
+        assertEquals(2, (int) db.findAccountIdByUsername("peppe").get(0));
+
+    }
 }

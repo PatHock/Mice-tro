@@ -18,7 +18,6 @@ class AccountControllerTest {
 
     @BeforeEach
     void createModel() {
-        //FIXME update
         DatabaseProvider.setInstance(new Mock_DB());
         db = DatabaseProvider.getInstance();
         controller = new AccountController();
@@ -30,31 +29,30 @@ class AccountControllerTest {
         Account newAccount = controller.createAccount("Pat", "pASSword");
         controller.addAccount(newAccount);
         List<Account> accounts = controller.getAllAccounts();
-        assertTrue(accounts.get(accounts.size()-1).getUsername().equals("Pat"));
+        assertEquals("Pat", accounts.get(accounts.size() - 1).getUsername());
     }
     @Test
     void createAccountTest()
     {
         Account newAccount = controller.createAccount("Pat", "pASSword");
-        assertTrue(newAccount.getUsername().equals("Pat"));
-        assertTrue(newAccount.getPassword().equals("pASSword"));
+        assertEquals("Pat", newAccount.getUsername());
+        assertEquals("pASSword", newAccount.getPassword());
 
         Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen");
-        assertTrue(newAccount2.getUsername().equals("uber_user"));
-        assertTrue(newAccount2.getPassword().equals("notGonnaHappen"));
+        assertEquals("uber_user", newAccount2.getUsername());
+        assertEquals("notGonnaHappen", newAccount2.getPassword());
     }
 
     @Test
     void deleteAccountTest()
     {
-
         Account newAccount = controller.createAccount("Rick", "pASSword");
         controller.addAccount(newAccount);
         List<Account> accounts = controller.getAllAccounts();
-        assertTrue(accounts.get(accounts.size()-1).getUsername().equals("Rick"));
+        assertEquals("Rick", accounts.get(accounts.size() - 1).getUsername());
         controller.deleteAccount("Rick");
         accounts = controller.getAllAccounts();
-        assertFalse(accounts.get((accounts.size()-1)).getUsername().equals("Rick"));
+        assertNotEquals("Rick", accounts.get((accounts.size() - 1)).getUsername());
     }
 
     @Test
@@ -66,13 +64,13 @@ class AccountControllerTest {
     @Test
     void logInTest()
     {
-        assertFalse( controller.logIn("Rick", "password"));
+        assertFalse(controller.logIn("Rick", "password"));
         assertTrue(controller.logIn("sad_Keanu", "sad_Keanu_is_Sad"));
     }
 
     @Test
     void findAllAccountsTest()
     {
-        assertTrue(controller.getAllAccounts().size() == 4);
+        assertEquals(4, controller.getAllAccounts().size());
     }
 }

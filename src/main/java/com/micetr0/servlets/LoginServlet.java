@@ -1,6 +1,5 @@
 package com.micetr0.servlets;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,11 +33,11 @@ public class LoginServlet extends HttpServlet {
 
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        resp.getWriter().write(text);       // Write response body.
 
 
         if (ajax) {
             System.out.println("LoginServlet AJAX doGet");
+            resp.getWriter().write(text);       // Write response body.
         } else {
             System.out.println("LoginServlet doGet");
             // Handle regular (JSP) response.
