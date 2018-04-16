@@ -45,8 +45,11 @@ coverage:
 
 
 ignore:
-  - "src/main/java/listener/*"
-  - "src/main/java/servlets/*"
+  - "src/main/java/listener/.*"
+  - "src/main/java/servlets/.*"
+  - "src/main/java/spring/.*"
+  - "src/main/resources/.*"
+
 
 comment:
   layout: "header, reach, diff, flags, files, footer, tree, sunburst, suggestions"

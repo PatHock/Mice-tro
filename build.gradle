@@ -109,6 +109,18 @@ jacocoTestReport {
         xml.enabled = true
         csv.enabled = false
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/src/main/java/listener/.*',
+                              '**/src/main/java/servlets/.*',
+                              '**/src/main/java/spring/.*',
+                              '**/src/main/resources/.*'
+                    ]
+            )
+        })
+    }
 }
 
 jacocoTestCoverageVerification {
@@ -133,6 +145,13 @@ tomcat {
 
 test {
     useJUnitPlatform()
+
+    jacoco {
+        excludes += ['src/main/java/listener/.*',
+                     'src/main/java/servlets/.*',
+                     'src/main/java/spring/.*',
+                     'src/main/resources/.*']
+    }
 }
 
 /**
