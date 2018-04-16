@@ -42,4 +42,13 @@ public class CountUserListener implements HttpSessionListener{
         currentSessionCount--;
         servletContext.setAttribute("currentUsers",currentSessionCount);
     }
+
+    public Integer getTotalSessionCount() {
+        return this.totalSessionCount;
+    }
+
+    public Integer getCurrentSessionCount() {
+        return this.currentSessionCount;
+    }
+
 }

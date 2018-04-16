@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Class-Path: javax.el-api-3.0.0.jar aws-java-sdk-s3-1.11.228.jar spring
- -jdbc-4.1.4.RELEASE.jar jstl-1.2.jar javax.servlet-api-3.1.0.jar gson
- -2.8.2.jar aws-java-sdk-kms-1.11.228.jar aws-java-sdk-core-1.11.228.j
- ar jmespath-java-1.11.228.jar spring-tx-4.1.4.RELEASE.jar spring-bean
- s-4.1.4.RELEASE.jar spring-core-4.1.4.RELEASE.jar httpclient-4.3.6.ja
- r commons-logging-1.2.jar ion-java-1.0.2.jar jackson-databind-2.4.4.j
- ar jackson-dataformat-cbor-2.6.7.jar joda-time-2.5.jar httpcore-4.3.3
- .jar commons-codec-1.10.jar jackson-annotations-2.4.4.jar jackson-cor
- e-2.4.4.jar
+ -jdbc-4.1.4.RELEASE.jar spring-mock-2.0.8.jar jstl-1.2.jar javax.serv
+ let-api-3.1.0.jar gson-2.8.2.jar aws-java-sdk-kms-1.11.228.jar aws-ja
+ va-sdk-core-1.11.228.jar jmespath-java-1.11.228.jar spring-tx-4.1.4.R
+ ELEASE.jar spring-beans-4.1.4.RELEASE.jar spring-core-4.1.4.RELEASE.j
+ ar httpclient-4.3.6.jar commons-logging-1.2.jar junit-4.11.jar ion-ja
+ va-1.0.2.jar jackson-databind-2.4.4.jar jackson-dataformat-cbor-2.6.7
+ .jar joda-time-2.5.jar hamcrest-core-1.3.jar httpcore-4.3.3.jar commo
+ ns-codec-1.10.jar jackson-annotations-2.4.4.jar jackson-core-2.4.4.ja
+ r
 

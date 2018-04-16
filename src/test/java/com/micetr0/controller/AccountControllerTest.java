@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
 class AccountControllerTest {
     private AccountController controller;
@@ -66,11 +67,13 @@ class AccountControllerTest {
     {
         assertFalse(controller.logIn("Rick", "password"));
         assertTrue(controller.logIn("sad_Keanu", "sad_Keanu_is_Sad"));
+
+        assertThrows(DataIntegrityViolationException.class, ()-> controller.logIn("BadUsername", "BadPassword"));
     }
 
     @Test
     void findAllAccountsTest()
     {
-        assertEquals(4, controller.getAllAccounts().size());
+        assertEquals(6, controller.getAllAccounts().size());
     }
 }

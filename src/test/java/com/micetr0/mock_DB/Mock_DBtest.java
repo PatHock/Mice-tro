@@ -68,7 +68,7 @@ class Mock_DBtest {
     void findAllAccountsTest()
     {
         List<Account> accounts = db.findAllAccounts();
-        assertEquals(4, accounts.size());
+        assertEquals(6, accounts.size());
     }
 
     @Test
@@ -100,7 +100,7 @@ class Mock_DBtest {
 
         List<Account> accnts = db.findAllAccounts();
 
-        assertEquals(5, accnts.size());
+        assertEquals(7, accnts.size());
         assertEquals("Morty_Ruelz", accnts.get(accnts.size() - 1).getUsername());
     }
 

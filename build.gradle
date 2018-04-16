@@ -65,6 +65,7 @@ dependencies {
     implementation(
             'com.amazonaws:aws-java-sdk-s3',
             'org.springframework:spring-jdbc',
+            'org.springframework:spring-mock:2.0.8',
             'javax.servlet:jstl:1.2',
             'javax.servlet:javax.servlet-api:3.1.0',
             'javax.el:javax.el-api:3.0.0',
