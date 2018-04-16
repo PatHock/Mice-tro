@@ -93,6 +93,10 @@ war {
         attributes(
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
+    from('src/main/webapp/js/dist') {
+        include 'app.bundle.js'
+        into('js')
+    }
 }
 
 jacoco {

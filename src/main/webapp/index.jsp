@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-      <script src="/micetr0/webapp/js/app.bundle.js"></script>
+      <script src="/micetr0/js/dist/app.bundle.js"></script>
 
   </head>
 
