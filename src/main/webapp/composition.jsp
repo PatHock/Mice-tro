@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Mice-tr0 - Composition 1</title>
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>

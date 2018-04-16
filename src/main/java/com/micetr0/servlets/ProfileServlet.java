@@ -1,9 +1,7 @@
 package com.micetr0.servlets;
 
-import com.micetr0.controller.AccountController;
 import com.micetr0.model.Composition;
 import com.micetr0.controller.CompositionController;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

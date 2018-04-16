@@ -1,10 +1,9 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
     <head>
         <title>Mice-tr0 - Create Composition</title>
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>

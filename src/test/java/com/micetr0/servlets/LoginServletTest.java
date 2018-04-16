@@ -25,15 +25,13 @@ class LoginServletTest {
     @Test
     void doGet() throws Exception {
         when(request.getRequestDispatcher("/login.jsp")).thenReturn(requestDispatcher);
-
         new LoginServlet().doGet(request, response);
-
         verify(requestDispatcher).forward(request, response);
     }
 
     @Test
     void doPost() {
-    //TODO: Add tests here after fixing login servlet
+    //FIXME: Add tests here after fixing login servlet
     }
 
 

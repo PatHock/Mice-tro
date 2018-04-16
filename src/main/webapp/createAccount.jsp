@@ -1,10 +1,9 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
   <head>
     <title>Mice-tr0 - Create Account</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
 
   <body>
@@ -12,31 +11,20 @@
 
       <form action="createAccount" method="post">
           Username:<br>
-          <input type="text"
-                 name="username"
-                 <%--value=${createAcc.username}--%>
+          <input type="text" name="username"
           ><br>
 
           Password:<br>
-          <input type="password"
-                 name="password"
-                 <%--value=${createAcc.password}--%>
+          <input type="password" name="password"
           ><br><br>
 
-          <input type="submit"
-                 value="Create Account">
+          <input type="submit" value="Create Account">
       </form>
-
-      <%--<if test="${! empty failedCreation}">--%>
-          <%--${failedCreation}<br>--%>
-      <%--</if>--%>
 
       <form action="index" method="get">
           <input name="goToIndex"
                  type="submit"
                  value="I Changed My Mind"/>
       </form>
-
   </body>
-
 </html>
