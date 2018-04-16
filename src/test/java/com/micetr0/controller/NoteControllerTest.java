@@ -1,6 +1,9 @@
 package com.micetr0.controller;
 
 import com.micetr0.definitions.Defs;
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.Mock_DB;
 import com.micetr0.model.Note;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +12,13 @@ import org.junit.jupiter.api.Test;
 
 class NoteControllerTest {
 
+    private IDatabase db;
     private NoteController controller;
+
     @BeforeEach
     void setUp(){
+        DatabaseProvider.setInstance(new Mock_DB());
+        db = DatabaseProvider.getInstance();
         controller = new NoteController();
     }
 

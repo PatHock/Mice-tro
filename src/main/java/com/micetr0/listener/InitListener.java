@@ -1,7 +1,6 @@
 package com.micetr0.listener;
-import com.micetr0.mock_DB.InitDatabase;
 
-import javax.servlet.ServletContext;
+import com.micetr0.mock_DB.InitDatabase;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.util.Scanner;

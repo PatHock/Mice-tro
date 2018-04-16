@@ -1,96 +1,104 @@
 package com.micetr0.servlets;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-import com.micetr0.controller.AccountController;
-import com.micetr0.model.Account;
+import java.util.HashMap;
+import java.util.Map;
+import com.google.gson.Gson;
 
+import com.micetr0.controller.AccountController;
+import org.springframework.dao.DataIntegrityViolationException;
+
+@WebServlet(
+        name = "LoginServlet",
+        urlPatterns = {"/login"},
+        description = "Whatever this servlet does, describe here",
+        loadOnStartup = 1
+)
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        System.out.println("Login Servlet: doGet");
+        String text = "Very Dank, ajax works";
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+        resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+
+
+        if (ajax) {
+            System.out.println("LoginServlet AJAX doGet");
+            resp.getWriter().write(text);       // Write response body.
+        } else {
+            System.out.println("LoginServlet doGet");
+            // Handle regular (JSP) response.
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        }
+
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Account model = new Account();
-
         AccountController controller = new AccountController();
 
-        controller.setModel(model);
+        Boolean isValidCredentials = false;
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
+        String redirectUrl = req.getContextPath() + "/profile";
 
-        String failedLoginError = null;
-        String tried = "false";
-        String correctLogin = null;
+        System.out.println("Login attempt from user " + username + "Password: " + password);
 
-        try{
-            //get username and password from entered data
-            String curUsername = getString(req, "username");
-            String curPassword = getString(req, "password");
-            System.out.println(curUsername);
-            System.out.println(curPassword);
-
-            //set password and username
-            model.setUsername(curUsername);
-            model.setPassword(curPassword);
-
-            //List<Account> accountsList= new ArrayList<>();
-            List<Account> accountsList = controller.getAllAccounts();
-            //Account tempAccount = new Account();
-            //tempAccount.setUsername("aredhouse");
-            //tempAccount.setPassword("pass");
-            //accountsList.add(tempAccount);
+        Map<String, String> data = new HashMap<>();
+        resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8");
 
 
-            Account validAccount = controller.logIn(curUsername, curPassword, accountsList);
+        // Println statements to show whether or not AJAX is working
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
+        if (ajax) {
+            System.out.println("Ajax request on LoginServlet doPost");
 
-            if (validAccount != null){
-                tried = "true";
-                correctLogin = "You have successfully logged in, Click below to go to Profile";
-                //resp.sendRedirect("profile.jsp");
-                //System.out.println(validAccount);
-            }
-            else{
-                //resp.sendRedirect("Login.jsp");
-                failedLoginError = "Username and Password Combination Invalid";
-            }
-        }
-       catch(InvalidParameterException e){
-
+        } else {
+            System.out.println("doPost on LoginServlet, not Ajax");
         }
 
-        req.setAttribute("login", model);
-        req.setAttribute("failedLoginError", failedLoginError);
-        req.setAttribute("tried", tried);
-        req.setAttribute("correctLogin", correctLogin);
+        try {
+            isValidCredentials =  controller.logIn(username, password);
+        } catch(DataIntegrityViolationException e) {
+            // TODO: Redirect to failure page
+            //resp.sendError(500, "Welp, something went wrong :(");
+            System.out.println(e.getCause() + "More than one account with specified username and password");
+        }
 
 
-        if(tried == "true"){
-            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+        if(isValidCredentials) {
+            HttpSession session = req.getSession();
+            session.setAttribute("username", username);
+            data.put("redirect", redirectUrl);
+            //TODO: Let ajax know to redirect, currently prints contents of profile page
+//            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
         }
-        else{
-            req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+        else {
+            data.put("messageerror", invalidCredentialsMsg);
+//            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
         }
+
+        String json = new Gson().toJson(data);
+        System.out.println(json);
+        resp.getWriter().write(json);
 
     }
-
-    private String getString(HttpServletRequest req, String name) {
-        return req.getParameter(name);
-    }
-
 
 }
