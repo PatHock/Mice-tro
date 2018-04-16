@@ -1,5 +1,8 @@
 package com.micetr0.controller;
 
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.Mock_DB;
 import com.micetr0.model.Composition;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -9,12 +12,16 @@ class CompositionControllerTest {
 
     private Composition model;
     private CompositionController controller;
+    private IDatabase db;
+
 
     @BeforeEach
     void setUp(){
         model = new Composition();
+        DatabaseProvider.setInstance(new Mock_DB());
         controller = new CompositionController();
         controller.setModel(model);
+        db = DatabaseProvider.getInstance();
     }
 
     @Test

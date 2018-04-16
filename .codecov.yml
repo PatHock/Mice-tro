@@ -35,16 +35,18 @@ coverage:
         if_ci_failed: error
 
 
-    changes:                   # if there are any unexpected changes in coverage
-      default:
-        enabled: yes             # must be yes|true to enable this status
-        branches: null           # -> see "branch patterns" below
-        if_no_uploads: error
-        if_not_found: success
-        if_ci_failed: error
+#    changes:                   # if there are any unexpected changes in coverage
+#      default:
+#        enabled: yes             # must be yes|true to enable this status
+#        branches: null           # -> see "branch patterns" below
+#        if_no_uploads: error
+#        if_not_found: success
+#        if_ci_failed: error
 
-  ignore:
-    - "src/main/java/servlets/*"  # ignore servlet code since we can't unit test it right now
+
+ignore:
+  - "src/main/java/listener/*"
+  - "src/main/java/servlets/*"
 
 comment:
   layout: "header, reach, diff, flags, files, footer, tree, sunburst, suggestions"

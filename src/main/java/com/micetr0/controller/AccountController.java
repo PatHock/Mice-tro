@@ -1,88 +1,81 @@
 package com.micetr0.controller;
 
-import com.micetr0.mock_DB.DatabaseProvider;
-import com.micetr0.mock_DB.IDatabase;
-import com.micetr0.model.Account;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.model.Account;
+import org.springframework.dao.*;
+
+
 public class AccountController {
 
-    Account account = new Account();
+    private Account account = new Account();
     private IDatabase db;
     private List<Account> dbAccounts = new ArrayList<>();
 
-    public AccountController()
-    {
+    public AccountController() {
         db = DatabaseProvider.getInstance();
     }
 
-    public void setModel(Account account) {
-        this.account = account;
-    }
-
-    public List<Account> getAllAccounts()
-    {
+    public List<Account> getAllAccounts() {
         dbAccounts = db.findAllAccounts();
         return dbAccounts;
     }
 
-    public void addAccount(Account account)
-    {
+    public void addAccount(Account account) {
         db.insertAccount(account);
     }
-    private boolean checkCredentials(String username, String password, List<Account> accounts) {
-        boolean validAccount = false;
 
-        for (Account account : accounts) {
-            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                validAccount = true;
-                return validAccount;
-            }
-        }   return validAccount;
-    }
+//    private Boolean checkCredentials(String username, String password, List<Account> accounts) {
+//        Boolean isValidAccount = false;
+//
+//        for (Account account : accounts) {
+//            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
+//                isValidAccount = true;
+//            }
+//        }
+//        return isValidAccount;
+//    }
 
-    public Account createAccount(String username, String password, List<Account> accounts) {
+    public Account createAccount(String username, String password) {
         try {
             Account newAccount = new Account();
             newAccount.setUsername(username);
             newAccount.setPassword(password);
             return newAccount;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             throw e;
         }
-
-}
-
-    public boolean deleteAccount(String username, List<Account> accounts)
-    {
-        for (Account account : accounts)
-        {
-            if(account.getUsername() == username)
-            {
-                accounts.remove(account);
-                return true;
-            }
-        }
-        return false;
     }
 
-    public void logOut(Account account){
+    public void deleteAccount(String username) {
+        db.deleteAccount(username);
+    }
+
+    public void logOut(Account account) {
         // jsp method?
     }
 
-    public Account logIn(String username, String password, List<Account> accounts){
-        boolean validAccount = checkCredentials(username, password, accounts);
-            if (validAccount) {
-                Account currAccount = accounts.get(accounts.indexOf(username)+1);
-                return currAccount;
-            }
-            else {
-                //should throw some exception ie(account does not exist)
-            }
-            return null;
+    // https://codereview.stackexchange.com/questions/63283/password-validation-in-java
+    public Boolean logIn(String username, String password) {
+
+        List<Integer> accountIds = db.findAccountIdByUsernameAndPassword(username, password);
+
+        switch (accountIds.size()) {
+            case 0:
+                return false;
+            case 1:
+                return true;
+
+            default:
+                throw new DataIntegrityViolationException("More than one account ID associated with username");
         }
+
     }
+}
+
+
+

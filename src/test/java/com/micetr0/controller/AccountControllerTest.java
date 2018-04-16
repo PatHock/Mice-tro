@@ -10,10 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
 class AccountControllerTest {
-
-    private Account model;
     private AccountController controller;
     private List<Account> accounts = new ArrayList<>();
     private IDatabase db;
@@ -22,34 +21,39 @@ class AccountControllerTest {
     void createModel() {
         DatabaseProvider.setInstance(new Mock_DB());
         db = DatabaseProvider.getInstance();
-        model = new Account();
         controller = new AccountController();
-        controller.setModel(model);
     }
 
     @Test
+    void addAccountTest()
+    {
+        Account newAccount = controller.createAccount("Pat", "pASSword");
+        controller.addAccount(newAccount);
+        List<Account> accounts = controller.getAllAccounts();
+        assertEquals("Pat", accounts.get(accounts.size() - 1).getUsername());
+    }
+    @Test
     void createAccountTest()
     {
-        Account newAccount = controller.createAccount("Pat", "password", accounts);
-        assertTrue(newAccount.getUsername().equals("Pat"));
-        assertTrue(newAccount.getPassword().equals("password"));
+        Account newAccount = controller.createAccount("Pat", "pASSword");
+        assertEquals("Pat", newAccount.getUsername());
+        assertEquals("pASSword", newAccount.getPassword());
 
-        Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen", accounts);
-        assertTrue(newAccount2.getUsername().equals("uber_user"));
-        assertTrue(newAccount2.getPassword().equals("notGonnaHappen"));
+        Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen");
+        assertEquals("uber_user", newAccount2.getUsername());
+        assertEquals("notGonnaHappen", newAccount2.getPassword());
     }
 
     @Test
     void deleteAccountTest()
     {
-        Account newAccount = controller.createAccount("Pat", "password", accounts);
-        Account newAccount2 = controller.createAccount("uber_user", "notGonnaHappen", accounts);
-        accounts.add(newAccount);
-        accounts.add(newAccount2);
-        controller.deleteAccount("Pat", accounts);
-        assertTrue(accounts.size() == 1);
-        controller.deleteAccount("jay-z",accounts);
-
+        Account newAccount = controller.createAccount("Rick", "pASSword");
+        controller.addAccount(newAccount);
+        List<Account> accounts = controller.getAllAccounts();
+        assertEquals("Rick", accounts.get(accounts.size() - 1).getUsername());
+        controller.deleteAccount("Rick");
+        accounts = controller.getAllAccounts();
+        assertNotEquals("Rick", accounts.get((accounts.size() - 1)).getUsername());
     }
 
     @Test
@@ -61,29 +65,15 @@ class AccountControllerTest {
     @Test
     void logInTest()
     {
-        List<Account> accounts =  new ArrayList<>();
-        Account a1 = new Account();
-        a1.setUsername("sad_Keanu");
-        a1.setPassword("sad_Keanu_is_Sad");
-        Account a2 = new Account();
-        a2.setUsername("sad_Keanu");
-        a2.setPassword("sad_Keanu");
-        accounts.add(a1);
-        accounts.add(a2);
-        Account sad_Keanu = controller.logIn("sad_Keanu", "sad_Keanu_is_Sad", accounts);
-        assertTrue(sad_Keanu.getUsername().equals("sad_Keanu"));
-        Account sad_Keanu2 = controller.logIn("sad_Keanu", "sad_Keanu_is", accounts);
-        assertNull(sad_Keanu2);
-        Account sad_Keanu3 = controller.logIn("sad_Keanu", "sad_Keanu", accounts);
-        assertTrue(sad_Keanu.getUsername().equals("sad_Keanu"));
+        assertFalse(controller.logIn("Rick", "password"));
+        assertTrue(controller.logIn("sad_Keanu", "sad_Keanu_is_Sad"));
 
+        assertThrows(DataIntegrityViolationException.class, ()-> controller.logIn("BadUsername", "BadPassword"));
     }
 
     @Test
     void findAllAccountsTest()
     {
-        List<Account> accounts = new ArrayList<>();
-        accounts = controller.getAllAccounts();
-        assertTrue(accounts.size() == 4);
+        assertEquals(6, controller.getAllAccounts().size());
     }
 }

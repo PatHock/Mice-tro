@@ -7,7 +7,7 @@ targetCompatibility = 1.8
 buildscript {
     repositories {
         jcenter()
-        maven {
+        maven{
             url "https://plugins.gradle.org/m2/"
         }
     }
@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
         classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
-//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
     }
 }
 
@@ -23,23 +23,20 @@ repositories {
     mavenCentral()
 }
 
-//apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
 apply plugin: "jacoco" // for unit test code coverage reports
 apply plugin: "io.spring.dependency-management" // for AWS SDK
 apply plugin: 'com.bmuschko.tomcat'
-//apply plugin: 'org.springframework.boot'
+apply plugin: 'com.moowork.node'
 
-// The last straw for Gretty
-// https://github.com/akhikhl/gretty/issues/306
+configurations {
+}
 
 sourceSets {
     main {
         java {
             srcDir 'src/main/java/'
-            exclude '**/config/**'
-            exclude '**/Application.java'
-            exclude '**/webapp/spring/**'
+            exclude '**/spring/**'
         }
         resources {
             srcDir 'src/main/resources'
@@ -55,13 +52,11 @@ sourceSets {
 dependencyManagement {
     imports {
         mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+        mavenBom 'io.spring.platform:platform-bom:1.1.1.RELEASE'
     }
 }
 
-
-
 dependencies {
-
     def tomcatVersion = '8.5.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
@@ -69,39 +64,40 @@ dependencies {
 
     implementation(
             'com.amazonaws:aws-java-sdk-s3',
-//            "org.springframework.boot:spring-boot-starter-web"
+            'org.springframework:spring-jdbc',
+            'org.springframework:spring-mock:2.0.8',
+            'javax.servlet:jstl:1.2',
+            'javax.servlet:javax.servlet-api:3.1.0',
+            'javax.el:javax.el-api:3.0.0',
+            'com.google.code.gson:gson:2.8.2',
+            group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
     )
+
     testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.1.0'
+            'org.junit.jupiter:junit-jupiter-api:5.1.0',
+            'org.mockito:mockito-core:2.7.19'
     )
+
     testRuntimeOnly(
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    providedCompile(
+            'javax.servlet:javax.servlet-api:3.1.0'
+    )
 }
 
 war {
-//    mainClassName = 'com.micetr0.main'
+    // Default classpath for WAR plugin is project.configurations.runtime - project.configurations.providedRuntime
     manifest {
         attributes(
                 "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
     }
-    webXml = file('src/main/webapp/WEB-INF/web.xml')
+    from('src/main/webapp/js/dist') {
+        include 'app.bundle.js'
+        into('js')
+    }
 }
-
-//springBoot {
-//    mainClassName = 'com.micetr0.main'
-//}
-//
-//bootWar {
-//
-//    mainClassName = 'com.micetr0.Application'
-//    baseName = 'micetr0-spring-boot'
-//    version =  '0.1.0'
-//    launchScript()
-//}
-
 
 jacoco {
     toolVersion = "0.8.1"
@@ -110,9 +106,8 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+        xml.enabled = true
+        csv.enabled = false
     }
 }
 
@@ -126,15 +121,30 @@ jacocoTestCoverageVerification {
     }
 }
 
+
 tomcat {
     httpPort = 8082
     httpsPort = 8091
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
+
 
 
 test {
     useJUnitPlatform()
 }
+
+/**
+ * Custom Task
+ */
+task explodedWar(type: Sync) {
+    into "$buildDir/explodedWar"
+    with war
+}
+
+// The last straw for Gretty
+// https://github.com/akhikhl/gretty/issues/306
+
+
 

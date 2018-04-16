@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@WebServlet(
-//        name = "Composition Servlet",
-//        description = "Does Composition things",
-//        urlPatterns = {"/composition"}
-//)
+@WebServlet (
+        name = "CompositionServlet",
+        urlPatterns = {"/composition"},
+        description = "Whatever this servlet does, describe here",
+        loadOnStartup = 1
+)
 public class CompositionServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
