@@ -24,15 +24,12 @@
 
             <input type="submit" value="Login">
         </form>
-
         <div id="loginErrMessDiv"></div>
 
         <h2>Don't Have an Account?</h2>
 
         <form action="createAccount" method="get">
-            <input name="goToCreateAccount"
-                   type="submit"
-                   value="Create Account"/>
+            <input name="goToCreateAccount" type="submit" value="Create Account"/>
         </form>
   </body>
 </html>
