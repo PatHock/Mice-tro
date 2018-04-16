@@ -33,11 +33,19 @@ public class Note {
         setMeasureId(measureId);
     }
 
+    /**
+     * Just your standard model set method
+     * @param noteID unique ID for note
+     */
     public void setNoteID(Integer noteID)
     {
         this.noteID = noteID;
     }
 
+    /**
+     *
+     * @return unique ID for note
+     */
     public Integer getNoteID(){
         return noteID;
     }

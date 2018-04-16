@@ -1,51 +1,134 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.definitions.Defs;
-import org.junit.Before;
-import org.junit.Test;
-import com.micetr0.mock_DB.*;
-import static org.junit.Assert.*;
-import com.micetr0.model.Note;
-import com.micetr0.definitions.Defs;
+import com.micetr0.model.Account;
+import com.micetr0.model.Composition;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Mock_DBtest {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import com.micetr0.model.Note;
+
+import java.util.List;
+
+class Mock_DBtest {
 
     private IDatabase db;
 
-    @Before
-    public void setUp()
+    @BeforeEach
+    void setUp()
     {
-        InitDatabase.init(true);
+        DatabaseProvider.setInstance(new Mock_DB());
         db = DatabaseProvider.getInstance();
     }
 
 
     @Test
-    public void findNotesByMeasureIdAndMeasureIndexTest() {
+    void findNotesByMeasureIdAndMeasureIndexTest() {
 
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(1, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(2, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(3, 1).size() == 1);
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(4, 1).size() == 1);
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(1, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(2, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(3, 1).size());
+        assertEquals(1, db.findNotesByMeasureIdAndMeasureIndex(4, 1).size());
 
         assertFalse(db.findNotesByMeasureIdAndMeasureIndex(5, 1).size() > 0);
-
-        //assertEquals();
     }
 
     @Test
-    public void insertNoteTest() {
+    void insertNoteTest() {
         Defs.Pitch pitch =  Defs.Pitch.F8_SHARP;
         Defs.NoteType noteType = Defs.NoteType.EIGHTH;
         Integer measureId = 7;
         Integer measureIndex = 3;
 
-
         Note note = new Note(1, noteType, pitch, measureIndex, measureId);
         db.insertNote(note);
 
-        assertTrue(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch().equals(pitch));
+        assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
+    }
+
+    @Test
+    void findCompositionsIdsByAccountIdTest()
+    {
+
+        List<Composition> comps = db.findCompositionsIdsByAccountId(2);
+
+        assertEquals(2, comps.size());
+
+    }
+
+    @Test
+    void findCurrentAccountTest()
+    {
+        List<Account> Account = db.findCurrentAccount(1);
+        assertEquals("sad_Keanu", Account.get(0).getUsername());
+    }
+
+    @Test
+    void findAllAccountsTest()
+    {
+        List<Account> accounts = db.findAllAccounts();
+        assertEquals(6, accounts.size());
+    }
+
+    @Test
+    void deleteCompositionTest()
+    {
+        Integer compositionId = 4;
+        db.deleteComposition(compositionId);
+
+        List<Composition> comps = db.findAllComps();
+        assertEquals(4, comps.size());
+        assertEquals("Hump De Bump", comps.get(comps.size() - 1).getTitle());
+    }
+
+    @Test
+    void findAllCompsTest()
+    {
+        List<Composition> allComps = db.findAllComps();
+
+        assertEquals(5, allComps.size());
+    }
+
+    @Test
+    void insertAccountTest()
+    {
+        Account newUser = new Account();
+        newUser.setUsername("Morty_Ruelz");
+        newUser.setPassword("Rick_Sux");
+        db.insertAccount(newUser);
+
+        List<Account> accnts = db.findAllAccounts();
+
+        assertEquals(7, accnts.size());
+        assertEquals("Morty_Ruelz", accnts.get(accnts.size() - 1).getUsername());
+    }
+
+    @Test
+    void findAccountIdByUsernameAndPasswordTest() {
+        // See if the test can find sad Keanu
+        assertEquals(1, (int) db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").get(0));
+        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").size(), 1);
+
+        // Try checking for valid username but invalid password
+        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu").size(), 0);
+
+        // See if peppe is ok
+        assertEquals(2, (int) db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").get(0));
+        assertEquals(1, db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").size());
+
     }
 
 
+    @Test
+    void findAccountIdByUsernameTest() {
+        // Test sad_Keanu
+        assertEquals(db.findAccountIdByUsername("sad_Keanu").size(), 1);
+        assertEquals(1, (int) db.findAccountIdByUsername("sad_Keanu").get(0));
+
+        //Test peppe
+        assertEquals(db.findAccountIdByUsername("peppe").size(), 1);
+        assertEquals(2, (int) db.findAccountIdByUsername("peppe").get(0));
+
+    }
 }

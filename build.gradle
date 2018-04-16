@@ -1,14 +1,21 @@
 version '0.1'
 
+apply plugin: 'java'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 buildscript {
     repositories {
         jcenter()
-//        mavenCentral()
+        maven{
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.4.2'
-//        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
     }
 }
 
@@ -16,31 +23,147 @@ repositories {
     mavenCentral()
 }
 
-apply plugin: 'java'
-//apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'war'
+apply plugin: "jacoco" // for unit test code coverage reports
+apply plugin: "io.spring.dependency-management" // for AWS SDK
 apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'com.moowork.node'
 
-sourceCompatibility = 1.9
+configurations {
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java/'
+            exclude '**/spring/**'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+        mavenBom 'io.spring.platform:platform-bom:1.1.1.RELEASE'
+    }
+}
 
 dependencies {
-    def tomcatVersion = '9.0.6'
+    def tomcatVersion = '8.5.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
-//    testCompile('org.junit.jupiter:junit-jupiter-api:5.1.0')
-//    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.1.0')
+    implementation(
+            'com.amazonaws:aws-java-sdk-s3',
+            'org.springframework:spring-jdbc',
+            'org.springframework:spring-mock:2.0.8',
+            'javax.servlet:jstl:1.2',
+            'javax.servlet:javax.servlet-api:3.1.0',
+            'javax.el:javax.el-api:3.0.0',
+            'com.google.code.gson:gson:2.8.2',
+            group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
+    )
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.1.0',
+            'org.mockito:mockito-core:2.7.19'
+    )
 
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    )
+
+    providedCompile(
+            'javax.servlet:javax.servlet-api:3.1.0'
+    )
 }
+
+war {
+    // Default classpath for WAR plugin is project.configurations.runtime - project.configurations.providedRuntime
+    manifest {
+        attributes(
+                "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' '))
+    }
+    from('src/main/webapp/js/dist') {
+        include 'app.bundle.js'
+        into('js')
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/JacocoCodeCoverageReports")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        csv.enabled = false
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/src/main/java/listener/.*',
+                              '**/src/main/java/servlets/.*',
+                              '**/src/main/java/spring/.*',
+                              '**/src/main/resources/.*'
+                    ]
+            )
+        })
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.7
+            }
+        }
+    }
+}
+
 
 tomcat {
     httpPort = 8082
     httpsPort = 8091
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
+
+
+
+test {
+    useJUnitPlatform()
+
+    jacoco {
+        excludes += ['src/main/java/listener/.*',
+                     'src/main/java/servlets/.*',
+                     'src/main/java/spring/.*',
+                     'src/main/resources/.*']
+    }
+}
+
+/**
+ * Custom Task
+ */
+task explodedWar(type: Sync) {
+    into "$buildDir/explodedWar"
+    with war
+}
+
+// The last straw for Gretty
+// https://github.com/akhikhl/gretty/issues/306
+
+
+

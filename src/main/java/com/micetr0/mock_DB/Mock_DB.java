@@ -1,5 +1,6 @@
 package com.micetr0.mock_DB;
 
+import com.micetr0.Credential;
 import com.micetr0.model.*;
 
 import java.io.IOException;
@@ -63,6 +64,66 @@ public class Mock_DB implements IDatabase{
         throw new UnsupportedOperationException("Please implement deleteNote()");
     }
 
+
+    /**
+     *
+     */
+    @Override
+    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
+    {
+        List<Composition> resultList;
+        List<String> compList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            if(account.getAccountID().equals(accountId))
+            {
+                compList.addAll(account.getViewableComps());
+                compList.addAll(account.getEditableComps());
+            }
+        }
+        resultList = findCompositionsByCompIds(compList);
+        return resultList;
+    }
+
+    private List<Composition> findCompositionsByCompIds(List<String> compIds)
+    {
+        List<Composition> resultList = new ArrayList<>();
+
+        for (Composition comp : compositions)
+        {
+            for(String compId : compIds)
+            {
+                if(compId.equals(String.valueOf(comp.getCompositionID())))
+                {
+                    resultList.add(comp);
+                }
+            }
+        }
+        return resultList;
+    }
+
+    public List<Account> findAllAccounts()
+    {
+        List<Account> resultList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            resultList.add(account);
+        }
+        return resultList;
+    }
+    public List<Account> findCurrentAccount(Integer accountId)
+    {
+        List<Account> resultList = new ArrayList<>();
+        for (Account account : accounts)
+        {
+            if(account.getAccountID().equals(accountId))
+            {
+                resultList.add(account);
+            }
+        }
+        return resultList;
+    }
+
     /**
      *
      * @param measureId Unique ID for measure in database.
@@ -79,4 +140,108 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
+
+    @Override
+    public void insertComposition(Composition composition)
+    {
+        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
+        composition.setCompositionID(compositionId);
+        compositions.add(composition);
+    }
+
+    @Override
+    public void deleteComposition(Integer compositionId)
+    {
+        List<String> compId = new ArrayList<>();
+        compId.add(String.valueOf(compositionId));
+        List<Composition> comp = findCompositionsByCompIds(compId);
+        compositions.remove(comp.get(0));
+
+    }
+
+   @Override
+    public void deleteAccount(String username)
+   {
+       List<Integer> accId = findAccountIdByUsername(username);
+       for (Account acc : accounts)
+       {
+           if (acc.getAccountID().equals(accId.get(0)))
+           {
+               accounts.remove(acc);
+               break;
+           }
+       }
+   }
+
+   @Override
+   public void insertAccount(Account account)
+   {
+       Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
+       account.setAccountID(accountId);
+       accounts.add(account);
+   }
+
+    /**
+     *
+     * @param username unique username entered by user when logging in
+     * @return List of Account ID's that have the specified username
+     */
+    @Override
+    public List<Integer> findAccountIdByUsername(String username) {
+        List<Integer> accountIdList = new ArrayList<>();
+
+        for (Account acc : accounts) {
+            if(acc.getUsername().equals(username)) {
+                accountIdList.add(acc.getAccountID());
+            }
+        }
+
+        return accountIdList;
+    }
+
+    @Override
+    public List<Composition> findAllComps()
+   {
+       List<Composition> comps = new ArrayList<>();
+       for (Composition comp : compositions)
+       {
+           comps.add(comp);
+       }
+       return comps;
+   }
+
+   @Override
+    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
+        List<Integer> accountIdList = new ArrayList<>();
+
+        for (Account account : accounts) {
+            if(account.getUsername().equals(username) && account.getPassword().equals(password)) {
+                accountIdList.add(account.getAccountID());
+            }
+        }
+
+        return accountIdList;
+   }
+
+    //    /**
+//     * FIXME: needs unit test
+//     * @param accountId Unique integer ID for accounts in database
+//     * @return List of passwords that are associated with this account ID
+//     */
+//    @Override
+//    public List<Credential> findUsernameAndPasswordByAccountId(Integer accountId) {
+//        List<Credential> credentialList = new ArrayList<>();
+//
+//        for (Account acc : accounts) {
+//            if(accountId.equals(acc.getAccountID())) {
+//                credentialList.add(new Credential(acc.getUsername(), acc.getPassword()));
+//            }
+//        }
+//
+//        return credentialList;
+//    }
+
+
+
 }
+
