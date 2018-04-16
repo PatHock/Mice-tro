@@ -43,8 +43,10 @@ coverage:
         if_not_found: success
         if_ci_failed: error
 
-#  ignore:
-#    - "src/main/java/servlets/*"  # ignore servlet code since we can't unit test it right now
+
+ignore:
+  - "src/main/java/listener/*"
+  - "src/main/java/servlets/*"
 
 comment:
   layout: "header, reach, diff, flags, files, footer, tree, sunburst, suggestions"
