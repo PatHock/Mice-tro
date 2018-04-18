@@ -29,5 +29,7 @@
     <input name="goToLogIn" type="submit" value="Login" />
   </form>
 
+  <button> Delete DB </button>
+  <button> Create DB </button>>
   </body>
 </html>

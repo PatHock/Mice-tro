@@ -103,4 +103,10 @@ public interface IDatabase {
      * @return List of Account IDs with given username and password
      */
     List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
+
+    /**
+     * create db access from front end. Ease to create and remove db
+     */
+    void deleteDB();
+    void createDB();
 }
