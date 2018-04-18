@@ -10,13 +10,13 @@ public class InitDatabase {
     public static void init(Scanner keyboard) {
         //TODO: Actually get input from user
 //        System.out.println("Which Database? 0 = fake, 1 = real (unimplemented)");
-        Integer which = 0;
+        Integer which = 1;
                 //= Integer.parseInt(keyboard.nextLine());
 
         if (which == 0) {
             DatabaseProvider.setInstance(new Mock_DB());
         } else if (which == 1) {
-            throw new UnsupportedOperationException("Tomcat is asleep. Come back later.");
+            DatabaseProvider.setInstance(new MySqlDB());
         } else {
             throw new IllegalArgumentException("Invalid choice: " + which);
         }
