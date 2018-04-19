@@ -256,6 +256,22 @@ public class Mock_DB implements IDatabase{
         return compositionList;
     }
 
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param year          Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    @Override
+    public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
+        for (Composition composition : compositions) {
+            if(composition.getCompositionID().equals(compositionId)){
+                composition.setYear(year);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //    /**
 //     * FIXME: needs unit test

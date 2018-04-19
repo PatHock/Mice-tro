@@ -341,6 +341,17 @@ public class MySqlDB implements IDatabase {
         //TODO: Implement
     }
 
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param year          Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    @Override
+    public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
+        return null;
+        //TODO: Implement
+    }
+
     @Override
     public void deleteDB() {
         dropTables();

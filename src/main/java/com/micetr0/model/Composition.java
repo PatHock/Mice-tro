@@ -16,6 +16,7 @@ public class Composition {
 
     public Composition() {
         //empty constructor
+
     }
 
     private String title = "Untitled";

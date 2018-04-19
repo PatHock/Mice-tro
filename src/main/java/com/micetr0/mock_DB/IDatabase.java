@@ -120,6 +120,13 @@ public interface IDatabase {
     List<Composition> findCompositionsByCompositionId(Integer compositionId);
 
     /**
+     *
+     * @param compositionId Unique Identifier for compositions.
+     * @param year Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year);
+    /**
      * create db access from front end. Ease to create and remove db
      */
     void deleteDB();
