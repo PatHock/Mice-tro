@@ -48,7 +48,7 @@ public abstract class DBUtil {
             try {
                 conn.close();
             } catch (SQLException e) {
-                // ignore
+                e.printStackTrace();
             }
         }
     }
