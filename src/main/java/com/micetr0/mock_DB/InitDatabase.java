@@ -16,7 +16,7 @@ public class InitDatabase {
         if (which == 0) {
             DatabaseProvider.setInstance(new Mock_DB());
         } else if (which == 1) {
-            throw new UnsupportedOperationException("Tomcat is asleep. Come back later.");
+            DatabaseProvider.setInstance(new MySqlDB());
         } else {
             throw new IllegalArgumentException("Invalid choice: " + which);
         }

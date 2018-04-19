@@ -134,6 +134,15 @@ class Mock_DBtest {
     }
 
     @Test
+    void deleteDBTest(){
+        assertTrue(db.findAllAccounts().size() == 6);
+        db.deleteDB();
+        assertTrue(db.findAllAccounts().size() == 0);
+        db.createDB();
+        assertTrue(db.findAllAccounts().size() == 6);
+    }
+
+    @Test
     void findCompositionsByCompositionIdTest() {
         List<Composition> compositionList = new ArrayList<>();
         compositionList = db.findCompositionsByCompositionId(4);

@@ -275,7 +275,22 @@ public class Mock_DB implements IDatabase{
 //        return credentialList;
 //    }
 
+    @Override
+    public void deleteDB()
+    {
+        accounts.clear();
+        sections.clear();
+        compositions.clear();
+        notes.clear();
+    }
 
+    @Override
+    public void createDB()
+    {
+        if(accounts.isEmpty() && sections.isEmpty() && compositions.isEmpty() && notes.isEmpty()) {
+            readInitialData();
+        }
+    }
 
 }
 

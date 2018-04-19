@@ -118,4 +118,10 @@ public interface IDatabase {
      * @return an ArrayList of Composition objects that match the given composition ID
      */
     List<Composition> findCompositionsByCompositionId(Integer compositionId);
+
+    /**
+     * create db access from front end. Ease to create and remove db
+     */
+    void deleteDB();
+    void createDB();
 }
