@@ -137,12 +137,6 @@ class Mock_DBtest {
         assertTrue(db.findAllAccounts().size() == 6);
         db.deleteDB();
         assertTrue(db.findAllAccounts().size() == 0);
-
-    }
-    @Test
-    void createDBTest(){
-        db.deleteDB();
-        assertTrue(db.findAllAccounts().size() == 0);
         db.createDB();
         assertTrue(db.findAllAccounts().size() == 6);
     }
