@@ -273,7 +273,8 @@ public class Defs {
 
     public enum Clef {
         BASS,
-        Treble
+        Treble,
+
     }
 
     public enum TimeSignature {
@@ -295,5 +296,6 @@ public class Defs {
         FOURTEEN_SIXTEEN,
         FIFTEEN_SIXTEEN,
         SIXTEEN_SIXTEEN
-    }
+        }
+
 }

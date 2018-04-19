@@ -16,6 +16,7 @@ buildscript {
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
         classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
         classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+        classpath "mysql:mysql-connector-java:5.1.46"
     }
 }
 
@@ -57,6 +58,9 @@ dependencyManagement {
 }
 
 dependencies {
+
+    runtime "mysql:mysql-connector-java:5.1.37"
+
     def tomcatVersion = '8.5.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",

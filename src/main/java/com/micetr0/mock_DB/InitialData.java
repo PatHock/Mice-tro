@@ -86,6 +86,22 @@ public class InitialData {
         }
     }
 
+    public static List<Measure> getMeasures() throws IOException{
+        List<Measure> measures = new ArrayList<>();
+        try (CSVParse parseMeasures = new CSVParse("measures.csv")){
+            Integer MeasureID = 1;
+            while(true) {
+                List<String> tuple = parseMeasures.next();
+                if(tuple == null) {
+                    break;
+                }
+                Iterator<String> i = tuple.iterator();
+                Measure measure = new Measure(Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+            }
+        }
+        return measures;
+    }
+
     public static List<Note> getNotes() throws IOException{
         List<Note> notes = new ArrayList<>();
         try (CSVParse parseNotes = new CSVParse("notes.csv")) {
@@ -96,7 +112,9 @@ public class InitialData {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
-                Note note = new Note(Integer.parseInt(i.next()), setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                //Note note = new Note(Integer.parseInt(i.next()), setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                Note note = new Note(NoteID, setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                NoteID ++;
                 notes.add(note);
             }
             return notes;
