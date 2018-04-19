@@ -315,9 +315,30 @@ public class MySqlDB implements IDatabase {
         return null;
     }
 
+    /**
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description   A user-editable description for the composition
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
+        return null;
+        //TODO: Implement
+    }
+
     @Override
     public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
         return null;
+    }
+
+    /**
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    @Override
+    public List<Composition> findCompositionsByCompositionId(Integer compositionId) {
+        return null;
+        //TODO: Implement
     }
 
     @Override
