@@ -115,7 +115,8 @@ public interface IDatabase {
     /**
      *
      */
-    void insertSection(String owningComp, Integer sectionID, Defs.Clef clef, Defs.Key key, Defs.TimeSignature timeSig);
+    void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
-    void deleteSection(Integer sectionID, String owningComp);
+
+        void deleteSection(Integer sectionID, Integer owningComp);
 }

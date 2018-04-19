@@ -15,8 +15,6 @@ public class MySqlDB implements IDatabase {
     static{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            //change the database connection so that it is not a static connection.
-            //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","micetr0");
         }
         catch(Exception e){
             System.out.println(e);
@@ -333,12 +331,13 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void insertSection(String owningComp, Integer sectionID, Defs.Clef clef, Defs.Key key, Defs.TimeSignature timeSig) {
+    public void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
 
     }
 
     @Override
-    public void deleteSection(Integer sectionID, String owningComp) {
+    public void deleteSection(Integer sectionID, Integer owningComp) {
 
     }
+
 }

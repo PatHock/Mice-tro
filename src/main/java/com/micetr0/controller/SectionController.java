@@ -27,15 +27,25 @@ public class SectionController {
      * @param: Clef enum type clef
      * @return:
      */
-    public void createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, String compID, Integer secID){
+    public Section createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, Integer compID, Integer secID){
         Section newSection = new Section();
         newSection.setClef(clef);
         newSection.setKey(key);
         newSection.setOwningComp(compID);
         newSection.setTempo(tempo);
+        newSection.setTimeSig(timeSig);
         newSection.setSectionID(secID);
+        return newSection;
     }
 
-    public void deleteSection()
-    {}
+    public void addDBSection(Section section)
+    {
+        db.insertSection(section.getSectionID(), section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getOwningComp());
+    }
+
+    public void deleteSection(Section section)
+    {
+        db.deleteSection(section.getSectionID(), section.getOwningComp());
+    }
+
 }
