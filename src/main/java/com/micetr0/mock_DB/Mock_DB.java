@@ -1,6 +1,7 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
 import java.io.IOException;
@@ -255,6 +256,30 @@ public class Mock_DB implements IDatabase{
     {
         if(accounts.isEmpty() && sections.isEmpty() && compositions.isEmpty() && notes.isEmpty()) {
             readInitialData();
+        }
+    }
+
+    @Override
+    public void insertSection(String owningComp, Integer sectionID, Defs.Clef clef, Defs.Key key, Defs.TimeSignature timeSig) {
+        Section section = new Section();
+        Integer sectionId = sections.get(sections.size() - 1).getSectionID() + 1;
+        section.setSectionID(sectionID);
+        section.setOwningComp(owningComp);
+        section.setClef(clef);
+        section.setKey(key);
+        section.setTimeSig(timeSig);
+        sections.add(section);
+    }
+
+    @Override
+    public void deleteSection(Integer sectionID, String owningComp) {
+        for (Section section : sections) {
+            if(section.getSectionID().equals(sectionID) && section.getOwningComp().equals(owningComp)) {
+                sections.remove(section);
+            }
+            else{
+                //daydream
+            }
         }
     }
 

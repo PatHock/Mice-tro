@@ -1,6 +1,7 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
 import com.micetr0.model.Note;
@@ -108,5 +109,13 @@ public interface IDatabase {
      * create db access from front end. Ease to create and remove db
      */
     void deleteDB();
+
     void createDB();
+
+    /**
+     *
+     */
+    void insertSection(String owningComp, Integer sectionID, Defs.Clef clef, Defs.Key key, Defs.TimeSignature timeSig);
+
+    void deleteSection(Integer sectionID, String owningComp);
 }
