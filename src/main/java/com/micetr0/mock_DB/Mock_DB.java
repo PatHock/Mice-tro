@@ -1,6 +1,5 @@
 package com.micetr0.mock_DB;
 
-import com.micetr0.Credential;
 import com.micetr0.model.*;
 
 import java.io.IOException;
@@ -199,6 +198,23 @@ public class Mock_DB implements IDatabase{
         return accountIdList;
     }
 
+    /**
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description   A user-editable description for the composition
+     * @return isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
+
+        for (Composition composition : compositions) {
+            if(composition.getCompositionID().equals(compositionId)){
+                composition.setDesc(description);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public List<Composition> findAllComps()
    {
@@ -222,6 +238,24 @@ public class Mock_DB implements IDatabase{
 
         return accountIdList;
    }
+
+    /**
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    @Override
+    public List<Composition> findCompositionsByCompositionId(Integer compositionId) {
+        List<Composition> compositionList = new ArrayList<>();
+
+        for (Composition composition: compositions) {
+            if(composition.getCompositionID().equals(compositionId)) {
+                compositionList.add(composition);
+            }
+        }
+
+        return compositionList;
+    }
+
 
     //    /**
 //     * FIXME: needs unit test

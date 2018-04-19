@@ -29,5 +29,7 @@
     <input name="goToLogIn" type="submit" value="Login" />
   </form>
 
+  <div id="numUsersDiv" ></div>
+
   </body>
 </html>

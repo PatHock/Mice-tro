@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.micetr0.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Mock_DBtest {
@@ -140,4 +141,14 @@ class Mock_DBtest {
         db.createDB();
         assertTrue(db.findAllAccounts().size() == 6);
     }
+
+    @Test
+    void findCompositionsByCompositionIdTest() {
+        List<Composition> compositionList = new ArrayList<>();
+        compositionList = db.findCompositionsByCompositionId(4);
+
+        assertEquals(1, compositionList.size());
+        assertEquals(compositionList.get(0).getDesc(), "Deffinicious");
+    }
+
 }

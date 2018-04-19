@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class CompositionControllerTest {
 
     private Composition model;
@@ -42,11 +45,30 @@ class CompositionControllerTest {
     {
         Integer year = 1996;
         controller.changeYear(year);
-        assertTrue(model.getYear() == year);
-        controller.changeYear(1996);
-        assertTrue(model.getYear().equals(year));
+        assertEquals(model.getYear(), year);
+
         year = 2018;
         controller.changeYear(year);
-        assertTrue(model.getYear() == year);
+        assertEquals(model.getYear(), year);
     }
+
+    @Test
+    void updateDescriptionTest() {
+        List<Composition> compositionList = new ArrayList<>();
+        compositionList = db.findCompositionsByCompositionId(4);
+
+        assertEquals(1, compositionList.size());
+        assertEquals(compositionList.get(0).getDesc(), "Deffinicious");
+
+        String description = "1234567890~`!@#$%^&*()_+-=qwertyuiopasdfghjklzxcvbnm[]{}";
+        assertEquals(true, controller.updateDescription(4, description));
+
+
+        compositionList = db.findCompositionsByCompositionId(4);
+        assertEquals(1, compositionList.size());
+
+        assertEquals(description, compositionList.get(0).getDesc());
+    }
+
+
 }

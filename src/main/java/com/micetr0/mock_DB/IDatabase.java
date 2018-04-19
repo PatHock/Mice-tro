@@ -88,6 +88,14 @@ public interface IDatabase {
      */
     List<Integer> findAccountIdByUsername(String username);
 
+    /**
+     *
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description A user-editable description for the composition
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description);
+
 //    /**
 //     * Returns list of usernames and passwords for given account ID
 //     * Map.Entry is compatible with OpenJDK
@@ -103,6 +111,13 @@ public interface IDatabase {
      * @return List of Account IDs with given username and password
      */
     List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
+
+    /**
+     *
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    List<Composition> findCompositionsByCompositionId(Integer compositionId);
 
     /**
      * create db access from front end. Ease to create and remove db
