@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
-
 import com.micetr0.controller.AccountController;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -34,7 +33,6 @@ public class LoginServlet extends HttpServlet {
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
 
-
         if (ajax) {
             System.out.println("LoginServlet AJAX doGet");
             resp.getWriter().write(text);       // Write response body.
@@ -43,7 +41,6 @@ public class LoginServlet extends HttpServlet {
             // Handle regular (JSP) response.
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
-
     }
 
     @Override
