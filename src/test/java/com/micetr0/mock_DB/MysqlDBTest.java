@@ -18,7 +18,7 @@ public class MysqlDBTest {
     }
 
 //TODO: implement tests
-
+/*
     @Test
     public void deleteDBtest() {
         db.deleteDB();
@@ -27,4 +27,5 @@ public class MysqlDBTest {
     public void createDBtest(){
         db.createDB();
     }
+    */
 }
