@@ -361,16 +361,19 @@ public class MySqlDB implements IDatabase {
     /**
      * Creates a composition from given title, description, and year. Generates unique ID
      *
-     * @param title       The name of the composition.
-     * @param description A string that describes the purpose etc of the composition
-     * @param year        The year the composition was written
+     * @param title              The name of the composition.
+     * @param description        A string that describes the purpose etc of the composition
+     * @param year               The year the composition was written
+     * @param isViewablePublicly
+     * @param accountId
      * @return A composition object with unique ID
      */
     @Override
-    public Composition createComposition(String title, String description, Integer year) {
+    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
         return null;
         //TODO: Implement
     }
+
 
     @Override
     public void deleteDB() {

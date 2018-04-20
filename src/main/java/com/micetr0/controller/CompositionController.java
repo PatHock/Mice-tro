@@ -18,6 +18,7 @@ public class CompositionController {
     private LocalDateTime date;
     private String descriptionDefault;
     private String titlePrefixDefault;
+    private Integer isViewablePubliclyDefault;
 
     public CompositionController(){
         date = LocalDateTime.now();
@@ -25,18 +26,37 @@ public class CompositionController {
         db = DatabaseProvider.getInstance();
         descriptionDefault = "Add your creative description here!";
         titlePrefixDefault = "Untitled";
+        isViewablePubliclyDefault = 0; // By default, compositions are NOT publicly viewable
     }
 
 
-    public Composition createComposition(){
+    /**
+     * Creates a new composition and stores it in the database.
+     * @param accountId Unique ID of the account of the user who created the composition
+     * @return New composition.
+     */
+    public Composition createComposition(Integer accountId){
         String title;
+        Integer compId;
+        Composition composition = new Composition();
         date = LocalDateTime.now();
+        Integer year = date.getYear();
 
         // Title is unique based on current date and time
         title =  titlePrefixDefault + "_" +date.toLocalDate() + "-" + date.toLocalTime();
         System.out.println(title);
 
-        return db.createComposition(title, descriptionDefault, date.getYear());
+        compId = db.insertComposition(title, descriptionDefault, year, isViewablePubliclyDefault, accountId);
+
+        System.out.println("Account ID is:" + db.findCompositionsByCompositionId(compId).get(0).getAccountId());
+        composition.setDesc(descriptionDefault);
+        composition.setYear(year);
+        composition.setTitle(title);
+        composition.setCompositionID(compId);
+        composition.setAccountId(accountId);
+        composition.setIsViewablePublicly(isViewablePubliclyDefault);
+
+        return composition;
     }
 
     /**

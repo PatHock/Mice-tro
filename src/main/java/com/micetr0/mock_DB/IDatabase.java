@@ -138,7 +138,7 @@ public interface IDatabase {
      * @param year The year the composition was written
      * @return A composition object with unique ID
      */
-    Composition createComposition(String title, String description, Integer year);
+    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
 
 
 

@@ -291,24 +291,29 @@ public class Mock_DB implements IDatabase{
     /**
      * Creates a composition from given title, description, and year. Generates unique ID
      *
-     * @param title       The name of the composition.
-     * @param description A string that describes the purpose etc of the composition
-     * @param year        The year the composition was written
+     * @param title              The name of the composition.
+     * @param description        A string that describes the purpose etc of the composition
+     * @param year               The year the composition was written
+     * @param isViewablePublicly Integer, should be 0 to indicate that comp is not viewable Publicly, or 1
+     *                           to indicate that it is viewable publicly. Like a boolean, but actually an
+     *                           Integer
+     * @param accountId          Integer that identifies which account owns this composition
      * @return A composition object with unique ID
      */
     @Override
-    public Composition createComposition(String title, String description, Integer year) {
+    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
         Composition composition = new Composition();
         composition.setTitle(title);
         composition.setDesc(description);
         composition.setYear(year);
+        composition.setIsViewablePublicly(isViewablePublicly);
+        composition.setAccountId(accountId);
 
         Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
         composition.setCompositionID(compositionId);
 
         compositions.add(composition);
-        return composition;
-
+        return compositionId;
     }
 
 

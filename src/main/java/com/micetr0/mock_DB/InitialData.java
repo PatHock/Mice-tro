@@ -62,10 +62,15 @@ public class InitialData {
                 composition.setCompositionID(compositionID);
                 compositionID++;
                 composition.setDesc(i.next());
+                composition.setAccountId(Integer.parseInt(i.next()));
+                composition.setIsViewablePublicly(Integer.parseInt(i.next()));
+
                 compositions.add(composition);
             }
-            return compositions;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return compositions;
     }
 
     public static List<Section> getSections() throws IOException{
