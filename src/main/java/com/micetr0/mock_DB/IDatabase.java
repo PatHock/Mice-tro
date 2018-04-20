@@ -152,12 +152,11 @@ public interface IDatabase {
 
     void createDB();
 
-    /**
-     *
-     */
-    void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
+    Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
-    boolean deleteSection(Integer sectionID, Integer owningComp);
+    Boolean deleteSection(Integer sectionID);
 
-    List<Section> findSection(Integer sectionID);
+    Section findSection(Integer sectionID);
+
+    List<Section> findAllSections();
 }

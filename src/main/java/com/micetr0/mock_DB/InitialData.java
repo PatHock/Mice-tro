@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import com.micetr0.definitions.*;
 
 public class InitialData {
 
@@ -90,7 +89,7 @@ public class InitialData {
                 section.setTimeSig(Defs.TimeSignature.valueOf(i.next()));
                 section.setClef(Defs.Clef.valueOf(i.next()));
                 section.setTempo(Integer.parseInt(i.next()));
-                section.setOwningComp(Integer.parseInt(i.next()));
+                section.setCompID(Integer.parseInt(i.next()));
                 sections.add(section);
             }
             return sections;

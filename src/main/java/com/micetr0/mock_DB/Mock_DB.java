@@ -1,6 +1,5 @@
 package com.micetr0.mock_DB;
 
-import com.micetr0.Credential;
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
@@ -362,22 +361,23 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
         Section section = new Section();
         Integer sectionId = sections.get(sections.size() - 1).getSectionID() + 1;
         section.setSectionID(sectionId);
-        section.setOwningComp(composition_ID);
+        section.setCompID(composition_ID);
         section.setClef(clef);
         section.setKey(key);
         section.setTimeSig(timeSig);
         section.setTempo(tempo);
         sections.add(section);
+        return true;
     }
 
     @Override
-    public boolean deleteSection(Integer sectionID, Integer owningComp) {
+    public Boolean deleteSection(Integer sectionID) {
         for (Section section : sections) {
-            if(section.getSectionID().equals(sectionID) && section.getOwningComp().equals(owningComp)) {
+            if(section.getSectionID().equals(sectionID)) {
                 sections.remove(section);
                 return true;
             }
@@ -386,13 +386,22 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public List<Section> findSection(Integer sectionID) {
+    public Section findSection(Integer sectionID) {
         List<Section> newSections = new ArrayList<>();
         for(Section section : sections)
         {
             if(section.getSectionID().equals(sectionID)){
                 newSections.add(section);
             }
+        }
+        return newSections.get(0);  //Sections should never be larger than 1.
+    }
+
+    @Override
+    public List<Section> findAllSections() {
+        List<Section> newSections = new ArrayList<>();
+        for (Section section : sections){
+            newSections.add(section);
         }
         return newSections;
     }

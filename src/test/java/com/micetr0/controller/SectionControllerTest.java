@@ -30,4 +30,9 @@ public class SectionControllerTest {
         controller.createSection(120, Defs.Key.C_MAJOR,Defs.Clef.TREBLE,Defs.TimeSignature.EIGHT_SIXTEEN,2,5);
         assertNotNull(controller.findSection(5));
     }
+    @Test
+    void deleteBDSection(){
+        controller.deleteSection(1);
+        assertEquals(3, controller.findAllSections().size());
+    }
 }

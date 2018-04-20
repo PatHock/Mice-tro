@@ -195,6 +195,6 @@ class Mock_DBtest {
 
     @Test
     void deleteSectionTest(){
-        assertTrue(db.deleteSection(2,1));
+        assertTrue(db.deleteSection(2));
     }
 }

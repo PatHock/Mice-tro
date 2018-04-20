@@ -33,26 +33,35 @@ public class SectionController {
         Section newSection = new Section();
         newSection.setClef(clef);
         newSection.setKey(key);
-        newSection.setOwningComp(compID);
+        newSection.setCompID(compID);
         newSection.setTempo(tempo);
         newSection.setTimeSig(timeSig);
         newSection.setSectionID(secID);
-        return newSection;
+        if(addDBSection(newSection)) {
+            return newSection;
+        }
+        return null;
     }
 
-    public void addDBSection(Section section)
+    private Boolean addDBSection(Section section)
     {
-        db.insertSection(section.getSectionID(), section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getOwningComp());
+        db.insertSection(section.getSectionID(), section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getCompID());
+        return true;
     }
 
-    public void deleteSection(Section section)
+    public Boolean deleteSection(Integer sectionID)
     {
-        db.deleteSection(section.getSectionID(), section.getOwningComp());
+        db.deleteSection(sectionID);
+        return true;
     }
-    public List<Section> findSection(Integer sectionID)
+    public Section findSection(Integer sectionID)
     {
         return db.findSection(sectionID);
 
+    }
+
+    public List<Section> findAllSections(){
+        return db.findAllSections();
     }
 
     //Will not implement updateSection functions for time being.
