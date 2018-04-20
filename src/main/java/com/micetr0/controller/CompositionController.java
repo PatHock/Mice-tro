@@ -30,6 +30,7 @@ public class CompositionController {
 
     public Composition createComposition(){
         String title;
+        date = LocalDateTime.now();
 
         // Title is unique based on current date and time
         title =  titlePrefixDefault + "_" +date.toLocalDate() + "-" + date.toLocalTime();
