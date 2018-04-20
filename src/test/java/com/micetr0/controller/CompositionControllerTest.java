@@ -23,6 +23,26 @@ class CompositionControllerTest {
         db = DatabaseProvider.getInstance();
     }
 
+    @Test
+    void deleteCompositionTest() {
+        Integer initialDbSize;
+        Composition compFergie;
+
+
+        initialDbSize = db.findAllComps().size();
+        compFergie = db.findCompositionsByCompositionId(4).get(0);
+
+        assertTrue(controller.deleteComposition(compFergie));
+        assertEquals(initialDbSize - 1, db.findAllComps().size());
+
+
+        // try to delete account with ID that doesn't exist
+        compFergie.setCompositionID(564564);
+        assertFalse(controller.deleteComposition(compFergie));
+        assertEquals(initialDbSize - 1, db.findAllComps().size());
+
+
+    }
 
     @Test
     void createCompositionTest() {
@@ -60,6 +80,8 @@ class CompositionControllerTest {
         title = "Just another one of those random off-the-cuff test code variables :)";
         assertTrue(controller.updateTitle(compFergie, title));
         assertEquals(title, compFergie.getTitle());
+
+        assertEquals(title, db.findCompositionsByCompositionId(4).get(0).getTitle());
 
     }
 

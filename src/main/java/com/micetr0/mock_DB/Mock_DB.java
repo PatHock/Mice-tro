@@ -127,6 +127,25 @@ public class Mock_DB implements IDatabase{
     }
 
     /**
+     * @param compositionId Unique Id for composition.
+     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
+     * not exist, etc
+     */
+    @Override
+    public Boolean deleteComposition(Integer compositionId) {
+        Boolean isCompDeleted = false;
+
+        for(Composition composition : compositions) {
+            if (composition.getCompositionID().equals(compositionId)){
+                compositions.remove(composition);
+                isCompDeleted = true;
+            }
+        }
+
+        return isCompDeleted;
+    }
+
+    /**
      *
      * @param measureId Unique ID for measure in database.
      * @param measureIndex  Position of a note in a measure, 0 being the first position
@@ -144,16 +163,6 @@ public class Mock_DB implements IDatabase{
     }
 
 
-
-    @Override
-    public void deleteComposition(Integer compositionId)
-    {
-        List<String> compId = new ArrayList<>();
-        compId.add(String.valueOf(compositionId));
-        List<Composition> comp = findCompositionsByCompIds(compId);
-        compositions.remove(comp.get(0));
-
-    }
 
    @Override
     public void deleteAccount(String username)

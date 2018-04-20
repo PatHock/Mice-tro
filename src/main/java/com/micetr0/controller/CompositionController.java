@@ -60,6 +60,18 @@ public class CompositionController {
     }
 
     /**
+     * Deletes composition from database.
+     * @param composition Composition object to be deleted
+     * @return isCompDeleted: true if deletion is successful, false if deletion failed (composition does
+     * not exist, etc)
+     */
+    public Boolean deleteComposition(Composition composition) {
+
+        return db.deleteComposition(composition.getCompositionID());
+    }
+
+
+    /**
      * Attempts to update the title attribute of the given composition in the database. If this is successful,
      * the title of the composition object is updated, and updateTitle returns true.
      * @param composition   A composition object.

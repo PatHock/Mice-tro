@@ -53,11 +53,14 @@ public interface IDatabase {
      */
     List<Account> findCurrentAccount(Integer accountId);
 
+
     /**
      *
-     * @param compositionId Unique ID for composition.
+     * @param compositionId Unique Id for composition.
+     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
+     * not exist, etc
      */
-    void deleteComposition(Integer compositionId);
+    Boolean deleteComposition(Integer compositionId);
 
     /**
      *

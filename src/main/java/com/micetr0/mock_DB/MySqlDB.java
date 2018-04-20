@@ -285,9 +285,15 @@ public class MySqlDB implements IDatabase {
         return null;
     }
 
+    /**
+     * @param compositionId Unique Id for composition.
+     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
+     * not exist, etc
+     */
     @Override
-    public void deleteComposition(Integer compositionId) {
-
+    public Boolean deleteComposition(Integer compositionId) {
+        return null;
+        //TODO: Implement
     }
 
     @Override

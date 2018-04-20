@@ -75,12 +75,17 @@ class Mock_DBtest {
     @Test
     void deleteCompositionTest()
     {
+        Integer initialDbSize;
         Integer compositionId = 4;
-        db.deleteComposition(compositionId);
 
-        List<Composition> comps = db.findAllComps();
-        assertEquals(4, comps.size());
-        assertEquals("Hump De Bump", comps.get(comps.size() - 1).getTitle());
+        initialDbSize = db.findAllComps().size();
+        assertTrue(db.deleteComposition(compositionId));
+
+        assertEquals(initialDbSize - 1, db.findAllComps().size());
+
+        assertFalse(db.deleteComposition(564648));
+        assertEquals(initialDbSize - 1, db.findAllComps().size());
+
     }
 
     @Test
@@ -144,16 +149,31 @@ class Mock_DBtest {
 
     @Test
     void findCompositionsByCompositionIdTest() {
-        List<Composition> compositionList = new ArrayList<>();
+        List<Composition> compositionList;
+        Composition compFergie;
+
         compositionList = db.findCompositionsByCompositionId(4);
 
         assertEquals(1, compositionList.size());
-        assertEquals(compositionList.get(0).getDesc(), "Deffinicious");
+        compFergie = compositionList.get(0);
+
+        assertEquals("Deffinicious", compFergie.getDesc());
+        assertEquals((Integer) 2018, compFergie.getYear());
+        assertEquals((Integer) 1, compFergie.getIsViewablePublicly());
+        assertEquals((Integer) 2, compFergie.getAccountId());
+        assertEquals("I Can't Think of Another Title", compFergie.getTitle());
+
     }
 
     @Test
     void updateCompositionTitleByCompositionIdTest(){
+        String title;
+        Composition compFergie = db.findCompositionsByCompositionId(4).get(0);
+        assertEquals("I Can't Think of Another Title", compFergie.getTitle());
 
+        title = "New Ferg, new Title";
+        assertTrue(db.updateCompositionTitleByCompositionId(4, title));
+        assertEquals(title, db.findCompositionsByCompositionId(4).get(0).getTitle());
     }
 
     @Test
