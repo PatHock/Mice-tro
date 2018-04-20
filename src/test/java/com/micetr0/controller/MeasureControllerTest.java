@@ -11,23 +11,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MeasureControllerTest {
 
+    MeasureController controller;
 
     @BeforeEach
     void setUp()
     {
         DatabaseProvider.setInstance(new Mock_DB());
-        MeasureController controller = new MeasureController();
+        controller = new MeasureController();
     }
 
     @Test
     void createMeasureTest(){
-        //TODO: Implement
+        assertNotNull(controller.createMeasure(1));
     }
 
+    /*
     @Test
     void deleteMeasureTest(){
-        //TODO: Implement
+        controller.insertMeasure(1);
+        assertTrue(controller.deleteMeasure(1));
     }
-
+*/
 
 }

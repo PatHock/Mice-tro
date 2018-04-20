@@ -411,4 +411,14 @@ public class MySqlDB implements IDatabase {
         return null;
     }
 
+    @Override
+    public Boolean deleteMeasure(Integer measureID) {
+        return null;
+    }
+
+    @Override
+    public Boolean insertMeasure(Integer sectionID) {
+        return null;
+    }
+
 }

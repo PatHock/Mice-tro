@@ -15,7 +15,7 @@ class MeasureTest {
     void setUp() {
         sectionID = 0;
         measureID = 0;
-        measure = new Measure(measureID, sectionID);
+        measure = new Measure();
     }
 
     @Test

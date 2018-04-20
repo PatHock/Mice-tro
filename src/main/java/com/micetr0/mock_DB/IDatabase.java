@@ -159,4 +159,10 @@ public interface IDatabase {
     Section findSection(Integer sectionID);
 
     List<Section> findAllSections();
+
+    Boolean deleteMeasure(Integer measureID);
+
+    Boolean insertMeasure(Integer sectionID);
+
+
 }

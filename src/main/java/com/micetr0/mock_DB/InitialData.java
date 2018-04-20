@@ -99,14 +99,17 @@ public class InitialData {
     public static List<Measure> getMeasures() throws IOException{
         List<Measure> measures = new ArrayList<>();
         try (CSVParse parseMeasures = new CSVParse("measures.csv")){
-            Integer MeasureID = 1;
+            Integer  measureID = 1;
             while(true) {
                 List<String> tuple = parseMeasures.next();
                 if(tuple == null) {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
-                Measure measure = new Measure(Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                Measure measure = new Measure();
+                measure.setMeasureID(measureID);
+                measureID++;
+                measure.setSectionID(Integer.parseInt(i.next()));
             }
         }
         return measures;

@@ -13,6 +13,7 @@ public class Mock_DB implements IDatabase{
     private List<Section> sections;
     private List<Composition> compositions;
     private List<Note> notes;
+    private List<Measure> measures;
 
     public Mock_DB()
     {
@@ -20,6 +21,7 @@ public class Mock_DB implements IDatabase{
         notes = new ArrayList<>();
         sections = new ArrayList<>();
         compositions = new ArrayList<>();
+        measures = new ArrayList<>();
 
         readInitialData();
 
@@ -27,6 +29,7 @@ public class Mock_DB implements IDatabase{
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
         System.out.println(notes.size() + "notes");
+        System.out.println(measures.size() + "measures");
 
     }
 
@@ -37,6 +40,7 @@ public class Mock_DB implements IDatabase{
             compositions.addAll(InitialData.getCompositions());
             sections.addAll(InitialData.getSections());
             notes.addAll(InitialData.getNotes());
+            measures.addAll(InitialData.getMeasures());
         }
         catch (IOException e)
         {
@@ -406,5 +410,26 @@ public class Mock_DB implements IDatabase{
         return newSections;
     }
 
-}
+    @Override
+    public Boolean deleteMeasure(Integer measureID) {
+        for (Measure measure : measures){
+            if(measure.getMeasureID().equals(measureID))
+            {
+                measures.remove(measure);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean insertMeasure(Integer sectionID) {
+        Measure measure = new Measure();
+        measure.setMeasureID(measures.get(measures.size()-1).getMeasureID()+1);
+        measures.add(measure);
+        return true;
+
+        }
+    }
+
 

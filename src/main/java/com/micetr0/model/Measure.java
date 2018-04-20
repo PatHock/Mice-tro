@@ -15,12 +15,9 @@ public class Measure {
 
     /**
      * Measure constructor.
-     * @param measureID unique ID of this measure
-     * @param sectionID Section ID of the section this measure belongs to
      */
-    public Measure(Integer measureID, Integer sectionID) {
-        this.measureID = measureID;
-        this.sectionID = sectionID;
+    public Measure() {
+
     }
 
     /**
