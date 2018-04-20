@@ -286,11 +286,6 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void insertComposition(Composition composition) {
-
-    }
-
-    @Override
     public void deleteComposition(Integer compositionId) {
 
     }
@@ -326,6 +321,17 @@ public class MySqlDB implements IDatabase {
         //TODO: Implement
     }
 
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param title         The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
+        return null;
+        //TODO: Implement
+    }
+
     @Override
     public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
         return null;
@@ -348,6 +354,20 @@ public class MySqlDB implements IDatabase {
      */
     @Override
     public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
+        return null;
+        //TODO: Implement
+    }
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     *
+     * @param title       The name of the composition.
+     * @param description A string that describes the purpose etc of the composition
+     * @param year        The year the composition was written
+     * @return A composition object with unique ID
+     */
+    @Override
+    public Composition createComposition(String title, String description, Integer year) {
         return null;
         //TODO: Implement
     }

@@ -45,17 +45,11 @@ public interface IDatabase {
     List<Account> findAllAccounts();
 
     /**
-     *FIXME: db methods shouldn't generate model objects
+     *
      * @param accountId unique identifier for accounts.
      * @return list of accounts
      */
     List<Account> findCurrentAccount(Integer accountId);
-
-    /**
-     *
-     * @param composition a composition object
-     */
-    void insertComposition(Composition composition);
 
     /**
      *
@@ -96,6 +90,14 @@ public interface IDatabase {
      */
     Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description);
 
+    /**
+     *
+     * @param compositionId Unique Identifier for compositions.
+     * @param title The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title);
+
 //    /**
 //     * Returns list of usernames and passwords for given account ID
 //     * Map.Entry is compatible with OpenJDK
@@ -126,6 +128,18 @@ public interface IDatabase {
      * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
      */
     Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year);
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     * @param title The name of the composition.
+     * @param description A string that describes the purpose etc of the composition
+     * @param year The year the composition was written
+     * @return A composition object with unique ID
+     */
+    Composition createComposition(String title, String description, Integer year);
+
+
+
     /**
      * create db access from front end. Ease to create and remove db
      */

@@ -110,6 +110,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
+
     public List<Account> findCurrentAccount(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
@@ -140,13 +141,7 @@ public class Mock_DB implements IDatabase{
         return resultList;
     }
 
-    @Override
-    public void insertComposition(Composition composition)
-    {
-        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
-        composition.setCompositionID(compositionId);
-        compositions.add(composition);
-    }
+
 
     @Override
     public void deleteComposition(Integer compositionId)
@@ -215,6 +210,25 @@ public class Mock_DB implements IDatabase{
         return false;
     }
 
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param title         The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
+        Boolean isCompUpdated = false;
+
+        for (Composition composition : compositions) {
+            if (composition.getCompositionID().equals(compositionId)) {
+                composition.setTitle(title);
+                isCompUpdated = true;
+            }
+        }
+
+        return isCompUpdated;
+    }
+
     @Override
     public List<Composition> findAllComps()
    {
@@ -270,6 +284,29 @@ public class Mock_DB implements IDatabase{
             }
         }
         return false;
+    }
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     *
+     * @param title       The name of the composition.
+     * @param description A string that describes the purpose etc of the composition
+     * @param year        The year the composition was written
+     * @return A composition object with unique ID
+     */
+    @Override
+    public Composition createComposition(String title, String description, Integer year) {
+        Composition composition = new Composition();
+        composition.setTitle(title);
+        composition.setDesc(description);
+        composition.setYear(year);
+
+        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
+        composition.setCompositionID(compositionId);
+
+        compositions.add(composition);
+        return composition;
+
     }
 
 

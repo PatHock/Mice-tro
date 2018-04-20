@@ -37,11 +37,27 @@ class CompositionControllerTest {
 //    }
 
 
+    @Test
+    void createCompositionTest() {
+        //TODO: Add more testing here
+        controller.createComposition();
+    }
 
+    @Test
+    void updateTitleTest() {
+        Composition compFergie = db.findCompositionsByCompositionId(4).get(0);
+        String title;
+
+        assertEquals("I Can't Think of Another Title", compFergie.getTitle());
+
+        title = "Just another one of those random off-the-cuff test code variables :)";
+        assertTrue(controller.updateTitle(compFergie, title));
+        assertEquals(title, compFergie.getTitle());
+
+    }
 
     @Test
     void updateYearTest() {
-        List<Composition> compositionList;
         Composition compFergie;
         Integer year;
 
@@ -66,11 +82,11 @@ class CompositionControllerTest {
     void updateDescriptionTest() {
         List<Composition> compositionList;
 
-        Composition compFergie = new Composition();
-        compFergie.setTitle("I Can't Think of Another Title");
-        compFergie.setYear(2018);
-        compFergie.setDesc("Deffinicious");
-        compFergie.setCompositionID(4);
+        Composition compFergie = db.findCompositionsByCompositionId(4).get(0);
+//        compFergie.setTitle("I Can't Think of Another Title");
+//        compFergie.setYear(2018);
+//        compFergie.setDesc("Deffinicious");
+//        compFergie.setCompositionID(4);
 
         String description = "1234567890~`!@#$%^&*()_+-=qwertyuiopasdfghjklzxcvbnm[]{}";
 
