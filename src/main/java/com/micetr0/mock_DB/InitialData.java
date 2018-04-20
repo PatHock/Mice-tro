@@ -56,7 +56,7 @@ public class InitialData {
                 compositionID++;
                 composition.setDesc(i.next());
                 composition.setAccountId(Integer.parseInt(i.next()));
-                composition.setIsViewablePublicly(Integer.parseInt(i.next()));
+                composition.setIsViewablePublicly(Boolean.parseBoolean(i.next()));
 
                 compositions.add(composition);
             }

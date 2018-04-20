@@ -107,7 +107,7 @@ public class MySqlDB implements IDatabase {
                     stmt2 = conn.prepareStatement(
                             "create table compositions (composition_id int auto_increment primary key, " +
                                     "title varchar(40), year int, description varchar(40), " +
-                                    "account_id int references account(account_id), viewableComp int);"
+                                    "account_id int references account(account_id), viewableComp BIT );"
                     );
                     stmt2.executeUpdate();
 
@@ -268,6 +268,16 @@ public class MySqlDB implements IDatabase {
     @Override
     public List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex) {
         return null;
+    }
+
+    /**
+     * @param accountId Unique ID for account as stored in database.
+     * @return List of compositions
+     */
+    @Override
+    public List<Composition> findCompositionsByAccountId(Integer accountId) {
+        return null;
+        //TODO: Implement
     }
 
 //    @Override
@@ -499,12 +509,13 @@ public class MySqlDB implements IDatabase {
      * @param title              The name of the composition.
      * @param description        A string that describes the purpose etc of the composition
      * @param year               The year the composition was written
-     * @param isViewablePublicly
-     * @param accountId
+     * @param accountId Unique ID for account
+     * @param isViewablePublicly False indicates that composition is not viewable to the public. True indicates that
+     *                           composition is viewable to the public
      * @return A composition object with unique ID
      */
     @Override
-    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+    public Integer insertComposition(String title, String description, Integer year, Boolean isViewablePublicly, Integer accountId) {
         return null;
         //TODO: Implement
     }

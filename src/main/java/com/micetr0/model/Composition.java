@@ -28,7 +28,7 @@ public class Composition {
     private Integer compositionID;
     private String desc;
     private Integer accountId;
-    private Integer isViewablePublicly;
+    private Boolean isViewablePublicly;
 
 
     public String getTitle() {
@@ -78,7 +78,7 @@ public class Composition {
      * @param isViewablePublicly 0 indicates composition is not viewable publicly, 1 indicates that composition
      *                           is viewable publicly
      */
-    public void setIsViewablePublicly(Integer isViewablePublicly) {
+    public void setIsViewablePublicly(Boolean isViewablePublicly) {
         this.isViewablePublicly = isViewablePublicly;
     }
 
@@ -87,7 +87,7 @@ public class Composition {
      * @return 0 indicates composition is not viewable publicly, 1 indicates that composition
      * is viewable publicly
      */
-    public Integer getIsViewablePublicly() {
+    public Boolean getIsViewablePublicly() {
         return this.isViewablePublicly;
     }
 }

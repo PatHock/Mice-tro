@@ -48,15 +48,15 @@ class CompositionTest {
 
     @Test
     void setIsViewablePubliclyTest() {
-        Integer isViewablePublicly;
+        Boolean isViewablePublicly;
 
         assertNull(composition.getIsViewablePublicly());
 
-        isViewablePublicly = 0;
+        isViewablePublicly = false;
         composition.setIsViewablePublicly(isViewablePublicly);
         assertEquals(isViewablePublicly, composition.getIsViewablePublicly());
 
-        isViewablePublicly = 1;
+        isViewablePublicly = true;
         composition.setIsViewablePublicly(isViewablePublicly);
         assertEquals(isViewablePublicly, composition.getIsViewablePublicly());
 
@@ -76,40 +76,5 @@ class CompositionTest {
         composition.setAccountId(accountId);
         assertEquals(accountId, composition.getAccountId());
 
-    }
-
-    @Test
-    void setAccountIDTest()
-    {
-        Integer accountID = 30;
-        composition.setAccountID(accountID);
-
-        assertTrue(composition.getAccountID() == 30);
-    }
-
-    @Test
-    void getAccountIDTest()
-    {
-        Integer accountID = 1;
-        composition.setAccountID(accountID);
-
-        assertTrue(composition.getAccountID() == 1);
-    }
-
-    @Test
-    void setViewableTest()
-    {
-        Integer viewable = 1;
-        composition.setViewable(viewable);
-
-        assertTrue(composition.getViewable() == 1);
-    }
-
-    void getViewableTest()
-    {
-        Integer viewable = 0;
-        composition.setViewable(viewable);
-
-        assertTrue(composition.getViewable() == 0);
     }
 }

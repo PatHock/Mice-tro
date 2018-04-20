@@ -37,8 +37,7 @@ public interface IDatabase {
      * @param accountId Unique ID for account as stored in database.
      * @return List of compositions
      */
-
-//List<Note> findNotesByMeasureId(Integer measureId);
+    List<Composition> findCompositionsByAccountId(Integer accountId);
 
     /**
      *
@@ -139,9 +138,12 @@ public interface IDatabase {
      * @param title The name of the composition.
      * @param description A string that describes the purpose etc of the composition
      * @param year The year the composition was written
-     * @return A composition object with unique ID
+     * @param accountId Unique ID for account
+     * @param isViewablePublicly False indicates that composition is not viewable to the public. True indicates that
+     *                           composition is viewable to the public
+     * @return A composition's unique ID
      */
-    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
+    Integer insertComposition(String title, String description, Integer year, Boolean isViewablePublicly, Integer accountId);
 
 
 

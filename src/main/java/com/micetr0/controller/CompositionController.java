@@ -18,7 +18,7 @@ public class CompositionController {
     private LocalDateTime date;
     private String descriptionDefault;
     private String titlePrefixDefault;
-    private Integer isViewablePubliclyDefault;
+    private Boolean isViewablePubliclyDefault;
 
     public CompositionController(){
         date = LocalDateTime.now();
@@ -26,7 +26,7 @@ public class CompositionController {
         db = DatabaseProvider.getInstance();
         descriptionDefault = "Add your creative description here!";
         titlePrefixDefault = "Untitled";
-        isViewablePubliclyDefault = 0; // By default, compositions are NOT publicly viewable
+        isViewablePubliclyDefault = false; // By default, compositions are NOT publicly viewable
     }
 
 

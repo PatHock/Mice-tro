@@ -2,6 +2,7 @@ package com.micetr0.mock_DB;
 
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,25 +66,22 @@ public class Mock_DB implements IDatabase{
     }
 
 
-//    /**
-//     *
-//     */
-//    @Override
-//    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
-//    {
-//        List<Composition> resultList;
-//        List<String> compList = new ArrayList<>();
-//        for (Account account : accounts)
-//        {
-//            if(account.getAccountID().equals(accountId))
-//            {
-//                compList.addAll(account.getViewableComps());
-//                compList.addAll(account.getEditableComps());
-//            }
-//        }
-//        resultList = findCompositionsByCompIds(compList);
-//        return resultList;
-//    }
+    /**
+     *
+     */
+    @Override
+    public List<Composition> findCompositionsByAccountId(Integer accountId)
+    {
+        List<Composition> compositionList = new ArrayList<>();
+
+        for (Composition composition : compositions) {
+            if (composition.getAccountId().equals(accountId)) {
+                compositionList.add(composition);
+            }
+        }
+
+        return compositionList;
+    }
 
     private List<Composition> findCompositionsByCompIds(List<String> compIds)
     {
@@ -168,10 +166,11 @@ public class Mock_DB implements IDatabase{
        List<Account> accIds = findAccountByUsername(username);
 
        if(accIds.size() < 1){
+           //TODO: fix
            //too many accounts in returned account list, should only be one, throw exception
        }
 
-       Account tempAccount = new Account();
+       Account tempAccount;
        tempAccount = accIds.get(0);
 
        for (Account acc : accounts)
@@ -319,7 +318,7 @@ public class Mock_DB implements IDatabase{
      * @return A composition object with unique ID
      */
     @Override
-    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+    public Integer insertComposition(String title, String description, Integer year, Boolean isViewablePublicly, Integer accountId) {
         Composition composition = new Composition();
         composition.setTitle(title);
         composition.setDesc(description);
@@ -335,23 +334,6 @@ public class Mock_DB implements IDatabase{
     }
 
 
-    //    /**
-//     * FIXME: needs unit test
-//     * @param accountId Unique integer ID for accounts in database
-//     * @return List of passwords that are associated with this account ID
-//     */
-//    @Override
-//    public List<Credential> findUsernameAndPasswordByAccountId(Integer accountId) {
-//        List<Credential> credentialList = new ArrayList<>();
-//
-//        for (Account acc : accounts) {
-//            if(accountId.equals(acc.getAccountID())) {
-//                credentialList.add(new Credential(acc.getUsername(), acc.getPassword()));
-//            }
-//        }
-//
-//        return credentialList;
-//    }
 
     @Override
     public void deleteDB()

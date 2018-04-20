@@ -48,7 +48,15 @@ class Mock_DBtest {
 
         assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
     }
-/*
+
+    @Test
+    void findCompositionsByAccountIdTest()
+    {
+        List<Composition> comps = db.findCompositionsByAccountId(2);
+        assertEquals(2, comps.size());
+
+    }
+
     @Test
     void findAccountByAccountIDTest()
     {
@@ -60,7 +68,7 @@ class Mock_DBtest {
     void findAccountByUsernameTest(){
 
     }
-*/
+
     @Test
     void findAllAccountsTest()
     {
@@ -143,7 +151,7 @@ class Mock_DBtest {
 
         assertEquals("Deffinicious", compFergie.getDesc());
         assertEquals((Integer) 2018, compFergie.getYear());
-        assertEquals((Integer) 1, compFergie.getIsViewablePublicly());
+        assertEquals(true, compFergie.getIsViewablePublicly());
         assertEquals((Integer) 2, compFergie.getAccountId());
         assertEquals("I Can't Think of Another Title", compFergie.getTitle());
 
