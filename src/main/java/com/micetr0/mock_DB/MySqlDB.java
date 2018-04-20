@@ -331,17 +331,22 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
-
-    }
-
-    @Override
-    public boolean deleteSection(Integer sectionID, Integer owningComp) {
+    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
         return false;
     }
 
     @Override
-    public List<Section> findSection(Integer sectionID) {
+    public Boolean deleteSection(Integer sectionID) {
+        return false;
+    }
+
+    @Override
+    public Section findSection(Integer sectionID) {
+        return null;
+    }
+
+    @Override
+    public List<Section> findAllSections() {
         return null;
     }
 
