@@ -20,7 +20,6 @@ public class CompositionController {
     private String titlePrefixDefault;
 
     public CompositionController(){
-//        date.format(DateTimeFormatter.RFC_1123_DATE_TIME);
         date = LocalDateTime.now();
 
         db = DatabaseProvider.getInstance();
@@ -102,17 +101,6 @@ public class CompositionController {
 
         return isCompUpdated;
     }
-
-//    public Composition createComposition(String title, Integer year, String desc, Integer compID)
-//    {
-//        Composition newComp = new Composition();
-//        newComp.setYear(year);
-//        newComp.setTitle(title);
-//        newComp.setCompositionID(compID);
-//        newComp.setDesc(desc);
-//
-//        return newComp;
-//    }
 
     /**
      * Private helper function to check if year is not in the future

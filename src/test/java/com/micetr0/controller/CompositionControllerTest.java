@@ -83,10 +83,6 @@ class CompositionControllerTest {
         List<Composition> compositionList;
 
         Composition compFergie = db.findCompositionsByCompositionId(4).get(0);
-//        compFergie.setTitle("I Can't Think of Another Title");
-//        compFergie.setYear(2018);
-//        compFergie.setDesc("Deffinicious");
-//        compFergie.setCompositionID(4);
 
         String description = "1234567890~`!@#$%^&*()_+-=qwertyuiopasdfghjklzxcvbnm[]{}";
 
