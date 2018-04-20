@@ -140,4 +140,15 @@ class Mock_DBtest {
         db.createDB();
         assertTrue(db.findAllAccounts().size() == 6);
     }
+
+    @Test
+    void insertSectionTest(){
+        db.insertSection(1,Defs.Key.D_MAJOR,Defs.TimeSignature.FOUR_FOUR,Defs.Clef.TREBLE, 120, 1);
+        assertNotNull(db.findSection(1));
+    }
+
+    @Test
+    void deleteSectionTest(){
+        assertTrue(db.deleteSection(2,1));
+    }
 }

@@ -11,6 +11,8 @@ import com.micetr0.definitions.Defs;
 import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Section;
+
+import java.util.List;
 //import org.springframework.stereotype.Controller;
 
 //@Controller
@@ -47,5 +49,12 @@ public class SectionController {
     {
         db.deleteSection(section.getSectionID(), section.getOwningComp());
     }
+    public List<Section> findSection(Integer sectionID)
+    {
+        return db.findSection(sectionID);
+
+    }
+
+    //Will not implement updateSection functions for time being.
 
 }

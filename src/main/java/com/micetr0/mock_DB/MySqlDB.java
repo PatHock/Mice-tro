@@ -336,8 +336,13 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void deleteSection(Integer sectionID, Integer owningComp) {
+    public boolean deleteSection(Integer sectionID, Integer owningComp) {
+        return false;
+    }
 
+    @Override
+    public List<Section> findSection(Integer sectionID) {
+        return null;
     }
 
 }

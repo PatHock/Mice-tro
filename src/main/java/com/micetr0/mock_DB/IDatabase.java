@@ -5,6 +5,7 @@ import com.micetr0.definitions.Defs;
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
 import com.micetr0.model.Note;
+import com.micetr0.model.Section;
 
 import java.util.List;
 import java.util.Map;
@@ -117,6 +118,7 @@ public interface IDatabase {
      */
     void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
+    boolean deleteSection(Integer sectionID, Integer owningComp);
 
-        void deleteSection(Integer sectionID, Integer owningComp);
+    List<Section> findSection(Integer sectionID);
 }
