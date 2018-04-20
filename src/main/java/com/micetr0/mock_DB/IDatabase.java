@@ -1,9 +1,11 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.Account;
 import com.micetr0.model.Composition;
 import com.micetr0.model.Note;
+import com.micetr0.model.Section;
 
 import java.util.List;
 import java.util.Map;
@@ -45,23 +47,20 @@ public interface IDatabase {
     List<Account> findAllAccounts();
 
     /**
-     *FIXME: db methods shouldn't generate model objects
+     *
      * @param accountId unique identifier for accounts.
      * @return list of accounts
      */
     List<Account> findAccountByAccountID(Integer accountId);
 
-    /**
-     *
-     * @param composition a composition object
-     */
-    void insertComposition(Composition composition);
 
     /**
      *
-     * @param compositionId Unique ID for composition.
+     * @param compositionId Unique Id for composition.
+     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
+     * not exist, etc
      */
-    void deleteComposition(Integer compositionId);
+    Boolean deleteComposition(Integer compositionId);
 
     /**
      *
@@ -88,6 +87,22 @@ public interface IDatabase {
      */
     List<Account> findAccountByUsername(String username);
 
+    /**
+     *
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description A user-editable description for the composition
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description);
+
+    /**
+     *
+     * @param compositionId Unique Identifier for compositions.
+     * @param title The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title);
+
 //    /**
 //     * Returns list of usernames and passwords for given account ID
 //     * Map.Entry is compatible with OpenJDK
@@ -105,8 +120,43 @@ public interface IDatabase {
     List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
 
     /**
+     *
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    List<Composition> findCompositionsByCompositionId(Integer compositionId);
+
+    /**
+     *
+     * @param compositionId Unique Identifier for compositions.
+     * @param year Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year);
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     * @param title The name of the composition.
+     * @param description A string that describes the purpose etc of the composition
+     * @param year The year the composition was written
+     * @return A composition object with unique ID
+     */
+    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
+
+
+
+    /**
      * create db access from front end. Ease to create and remove db
      */
     void deleteDB();
+
     void createDB();
+
+    Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
+
+    Boolean deleteSection(Integer sectionID);
+
+    Section findSection(Integer sectionID);
+
+    List<Section> findAllSections();
 }
