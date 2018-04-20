@@ -15,8 +15,6 @@ public class MySqlDB implements IDatabase {
     static{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            //change the database connection so that it is not a static connection.
-            //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","micetr0");
         }
         catch(Exception e){
             System.out.println(e);
@@ -101,32 +99,34 @@ public class MySqlDB implements IDatabase {
 
                 try {
                     stmt1 = conn.prepareStatement(
-                            "create table accounts (account_id int auto_increment primary key, " +
-                                    "username varchar(40), password varchar(40), editableComps varchar(40), " +
-                                    "viewableComps varchar(40));"
+                            "create table accounts (account_id int auto_increment primary key," +
+                                    " username varchar(40), password varchar(40));"
                     );
                     stmt1.executeUpdate();
 
                     stmt2 = conn.prepareStatement(
-                            "create table compositions (composition_id int auto_increment primary key," +
-                                    " title varchar(40), year int, description varchar(40));"
+                            "create table compositions (composition_id int auto_increment primary key, " +
+                                    "title varchar(40), year int, description varchar(40), " +
+                                    "account_id int references account(account_id), viewableComp int);"
                     );
                     stmt2.executeUpdate();
 
                     stmt3 = conn.prepareStatement(
                             "create table sections (section_id int auto_increment primary key, " +
-                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40));"
+                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), " +
+                                    "composition_id int references compositions(composition_id));"
                     );
                     stmt3.executeUpdate();
 
                     stmt4 = conn.prepareStatement(
-                            "create table measures (measure_id int auto_increment primary key, section_id int);"
+                            "create table measures (measure_id int auto_increment primary key, " +
+                                    "section_id int references sections(section_id));"
                     );
                     stmt4.executeUpdate();
 
                     stmt5 = conn.prepareCall(
                             "create table notes (note_id int auto_increment primary key, pitch varchar(40), " +
-                                    "type varchar(40), measureindex int, measure_id varchar(40));"
+                                    "type varchar(40), measureindex int, measure_id int references measures(measure_id));"
                     );
                     stmt5.executeUpdate();
 
@@ -381,4 +381,15 @@ public class MySqlDB implements IDatabase {
     public void createDB() {
         createTables();
     }
+
+    @Override
+    public void insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+
+    }
+
+    @Override
+    public void deleteSection(Integer sectionID, Integer owningComp) {
+
+    }
+
 }
