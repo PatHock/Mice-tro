@@ -10,20 +10,21 @@ import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.mock_DB.InitDatabase;
 import com.micetr0.model.Note;
 import com.micetr0.definitions.Defs;
+//import org.springframework.stereotype.Controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * adds notes from database
  */
+//@Controller
 public class NoteController {
 
     private IDatabase db;
     private List<Note> dbNotes = new ArrayList<>();
 
     public NoteController() {
-        //Fixme: database is instantiated here for testing purposes
-        InitDatabase.init(true);
         db = DatabaseProvider.getInstance();
     }
 

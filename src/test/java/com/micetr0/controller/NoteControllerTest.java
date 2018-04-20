@@ -1,22 +1,29 @@
 package com.micetr0.controller;
 
 import com.micetr0.definitions.Defs;
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.Mock_DB;
 import com.micetr0.model.Note;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class NoteControllerTest {
+class NoteControllerTest {
 
+    private IDatabase db;
     private NoteController controller;
-    @Before
-    public void setUp(){
+
+    @BeforeEach
+    void setUp(){
+        DatabaseProvider.setInstance(new Mock_DB());
+        db = DatabaseProvider.getInstance();
         controller = new NoteController();
     }
 
     @Test
-    public void addNote() {
+    void addNote() {
         // Fixme getDbNotes() does not work in Note Controller
         Note note = new Note(1, Defs.NoteType.SIXTEENTH, Defs.Pitch.F8_SHARP, 2, 10);
         controller.addNote(note.getType(), note.getPitch(), Defs.Key.D_MAJOR, note.getMeasureIndex(), note.getMeasureId());

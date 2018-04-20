@@ -1,31 +1,16 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
   <head>
     <title>Mice-tr0 - Home Page</title>
 
-    <style type="text/css">
-      input[type=submit]{
-          background-color: darkred; /* Red */
-          border: 2px solid darkred;
-          color: white;
-          padding: 10px 25px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          border-radius: 4px;
-          margin: 4px 2px;
-      }
-      input[type=submit]:hover{
-          background-color: white;
-          border: 2px solid darkred;
-          color: darkred;
-      }
+    <link rel="stylesheet" href="css/style.css">
 
-    </style>
+      <script src="/micetr0/js/dist/app.bundle.js"></script>
 
   </head>
+
   <body>
   <h1> Welcome to Mice-tr0!</h1>
 
@@ -40,9 +25,11 @@
   <p> - Save compositions as audio or pdf files </p>
   <p> - Share your music with other mice-tr0 accounts</p>
 
-  <form action="${pageContext.servletContext.contextPath}/login" method="get">
+  <form action="login" method="get">
     <input name="goToLogIn" type="submit" value="Login" />
   </form>
+
+  <div id="numUsersDiv" ></div>
 
   </body>
 </html>

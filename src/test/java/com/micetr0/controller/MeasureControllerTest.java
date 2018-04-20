@@ -1,24 +1,32 @@
 package com.micetr0.controller;
 
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.Mock_DB;
 import com.micetr0.model.Measure;
-import com.micetr0.model.Note;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
 
-public class MeasureControllerTest {
-    private MeasureController controller;
-    private Measure model;
+class MeasureControllerTest {
 
-    @Before
-    public void setUp()
+
+    @BeforeEach
+    void setUp()
     {
-        controller = new MeasureController();
+        DatabaseProvider.setInstance(new Mock_DB());
+        MeasureController controller = new MeasureController();
+    }
+
+    @Test
+    void createMeasureTest(){
+        //TODO: Implement
+    }
+
+    @Test
+    void deleteMeasureTest(){
+        //TODO: Implement
     }
 
 

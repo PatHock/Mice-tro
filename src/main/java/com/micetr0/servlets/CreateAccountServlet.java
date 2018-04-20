@@ -4,6 +4,7 @@ import com.micetr0.controller.AccountController;
 import com.micetr0.model.Account;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,12 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebServlet (
+        name = "CreateAccountServlet",
+        urlPatterns = {"/createAccount"},
+        description = "Creates Accounts",
+        loadOnStartup = 1
+)
 public class CreateAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -33,7 +40,8 @@ public class CreateAccountServlet extends HttpServlet {
 
         AccountController controller = new AccountController();
 
-        controller.setModel(model);
+        //FIXME commented out
+//        controller.setModel(model);
 
         String failedLoginError = null;
         String tried = "false";
@@ -52,19 +60,22 @@ public class CreateAccountServlet extends HttpServlet {
             model.setPassword(curPassword);
 
             //add new account info to list
-            List<Account> accountsList= new ArrayList<>();
-            Account tempAccount = new Account();
-            tempAccount.setUsername(curUsername);
-            tempAccount.setPassword(curPassword);
-            accountsList.add(tempAccount);
+            //List<Account> accountsList= new ArrayList<>();
+            //Account tempAccount = new Account();
+            //tempAccount.setUsername(curUsername);
+            //tempAccount.setPassword(curPassword);
+            //accountsList.add(tempAccount);
+            //FIXME Commented out spaghet
+//            controller.addAccount(controller.createAccount(curUsername, curPassword, controller.getAllAccounts()));
 
-            if (curUsername.length() <2 || curPassword.length() < 2) {
+
+            if (curUsername.length() < 4  || curPassword.length() < 4) {
                 failedCreation = "Please Enter a valid username and password";
                 //resp.sendRedirect("profile.jsp");
                 //System.out.println(validAccount);
             }
             else{
-                //resp.sendRedirect("Login.jsp");
+                //resp.sendRedirect("login.jsp");
                 tried = "true";
             }
         }
