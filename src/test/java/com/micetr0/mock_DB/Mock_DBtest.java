@@ -135,11 +135,11 @@ class Mock_DBtest {
 
     @Test
     void deleteDBTest(){
-        assertTrue(db.findAllAccounts().size() == 6);
+        assertEquals(6, db.findAllAccounts().size());
         db.deleteDB();
-        assertTrue(db.findAllAccounts().size() == 0);
+        assertEquals(0, db.findAllAccounts().size());
         db.createDB();
-        assertTrue(db.findAllAccounts().size() == 6);
+        assertEquals(6, db.findAllAccounts().size());
     }
 
     @Test
@@ -151,4 +151,19 @@ class Mock_DBtest {
         assertEquals(compositionList.get(0).getDesc(), "Deffinicious");
     }
 
+    @Test
+    void updateCompositionTitleByCompositionIdTest(){
+        
+    }
+
+    @Test
+    void updateCompositionYearByCompositionIdTest(){
+        Composition compFergie = db.findCompositionsByCompositionId(4).get(0);
+
+        assertTrue(db.updateCompositionYearByCompositionId(compFergie.getCompositionID(), 1985));
+        assertEquals((Integer) 1985, db.findCompositionsByCompositionId(compFergie.getCompositionID()).get(0).getYear());
+
+        assertTrue(db.updateCompositionYearByCompositionId(compFergie.getCompositionID(), 7458));
+        assertEquals((Integer) 7458, db.findCompositionsByCompositionId(compFergie.getCompositionID()).get(0).getYear());
+    }
 }
