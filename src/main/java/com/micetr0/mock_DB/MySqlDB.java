@@ -311,8 +311,46 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Account> findCurrentAccount(Integer accountId) {
-        return null;
+    public List<Account> findAccountByAccountID(Integer accountId) {
+        return executeTransaction(conn -> {
+            PreparedStatement getAccStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAccStmt = conn.prepareStatement(
+                        "Select accounts.* from accounts"+
+                                "where accountID = ?"
+                );
+                getAccStmt.setInt(1,accountId);
+
+                List<Account> resultAccounts = new ArrayList<>();
+
+                accResultSet = getAccStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAccStmt);
+                DBUtil.closeQuietly(getAccStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override

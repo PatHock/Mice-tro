@@ -48,9 +48,9 @@ class Mock_DBtest {
     }
 
     @Test
-    void findCurrentAccountTest()
+    void findAccountByAccountIDTest()
     {
-        List<Account> Account = db.findCurrentAccount(1);
+        List<Account> Account = db.findAccountByAccountID(1);
         assertEquals("sad_Keanu", Account.get(0).getUsername());
     }
 

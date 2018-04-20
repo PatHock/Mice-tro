@@ -92,7 +92,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
-    public List<Account> findCurrentAccount(Integer accountId)
+    public List<Account> findAccountByAccountID(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
         for (Account account : accounts)

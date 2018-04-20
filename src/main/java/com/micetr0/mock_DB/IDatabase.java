@@ -49,7 +49,7 @@ public interface IDatabase {
      * @param accountId unique identifier for accounts.
      * @return list of accounts
      */
-    List<Account> findCurrentAccount(Integer accountId);
+    List<Account> findAccountByAccountID(Integer accountId);
 
     /**
      *
