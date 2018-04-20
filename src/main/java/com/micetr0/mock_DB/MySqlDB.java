@@ -433,7 +433,7 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
+    public List<Account> findAccountByUsername(String username) {
 
 
         return null;

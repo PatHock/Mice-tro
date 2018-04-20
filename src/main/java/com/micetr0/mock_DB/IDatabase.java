@@ -86,7 +86,7 @@ public interface IDatabase {
      * @param username String - a user's unique username as entered at login
      * @return List of account IDs that are paired with given username
      */
-    List<Integer> findAccountIdByUsername(String username);
+    List<Account> findAccountByUsername(String username);
 
 //    /**
 //     * Returns list of usernames and passwords for given account ID

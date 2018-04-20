@@ -143,10 +143,18 @@ public class Mock_DB implements IDatabase{
    @Override
     public void deleteAccount(String username)
    {
-       List<Integer> accId = findAccountIdByUsername(username);
+       List<Account> accIds = findAccountByUsername(username);
+
+       if(accIds.size() < 1){
+           //too many accounts in returned account list, should only be one, throw exception
+       }
+
+       Account tempAccount = new Account();
+       tempAccount = accIds.get(0);
+
        for (Account acc : accounts)
        {
-           if (acc.getAccountID().equals(accId.get(0)))
+           if (acc.getAccountID().equals(tempAccount.getAccountID()))
            {
                accounts.remove(acc);
                break;
@@ -172,15 +180,14 @@ public class Mock_DB implements IDatabase{
      * @return List of Account ID's that have the specified username
      */
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsername(String username) {
+        List<Account> accountIdList = new ArrayList<>();
 
         for (Account acc : accounts) {
             if(acc.getUsername().equals(username)) {
-                accountIdList.add(acc.getAccountID());
+                accountIdList.add(acc);
             }
         }
-
         return accountIdList;
     }
 

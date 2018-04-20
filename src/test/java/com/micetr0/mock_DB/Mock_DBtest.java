@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.micetr0.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Mock_DBtest {
@@ -34,6 +35,7 @@ class Mock_DBtest {
         assertFalse(db.findNotesByMeasureIdAndMeasureIndex(5, 1).size() > 0);
     }
 
+
     @Test
     void insertNoteTest() {
         Defs.Pitch pitch =  Defs.Pitch.F8_SHARP;
@@ -46,7 +48,7 @@ class Mock_DBtest {
 
         assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
     }
-
+/*
     @Test
     void findAccountByAccountIDTest()
     {
@@ -54,6 +56,11 @@ class Mock_DBtest {
         assertEquals("sad_Keanu", Account.get(0).getUsername());
     }
 
+    @Test
+    void findAccountByUsernameTest(){
+
+    }
+*/
     @Test
     void findAllAccountsTest()
     {
@@ -107,19 +114,6 @@ class Mock_DBtest {
         // See if peppe is ok
         assertEquals(2, (int) db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").get(0));
         assertEquals(1, db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").size());
-
-    }
-
-
-    @Test
-    void findAccountIdByUsernameTest() {
-        // Test sad_Keanu
-        assertEquals(db.findAccountIdByUsername("sad_Keanu").size(), 1);
-        assertEquals(1, (int) db.findAccountIdByUsername("sad_Keanu").get(0));
-
-        //Test peppe
-        assertEquals(db.findAccountIdByUsername("peppe").size(), 1);
-        assertEquals(2, (int) db.findAccountIdByUsername("peppe").get(0));
 
     }
 

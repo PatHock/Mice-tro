@@ -25,10 +25,10 @@ public class AccountController {
         return dbAccounts;
     }
 
-    public void addAccount(Account account) {
+    public Integer addAccount(Account account) {
         //make sure account doesn't already exist!
 
-        db.insertAccount(account.getUsername(),account.getPassword());
+        return db.insertAccount(account.getUsername(),account.getPassword());
     }
 
 //    private Boolean checkCredentials(String username, String password, List<Account> accounts) {
