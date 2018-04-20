@@ -14,7 +14,7 @@ import java.security.InvalidParameterException;
 
 @WebServlet(
         name = "CreateCompositionServlet",
-        urlPatterns = {"/insertComposition"},
+        urlPatterns = {"/createComposition"},
         description = "Whatever this servlet does, describe here",
         loadOnStartup = 1
 )
@@ -28,7 +28,7 @@ public class CreateCompositionServlet extends HttpServlet {
 
         System.out.println("Create Composition Servlet: doGet");
 
-        req.getRequestDispatcher("/insertComposition.jsp").forward(req, resp);
+        req.getRequestDispatcher("/createComposition.jsp").forward(req, resp);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class CreateCompositionServlet extends HttpServlet {
             req.getRequestDispatcher("/composition.jsp").forward(req, resp);
         }
         else{
-            req.getRequestDispatcher("/insertComposition.jsp").forward(req, resp);
+            req.getRequestDispatcher("/createComposition.jsp").forward(req, resp);
         }
 
     }
