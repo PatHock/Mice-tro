@@ -26,7 +26,9 @@ public class AccountController {
     }
 
     public void addAccount(Account account) {
-        db.insertAccount(account);
+        //make sure account doesn't already exist!
+
+        db.insertAccount(account.getUsername(),account.getPassword());
     }
 
 //    private Boolean checkCredentials(String username, String password, List<Account> accounts) {

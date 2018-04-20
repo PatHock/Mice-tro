@@ -31,12 +31,6 @@ public class InitialData {
                 account.setUsername(i.next());
                 account.setPassword(i.next());
                 account.setAccountID(accountID);
-                String editableComps[] = i.next().split(" ");
-                List<String> editable = Arrays.asList(editableComps);
-                String viewableComps[] = i.next().split(" ");
-                List<String> viewable = Arrays.asList(viewableComps);
-                account.setEditableComps(editable);
-                account.setViewableComps(viewable);
                 accounts.add(account);
                 accountID++;
             }

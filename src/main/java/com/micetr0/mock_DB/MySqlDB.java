@@ -258,7 +258,7 @@ public class MySqlDB implements IDatabase {
 
 
     @Override
-    public void insertNote(Note note) {
+    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
     }
 
     @Override
@@ -271,13 +271,43 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId) {
-        return null;
-    }
-
-    @Override
     public List<Account> findAllAccounts() {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getAccsStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAccsStmt = conn.prepareStatement(
+                    "Select accounts.* from accounts"
+                );
+
+                List<Account> resultAccounts = new ArrayList<Account>();
+
+                accResultSet = getAccsStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAccsStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override
@@ -306,12 +336,68 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void insertAccount(Account account) {
+    public Integer insertAccount(String username, String password) {
+        return executeTransaction((Transaction<Integer>) (Connection conn) -> {
+            PreparedStatement instAccStmt = null;
+            PreparedStatement getAccIDStmt = null;
+            ResultSet accResultSet = null;
 
+            try{
+                instAccStmt = conn.prepareStatement(
+                        "insert into accounts (username, password) " +
+                                "  values(?, ?) "
+                );
+                instAccStmt.setString(1,username);
+                instAccStmt.setString(2,password);
+
+                instAccStmt.executeUpdate();
+
+                System.out.println(username + "has been added to database");
+
+                getAccIDStmt = conn.prepareStatement(
+                        "select accounts.* from accounts"+
+                                "where username = ? and password = ?"
+                );
+                getAccIDStmt.setString(1,username);
+                getAccIDStmt.setString(2,password);
+
+                List<Account> resultAccounts = new ArrayList<Account>();
+
+                accResultSet = getAccIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer accountID = 0;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+                    accountID = account.getAccountID();
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("Account was not added successfully");
+                }
+
+                return accountID;
+            }
+            finally{
+                DBUtil.closeQuietly(instAccStmt);
+                DBUtil.closeQuietly(getAccIDStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override
     public List<Integer> findAccountIdByUsername(String username) {
+
+
         return null;
     }
 
@@ -329,4 +415,11 @@ public class MySqlDB implements IDatabase {
     public void createDB() {
         createTables();
     }
+
+    private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
+        account.setAccountID(resultSet.getInt(index++));
+        account.setUsername(resultSet.getString(index++));
+        account.setPassword(resultSet.getString(index++));
+    }
+
 }

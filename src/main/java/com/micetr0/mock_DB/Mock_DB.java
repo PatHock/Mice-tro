@@ -1,6 +1,7 @@
 package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
 import java.io.IOException;
@@ -45,10 +46,10 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertNote(Note note) {
-
+    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
         Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
-        note.setNoteID(noteId);
+
+        Note note = new Note(noteId,Defs.NoteType.valueOf(type),Defs.Pitch.valueOf(pitch),measureIndex,measureId);
 
         notes.add(note);
     }
@@ -64,26 +65,6 @@ public class Mock_DB implements IDatabase{
         throw new UnsupportedOperationException("Please implement deleteNote()");
     }
 
-
-    /**
-     *
-     */
-    @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
-    {
-        List<Composition> resultList;
-        List<String> compList = new ArrayList<>();
-        for (Account account : accounts)
-        {
-            if(account.getAccountID().equals(accountId))
-            {
-                compList.addAll(account.getViewableComps());
-                compList.addAll(account.getEditableComps());
-            }
-        }
-        resultList = findCompositionsByCompIds(compList);
-        return resultList;
-    }
 
     private List<Composition> findCompositionsByCompIds(List<String> compIds)
     {
@@ -174,11 +155,15 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-   public void insertAccount(Account account)
+   public Integer insertAccount(String username, String password)
    {
+       Account account = new Account();
        Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
        account.setAccountID(accountId);
+       account.setUsername(username);
+       account.setPassword(password);
        accounts.add(account);
+       return accountId;
    }
 
     /**

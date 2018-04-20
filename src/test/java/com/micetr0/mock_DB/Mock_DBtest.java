@@ -42,19 +42,9 @@ class Mock_DBtest {
         Integer measureIndex = 3;
 
         Note note = new Note(1, noteType, pitch, measureIndex, measureId);
-        db.insertNote(note);
+        db.insertNote(noteType.toString(),pitch.toString(),measureIndex,measureId);
 
         assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
-    }
-
-    @Test
-    void findCompositionsIdsByAccountIdTest()
-    {
-
-        List<Composition> comps = db.findCompositionsIdsByAccountId(2);
-
-        assertEquals(2, comps.size());
-
     }
 
     @Test
@@ -93,15 +83,16 @@ class Mock_DBtest {
     @Test
     void insertAccountTest()
     {
-        Account newUser = new Account();
-        newUser.setUsername("Morty_Ruelz");
-        newUser.setPassword("Rick_Sux");
-        db.insertAccount(newUser);
-
         List<Account> accnts = db.findAllAccounts();
 
-        assertEquals(7, accnts.size());
-        assertEquals("Morty_Ruelz", accnts.get(accnts.size() - 1).getUsername());
+        String username = "Morty_Ruelz";
+        String password = "Rick_Sux";
+        db.insertAccount(username, password);
+
+        List<Account> addedAccnts = db.findAllAccounts();
+
+        assertEquals(accnts.size() + 1, addedAccnts.size());
+        assertEquals("Morty_Ruelz", addedAccnts.get(addedAccnts.size() - 1).getUsername());
     }
 
     @Test

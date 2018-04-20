@@ -66,8 +66,9 @@ public class CreateAccountServlet extends HttpServlet {
             //tempAccount.setPassword(curPassword);
             //accountsList.add(tempAccount);
             //FIXME Commented out spaghet
-//            controller.addAccount(controller.createAccount(curUsername, curPassword, controller.getAllAccounts()));
-
+            Account newAccount = new Account();
+            newAccount = controller.createAccount(curUsername, curPassword);
+            controller.addAccount(newAccount);
 
             if (curUsername.length() < 4  || curPassword.length() < 4) {
                 failedCreation = "Please Enter a valid username and password";

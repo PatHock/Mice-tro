@@ -18,11 +18,23 @@ public class Composition {
         //empty constructor
     }
 
+    private Integer compositionID;
     private String title = "Untitled";
     private Integer year;
-    private Integer compositionID;
     private String desc = null;
+    private Integer accountID;
+    private Integer viewable;
 
+
+    public Integer getCompositionID()
+    {
+        return compositionID;
+    }
+
+    public void setCompositionID(Integer compositionID)
+    {
+        this.compositionID = compositionID;
+    }
 
     public String getTitle() {
         return title;
@@ -36,16 +48,6 @@ public class Composition {
 
     public void setYear(Integer year) {this.year = year;}
 
-    public Integer getCompositionID()
-    {
-        return compositionID;
-    }
-
-    public void setCompositionID(Integer compositionID)
-    {
-        this.compositionID = compositionID;
-    }
-
     public String getDesc()
     {
         return desc;
@@ -54,5 +56,21 @@ public class Composition {
     public void setDesc(String desc)
     {
         this.desc = desc;
+    }
+
+    public Integer getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(Integer accountID) {
+        this.accountID = accountID;
+    }
+
+    public Integer getViewable() {
+        return viewable;
+    }
+
+    public void setViewable(Integer viewable) {
+        this.viewable = viewable;
     }
 }
