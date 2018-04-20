@@ -40,7 +40,6 @@ public class ProfileServlet extends HttpServlet {
 
         CompositionController controller = new CompositionController();
 
-        controller.setModel(model);
 
         //Get current user information from login
         String currUser = "aredhouse";

@@ -62,10 +62,15 @@ public class InitialData {
                 composition.setCompositionID(compositionID);
                 compositionID++;
                 composition.setDesc(i.next());
+                composition.setAccountId(Integer.parseInt(i.next()));
+                composition.setIsViewablePublicly(Integer.parseInt(i.next()));
+
                 compositions.add(composition);
             }
-            return compositions;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return compositions;
     }
 
     public static List<Section> getSections() throws IOException{
@@ -79,7 +84,13 @@ public class InitialData {
                 }
                 Iterator<String> i = tuple.iterator();
                 Section section = new Section();
-                //set fields
+                section.setSectionID(sectionID);
+                sectionID++;
+                section.setKey(Defs.Key.valueOf(i.next()));
+                section.setTimeSig(Defs.TimeSignature.valueOf(i.next()));
+                section.setClef(Defs.Clef.valueOf(i.next()));
+                section.setTempo(Integer.parseInt(i.next()));
+                section.setOwningComp(Integer.parseInt(i.next()));
                 sections.add(section);
             }
             return sections;
