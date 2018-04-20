@@ -166,4 +166,15 @@ class Mock_DBtest {
         assertTrue(db.updateCompositionYearByCompositionId(compFergie.getCompositionID(), 7458));
         assertEquals((Integer) 7458, db.findCompositionsByCompositionId(compFergie.getCompositionID()).get(0).getYear());
     }
+
+    @Test
+    void insertSectionTest(){
+        db.insertSection(1,Defs.Key.D_MAJOR,Defs.TimeSignature.FOUR_FOUR,Defs.Clef.TREBLE, 120, 1);
+        assertNotNull(db.findSection(1));
+    }
+
+    @Test
+    void deleteSectionTest(){
+        assertTrue(db.deleteSection(2,1));
+    }
 }

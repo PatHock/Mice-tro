@@ -361,15 +361,26 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void deleteSection(Integer sectionID, Integer owningComp) {
+    public boolean deleteSection(Integer sectionID, Integer owningComp) {
         for (Section section : sections) {
             if(section.getSectionID().equals(sectionID) && section.getOwningComp().equals(owningComp)) {
                 sections.remove(section);
-            }
-            else{
-                //daydream
+                return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public List<Section> findSection(Integer sectionID) {
+        List<Section> newSections = new ArrayList<>();
+        for(Section section : sections)
+        {
+            if(section.getSectionID().equals(sectionID)){
+                newSections.add(section);
+            }
+        }
+        return newSections;
     }
 
 }
