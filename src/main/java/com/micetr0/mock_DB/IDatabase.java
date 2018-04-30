@@ -102,7 +102,7 @@ public interface IDatabase {
      * @param password User's password, associated only with username and account and not unique in db
      * @return List of Account IDs with given username and password
      */
-    List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
+    List<Account> findAccountByUsernameAndPassword(String username, String password);
 
     /**
      * create db access from front end. Ease to create and remove db

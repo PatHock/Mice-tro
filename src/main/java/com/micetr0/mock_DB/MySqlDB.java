@@ -3,6 +3,7 @@ import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 //import com.sun.org.apache.xml.internal.security.Init;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -347,7 +348,6 @@ public class MySqlDB implements IDatabase {
             }
             finally{
                 DBUtil.closeQuietly(getAccStmt);
-                DBUtil.closeQuietly(getAccStmt);
                 DBUtil.closeQuietly(accResultSet);
             }
         });
@@ -375,7 +375,7 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public Integer insertAccount(String username, String password) {
-        return executeTransaction((Transaction<Integer>) (Connection conn) -> {
+        return executeTransaction((Connection conn) -> {
             PreparedStatement instAccStmt = null;
             PreparedStatement getAccIDStmt = null;
             ResultSet accResultSet = null;
@@ -440,8 +440,46 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        return null;
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement getAcctStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAcctStmt = conn.prepareStatement(
+                        "select accounts.* from accounts"+
+                                "where username = ? and password = ?"
+                );
+                getAcctStmt.setString(1, username);
+                getAcctStmt.setString(2, password);
+
+                List<Account> resultAccounts = new ArrayList<>();
+
+                getAcctStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAcctStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override

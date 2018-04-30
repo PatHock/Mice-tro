@@ -203,16 +203,16 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account account : accounts) {
             if(account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                accountIdList.add(account.getAccountID());
+                accountList.add(account);
             }
         }
 
-        return accountIdList;
+        return accountList;
    }
 
     //    /**

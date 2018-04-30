@@ -103,17 +103,7 @@ class Mock_DBtest {
     }
 
     @Test
-    void findAccountIdByUsernameAndPasswordTest() {
-        // See if the test can find sad Keanu
-        assertEquals(1, (int) db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").get(0));
-        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu_is_Sad").size(), 1);
-
-        // Try checking for valid username but invalid password
-        assertEquals(db.findAccountIdByUsernameAndPassword("sad_Keanu", "sad_Keanu").size(), 0);
-
-        // See if peppe is ok
-        assertEquals(2, (int) db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").get(0));
-        assertEquals(1, db.findAccountIdByUsernameAndPassword("peppe", "peppeDaFrog").size());
+    void findAccountByUsernameAndPasswordTest(){
 
     }
 

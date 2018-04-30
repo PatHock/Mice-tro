@@ -64,7 +64,7 @@ public class AccountController {
     // https://codereview.stackexchange.com/questions/63283/password-validation-in-java
     public Boolean logIn(String username, String password) {
 
-        List<Integer> accountIds = db.findAccountIdByUsernameAndPassword(username, password);
+        List<Account> accountIds = db.findAccountByUsernameAndPassword(username, password);
 
         switch (accountIds.size()) {
             case 0:
