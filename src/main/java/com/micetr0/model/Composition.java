@@ -15,26 +15,21 @@ import java.util.List;
 public class Composition {
 
     public Composition() {
-        //empty constructor
+        title = null;
+        year = null;
+        compositionID = null;
+        desc = null;
+        accountId = null;
+        isViewablePublicly = null;
     }
 
-    private Integer compositionID;
-    private String title = "Untitled";
+    private String title;
     private Integer year;
-    private String desc = null;
-    private Integer accountID;
-    private Integer viewable;
+    private Integer compositionID;
+    private String desc;
+    private Integer accountId;
+    private Integer isViewablePublicly;
 
-
-    public Integer getCompositionID()
-    {
-        return compositionID;
-    }
-
-    public void setCompositionID(Integer compositionID)
-    {
-        this.compositionID = compositionID;
-    }
 
     public String getTitle() {
         return title;
@@ -46,7 +41,9 @@ public class Composition {
 
     public Integer getYear() {return year;}
 
-    public void setYear(Integer year) {this.year = year;}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
     public String getDesc()
     {
@@ -58,19 +55,29 @@ public class Composition {
         this.desc = desc;
     }
 
-    public Integer getAccountID() {
-        return accountID;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
-    public void setAccountID(Integer accountID) {
-        this.accountID = accountID;
+    public Integer getAccountId() {
+        return this.accountId;
     }
 
-    public Integer getViewable() {
-        return viewable;
+    /**
+     *
+     * @param isViewablePublicly 0 indicates composition is not viewable publicly, 1 indicates that composition
+     *                           is viewable publicly
+     */
+    public void setIsViewablePublicly(Integer isViewablePublicly) {
+        this.isViewablePublicly = isViewablePublicly;
     }
 
-    public void setViewable(Integer viewable) {
-        this.viewable = viewable;
+    /**
+     *
+     * @return 0 indicates composition is not viewable publicly, 1 indicates that composition
+     * is viewable publicly
+     */
+    public Integer getIsViewablePublicly() {
+        return this.isViewablePublicly;
     }
 }

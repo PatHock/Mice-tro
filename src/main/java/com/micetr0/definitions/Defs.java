@@ -273,7 +273,7 @@ public class Defs {
 
     public enum Clef {
         BASS,
-        Treble,
+        TREBLE,
 
     }
 

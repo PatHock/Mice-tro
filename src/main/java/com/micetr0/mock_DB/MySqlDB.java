@@ -16,8 +16,6 @@ public class MySqlDB implements IDatabase {
     static{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            //change the database connection so that it is not a static connection.
-            //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","micetr0");
         }
         catch(Exception e){
             System.out.println(e);
@@ -102,32 +100,34 @@ public class MySqlDB implements IDatabase {
 
                 try {
                     stmt1 = conn.prepareStatement(
-                            "create table accounts (account_id int auto_increment primary key, " +
-                                    "username varchar(40), password varchar(40), editableComps varchar(40), " +
-                                    "viewableComps varchar(40));"
+                            "create table accounts (account_id int auto_increment primary key," +
+                                    " username varchar(40), password varchar(40));"
                     );
                     stmt1.executeUpdate();
 
                     stmt2 = conn.prepareStatement(
-                            "create table compositions (composition_id int auto_increment primary key," +
-                                    " title varchar(40), year int, description varchar(40));"
+                            "create table compositions (composition_id int auto_increment primary key, " +
+                                    "title varchar(40), year int, description varchar(40), " +
+                                    "account_id int references account(account_id), viewableComp int);"
                     );
                     stmt2.executeUpdate();
 
                     stmt3 = conn.prepareStatement(
                             "create table sections (section_id int auto_increment primary key, " +
-                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40));"
+                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), " +
+                                    "composition_id int references compositions(composition_id));"
                     );
                     stmt3.executeUpdate();
 
                     stmt4 = conn.prepareStatement(
-                            "create table measures (measure_id int auto_increment primary key, section_id int);"
+                            "create table measures (measure_id int auto_increment primary key, " +
+                                    "section_id int references sections(section_id));"
                     );
                     stmt4.executeUpdate();
 
                     stmt5 = conn.prepareCall(
                             "create table notes (note_id int auto_increment primary key, pitch varchar(40), " +
-                                    "type varchar(40), measureindex int, measure_id varchar(40));"
+                                    "type varchar(40), measureindex int, measure_id int references measures(measure_id));"
                     );
                     stmt5.executeUpdate();
 
@@ -359,8 +359,9 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void deleteComposition(Integer compositionId) {
-
+    public Boolean deleteComposition(Integer compositionId) {
+        return null;
+        //TODO: Implement
     }
 
     @Override
@@ -439,6 +440,28 @@ public class MySqlDB implements IDatabase {
         return null;
     }
 
+    /**
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description   A user-editable description for the composition
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
+        return null;
+        //TODO: Implement
+    }
+
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param title         The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
+        return null;
+        //TODO: Implement
+    }
+
     @Override
     public List<Account> findAccountByUsernameAndPassword(String username, String password) {
         return executeTransaction((Connection conn) -> {
@@ -482,6 +505,44 @@ public class MySqlDB implements IDatabase {
         });
     }
 
+    /**
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    @Override
+    public List<Composition> findCompositionsByCompositionId(Integer compositionId) {
+        return null;
+        //TODO: Implement
+    }
+
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param year          Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    @Override
+    public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
+        return null;
+        //TODO: Implement
+    }
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     *
+     * @param title              The name of the composition.
+     * @param description        A string that describes the purpose etc of the composition
+     * @param year               The year the composition was written
+     * @param isViewablePublicly
+     * @param accountId
+     * @return A composition object with unique ID
+     */
+    @Override
+    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+        return null;
+        //TODO: Implement
+    }
+
+
     @Override
     public void deleteDB() {
         dropTables();
@@ -490,6 +551,26 @@ public class MySqlDB implements IDatabase {
     @Override
     public void createDB() {
         createTables();
+    }
+
+    @Override
+    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+        return false;
+    }
+
+    @Override
+    public Boolean deleteSection(Integer sectionID) {
+        return false;
+    }
+
+    @Override
+    public Section findSection(Integer sectionID) {
+        return null;
+    }
+
+    @Override
+    public List<Section> findAllSections() {
+        return null;
     }
 
     private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {

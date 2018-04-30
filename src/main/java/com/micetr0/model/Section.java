@@ -10,7 +10,7 @@ package com.micetr0.model;
 import com.micetr0.definitions.Defs;
 
 public class Section {
-    private String owningComp = null;
+    private Integer compID = null;
     private Integer sectionID = null;
     private Integer tempo = null;
     private Defs.Clef clef = null;
@@ -23,7 +23,6 @@ public class Section {
     public void setTimeSig(Defs.TimeSignature timeSig) {
         this.timeSig = timeSig;
     }
-
     public Defs.Key getKey() {
         return key;
     }
@@ -36,8 +35,8 @@ public class Section {
     public void setClef(Defs.Clef clef) {
         this.clef = clef;
     }
-    public String getOwningComp(){return owningComp;}
-    public void setOwningComp(String owningComp) {this.owningComp = owningComp;}
+    public Integer getCompID(){return compID;}
+    public void setCompID(Integer owningComp) {this.compID = owningComp;}
     public Integer getSectionID(){return sectionID;}
     public void setSectionID(Integer ID){this.sectionID = ID;}
     public void setTempo(Integer tempo)
