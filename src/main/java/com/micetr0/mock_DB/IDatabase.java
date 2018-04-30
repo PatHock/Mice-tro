@@ -2,10 +2,7 @@ package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
 import com.micetr0.definitions.Defs;
-import com.micetr0.model.Account;
-import com.micetr0.model.Composition;
-import com.micetr0.model.Note;
-import com.micetr0.model.Section;
+import com.micetr0.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,9 @@ public interface IDatabase {
      *
      * @param noteId Unique ID that is stored in the database
      */
-    void deleteNote(String noteId);
+    boolean deleteNote(String noteId);
+
+    List<Composition> findCompositionsByAccountId(Integer accountId);
 
     /**
      * Multiple notes can exist in the same index in a measure (for a chord), so noteId is the only way to properly
@@ -156,7 +155,12 @@ public interface IDatabase {
 
     Boolean deleteSection(Integer sectionID);
 
-    Section findSection(Integer sectionID);
+    Section findSectionFromSectionID(Integer sectionID);
 
     List<Section> findAllSections();
+
+    List<Section> findSectionsByCompositionId(Integer compositionId);
+
+    List<Measure> findMeasuresBySectionId(Integer SectionId);
+
 }

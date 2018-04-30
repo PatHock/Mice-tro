@@ -63,6 +63,10 @@ public class Composition {
         return this.accountId;
     }
 
+    public void setCompositionID(Integer compositionID) {this.compositionID = compositionID;}
+
+    public Integer getCompositionID() {return compositionID;}
+
     /**
      *
      * @param isViewablePublicly 0 indicates composition is not viewable publicly, 1 indicates that composition

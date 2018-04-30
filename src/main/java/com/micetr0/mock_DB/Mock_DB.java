@@ -60,43 +60,34 @@ public class Mock_DB implements IDatabase{
      * @param noteId Unique database ID for note
      */
     @Override
-    public void deleteNote(String noteId) {
-        throw new UnsupportedOperationException("Please implement deleteNote()");
+    public boolean deleteNote(String noteId) {
+        Boolean isNoteDeleted = false;
+
+        for(Note note : notes) {
+            if (note.getNoteID().equals(noteId)){
+                notes.remove(note);
+                isNoteDeleted = true;
+            }
+            if(isNoteDeleted){
+                break;
+            }
+        }
+
+        return isNoteDeleted;
     }
 
 
     /**
      *
      */
-    @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
-    {
-        List<Composition> resultList;
-        List<String> compList = new ArrayList<>();
-        for (Account account : accounts)
-        {
-            if(account.getAccountID().equals(accountId))
-            {
-                compList.addAll(account.getViewableComps());
-                compList.addAll(account.getEditableComps());
-            }
-        }
-        resultList = findCompositionsByCompIds(compList);
-        return resultList;
-    }
-
-    private List<Composition> findCompositionsByCompIds(List<String> compIds)
+    public List<Composition> findCompositionsByAccountId(Integer accountId)
     {
         List<Composition> resultList = new ArrayList<>();
-
         for (Composition comp : compositions)
         {
-            for(String compId : compIds)
+            if(comp.getAccountId().equals(accountId))
             {
-                if(compId.equals(String.valueOf(comp.getCompositionID())))
-                {
-                    resultList.add(comp);
-                }
+                resultList.add(comp);
             }
         }
         return resultList;
@@ -158,24 +149,6 @@ public class Mock_DB implements IDatabase{
             }
         }
         return resultList;
-    }
-
-    @Override
-    public void insertComposition(Composition composition)
-    {
-        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
-        composition.setCompositionID(compositionId);
-        compositions.add(composition);
-    }
-
-    @Override
-    public void deleteComposition(Integer compositionId)
-    {
-        List<String> compId = new ArrayList<>();
-        compId.add(String.valueOf(compositionId));
-        List<Composition> comp = findCompositionsByCompIds(compId);
-        compositions.remove(comp.get(0));
-
     }
 
    @Override
@@ -413,7 +386,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Section findSection(Integer sectionID) {
+    public Section findSectionFromSectionID(Integer sectionID) {
         List<Section> newSections = new ArrayList<>();
         for(Section section : sections)
         {
@@ -432,6 +405,17 @@ public class Mock_DB implements IDatabase{
         }
         return newSections;
     }
+
+    @Override
+    public List<Section> findSectionsByCompositionId(Integer compositionId) {
+        return null;
+    }
+
+    @Override
+    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
+        return null;
+    }
+
 
 }
 

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.micetr0.model.Note;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class Mock_DBtest {
@@ -164,7 +163,7 @@ class Mock_DBtest {
     @Test
     void insertSectionTest(){
         db.insertSection(1,Defs.Key.D_MAJOR,Defs.TimeSignature.FOUR_FOUR,Defs.Clef.TREBLE, 120, 1);
-        assertNotNull(db.findSection(1));
+        assertNotNull(db.findSectionFromSectionID(1));
     }
 
     @Test

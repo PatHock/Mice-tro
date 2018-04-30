@@ -263,7 +263,13 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void deleteNote(String noteId) {
+    public boolean deleteNote(String noteId) {
+        return false;
+    }
+
+    @Override
+    public List<Composition> findCompositionsByAccountId(Integer accountId) {
+        return null;
     }
 
     @Override
@@ -351,11 +357,6 @@ public class MySqlDB implements IDatabase {
                 DBUtil.closeQuietly(accResultSet);
             }
         });
-    }
-
-    @Override
-    public void insertComposition(Composition composition) {
-
     }
 
     @Override
@@ -564,12 +565,22 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public Section findSection(Integer sectionID) {
+    public Section findSectionFromSectionID(Integer sectionID) {
         return null;
     }
 
     @Override
     public List<Section> findAllSections() {
+        return null;
+    }
+
+    @Override
+    public List<Section> findSectionsByCompositionId(Integer compositionId) {
+        return null;
+    }
+
+    @Override
+    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
         return null;
     }
 

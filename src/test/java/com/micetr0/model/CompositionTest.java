@@ -82,34 +82,40 @@ class CompositionTest {
     void setAccountIDTest()
     {
         Integer accountID = 30;
-        composition.setAccountID(accountID);
+        composition.setAccountId(accountID);
 
-        assertTrue(composition.getAccountID() == 30);
+        assertTrue(composition.getAccountId() == 30);
     }
 
     @Test
     void getAccountIDTest()
     {
         Integer accountID = 1;
-        composition.setAccountID(accountID);
+        composition.setAccountId(accountID);
 
-        assertTrue(composition.getAccountID() == 1);
+        assertTrue(composition.getAccountId() == 1);
     }
 
     @Test
-    void setViewableTest()
-    {
-        Integer viewable = 1;
-        composition.setViewable(viewable);
-
-        assertTrue(composition.getViewable() == 1);
-    }
-
-    void getViewableTest()
+    void getIsViewablePubliclyTest()
     {
         Integer viewable = 0;
-        composition.setViewable(viewable);
+        composition.setIsViewablePublicly(viewable);
 
-        assertTrue(composition.getViewable() == 0);
+        assertTrue(composition.getIsViewablePublicly() == 0);
+    }
+
+    @Test
+    void setCompositionIDTest(){
+        composition.setCompositionID(4);
+
+        assertTrue(composition.getCompositionID() == 4);
+    }
+
+    @Test
+    void getCompositionIDTest(){
+        composition.setCompositionID(10);
+
+        assertTrue(composition.getCompositionID() == 10);
     }
 }
