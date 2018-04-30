@@ -13,9 +13,9 @@ import java.util.Map;
 public interface IDatabase {
     /**
      *
-     * @param note a note POJO
+     * @param type
      */
-    void insertNote(Note note);
+    void insertNote(String type, String pitch, Integer measureIndex, Integer measureId);
 
     /**
      *
@@ -37,7 +37,7 @@ public interface IDatabase {
      * @param accountId Unique ID for account as stored in database.
      * @return List of compositions
      */
-    List<Composition> findCompositionsIdsByAccountId(Integer accountId);
+
 //List<Note> findNotesByMeasureId(Integer measureId);
 
     /**
@@ -51,7 +51,7 @@ public interface IDatabase {
      * @param accountId unique identifier for accounts.
      * @return list of accounts
      */
-    List<Account> findCurrentAccount(Integer accountId);
+    List<Account> findAccountByAccountID(Integer accountId);
 
 
     /**
@@ -76,16 +76,16 @@ public interface IDatabase {
 
     /**
      *
-     * @param account an account POJO
+     * @param  username
      */
-    void insertAccount(Account account);
+    Integer insertAccount(String username, String password);
 
     /**
      *
      * @param username String - a user's unique username as entered at login
      * @return List of account IDs that are paired with given username
      */
-    List<Integer> findAccountIdByUsername(String username);
+    List<Account> findAccountByUsername(String username);
 
     /**
      *
@@ -117,7 +117,7 @@ public interface IDatabase {
      * @param password User's password, associated only with username and account and not unique in db
      * @return List of Account IDs with given username and password
      */
-    List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
+    List<Account> findAccountByUsernameAndPassword(String username, String password);
 
     /**
      *

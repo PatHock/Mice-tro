@@ -45,10 +45,10 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertNote(Note note) {
-
+    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
         Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
-        note.setNoteID(noteId);
+
+        Note note = new Note(noteId,Defs.NoteType.valueOf(type),Defs.Pitch.valueOf(pitch),measureIndex,measureId);
 
         notes.add(note);
     }
@@ -111,8 +111,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
-
-    public List<Account> findCurrentAccount(Integer accountId)
+    public List<Account> findAccountByAccountID(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
         for (Account account : accounts)
@@ -161,15 +160,39 @@ public class Mock_DB implements IDatabase{
         return resultList;
     }
 
+    @Override
+    public void insertComposition(Composition composition)
+    {
+        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
+        composition.setCompositionID(compositionId);
+        compositions.add(composition);
+    }
 
+    @Override
+    public void deleteComposition(Integer compositionId)
+    {
+        List<String> compId = new ArrayList<>();
+        compId.add(String.valueOf(compositionId));
+        List<Composition> comp = findCompositionsByCompIds(compId);
+        compositions.remove(comp.get(0));
+
+    }
 
    @Override
     public void deleteAccount(String username)
    {
-       List<Integer> accId = findAccountIdByUsername(username);
+       List<Account> accIds = findAccountByUsername(username);
+
+       if(accIds.size() < 1){
+           //too many accounts in returned account list, should only be one, throw exception
+       }
+
+       Account tempAccount = new Account();
+       tempAccount = accIds.get(0);
+
        for (Account acc : accounts)
        {
-           if (acc.getAccountID().equals(accId.get(0)))
+           if (acc.getAccountID().equals(tempAccount.getAccountID()))
            {
                accounts.remove(acc);
                break;
@@ -178,11 +201,15 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-   public void insertAccount(Account account)
+   public Integer insertAccount(String username, String password)
    {
+       Account account = new Account();
        Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
        account.setAccountID(accountId);
+       account.setUsername(username);
+       account.setPassword(password);
        accounts.add(account);
+       return accountId;
    }
 
     /**
@@ -191,12 +218,12 @@ public class Mock_DB implements IDatabase{
      * @return List of Account ID's that have the specified username
      */
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsername(String username) {
+        List<Account> accountIdList = new ArrayList<>();
 
         for (Account acc : accounts) {
             if(acc.getUsername().equals(username)) {
-                accountIdList.add(acc.getAccountID());
+                accountIdList.add(acc);
             }
         }
 
@@ -251,16 +278,16 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account account : accounts) {
             if(account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                accountIdList.add(account.getAccountID());
+                accountList.add(account);
             }
         }
 
-        return accountIdList;
+        return accountList;
    }
 
     /**

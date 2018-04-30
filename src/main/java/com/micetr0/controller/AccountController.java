@@ -25,8 +25,10 @@ public class AccountController {
         return dbAccounts;
     }
 
-    public void addAccount(Account account) {
-        db.insertAccount(account);
+    public Integer addAccount(Account account) {
+        //make sure account doesn't already exist!
+
+        return db.insertAccount(account.getUsername(),account.getPassword());
     }
 
 //    private Boolean checkCredentials(String username, String password, List<Account> accounts) {
@@ -62,7 +64,7 @@ public class AccountController {
     // https://codereview.stackexchange.com/questions/63283/password-validation-in-java
     public Boolean logIn(String username, String password) {
 
-        List<Integer> accountIds = db.findAccountIdByUsernameAndPassword(username, password);
+        List<Account> accountIds = db.findAccountByUsernameAndPassword(username, password);
 
         switch (accountIds.size()) {
             case 0:

@@ -3,6 +3,7 @@ import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 //import com.sun.org.apache.xml.internal.security.Init;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -258,7 +259,7 @@ public class MySqlDB implements IDatabase {
 
 
     @Override
-    public void insertNote(Note note) {
+    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
     }
 
     @Override
@@ -271,25 +272,92 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId) {
-        return null;
-    }
-
-    @Override
     public List<Account> findAllAccounts() {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getAccsStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAccsStmt = conn.prepareStatement(
+                    "Select accounts.* from accounts"
+                );
+
+                List<Account> resultAccounts = new ArrayList<Account>();
+
+                accResultSet = getAccsStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAccsStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override
-    public List<Account> findCurrentAccount(Integer accountId) {
-        return null;
+    public List<Account> findAccountByAccountID(Integer accountId) {
+        return executeTransaction(conn -> {
+            PreparedStatement getAccStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAccStmt = conn.prepareStatement(
+                        "Select accounts.* from accounts"+
+                                "where accountID = ?"
+                );
+                getAccStmt.setInt(1,accountId);
+
+                List<Account> resultAccounts = new ArrayList<>();
+
+                accResultSet = getAccStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAccStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
-    /**
-     * @param compositionId Unique Id for composition.
-     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
-     * not exist, etc
-     */
+    @Override
+    public void insertComposition(Composition composition) {
+
+    }
+
     @Override
     public Boolean deleteComposition(Integer compositionId) {
         return null;
@@ -307,12 +375,68 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void insertAccount(Account account) {
+    public Integer insertAccount(String username, String password) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement instAccStmt = null;
+            PreparedStatement getAccIDStmt = null;
+            ResultSet accResultSet = null;
 
+            try{
+                instAccStmt = conn.prepareStatement(
+                        "insert into accounts (username, password) " +
+                                "  values(?, ?) "
+                );
+                instAccStmt.setString(1,username);
+                instAccStmt.setString(2,password);
+
+                instAccStmt.executeUpdate();
+
+                System.out.println(username + "has been added to database");
+
+                getAccIDStmt = conn.prepareStatement(
+                        "select accounts.* from accounts"+
+                                "where username = ? and password = ?"
+                );
+                getAccIDStmt.setString(1,username);
+                getAccIDStmt.setString(2,password);
+
+                List<Account> resultAccounts = new ArrayList<Account>();
+
+                accResultSet = getAccIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer accountID = 0;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+                    accountID = account.getAccountID();
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("Account was not added successfully");
+                }
+
+                return accountID;
+            }
+            finally{
+                DBUtil.closeQuietly(instAccStmt);
+                DBUtil.closeQuietly(getAccIDStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
+    public List<Account> findAccountByUsername(String username) {
+
+
         return null;
     }
 
@@ -339,8 +463,46 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        return null;
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement getAcctStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAcctStmt = conn.prepareStatement(
+                        "select accounts.* from accounts"+
+                                "where username = ? and password = ?"
+                );
+                getAcctStmt.setString(1, username);
+                getAcctStmt.setString(2, password);
+
+                List<Account> resultAccounts = new ArrayList<>();
+
+                getAcctStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultAccounts;
+            }
+            finally{
+                DBUtil.closeQuietly(getAcctStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
     }
 
     /**
@@ -409,6 +571,12 @@ public class MySqlDB implements IDatabase {
     @Override
     public List<Section> findAllSections() {
         return null;
+    }
+
+    private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
+        account.setAccountID(resultSet.getInt(index++));
+        account.setUsername(resultSet.getString(index++));
+        account.setPassword(resultSet.getString(index++));
     }
 
 }
