@@ -6,7 +6,7 @@
 <html>
     <head>
         <title>Mice-tr0 - Profile</title>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="scss/style.scss">
     </head>
 
     <body>

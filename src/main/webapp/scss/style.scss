@@ -1,6 +1,11 @@
-
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #323232;
+    color: white;
+}
 input[type=submit]{
-    background-color: darkred; /* Red */
+    background-color: darkred;
     border: 2px solid darkred;
     color: white;
     padding: 10px 25px;

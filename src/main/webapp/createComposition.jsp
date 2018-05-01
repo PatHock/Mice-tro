@@ -3,7 +3,7 @@
 
     <head>
         <title>Mice-tr0 - Create Composition</title>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="scss/style.scss">
     </head>
 
     <body>

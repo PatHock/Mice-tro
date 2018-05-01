@@ -1,13 +1,11 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
   <head>
-    <title>Mice-tr0 - Home Page</title>
-
-    <link rel="stylesheet" href="css/style.css">
+      <title>Mice-tr0 - Home Page</title>
 
       <script src="/micetr0/js/dist/app.bundle.js"></script>
+      <link rel="stylesheet" href="scss/style.scss">
 
   </head>
 
