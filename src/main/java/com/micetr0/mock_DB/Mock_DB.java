@@ -1,6 +1,6 @@
 package com.micetr0.mock_DB;
 
-import com.micetr0.Credential;
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
 import java.io.IOException;
@@ -45,12 +45,14 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertNote(Note note) {
-
+    public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
         Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
-        note.setNoteID(noteId);
+
+        Note note = new Note(noteId,Defs.NoteType.valueOf(type),Defs.Pitch.valueOf(pitch),measureIndex,measureId);
 
         notes.add(note);
+
+        return noteId;
     }
 
     /**
@@ -60,43 +62,34 @@ public class Mock_DB implements IDatabase{
      * @param noteId Unique database ID for note
      */
     @Override
-    public void deleteNote(String noteId) {
-        throw new UnsupportedOperationException("Please implement deleteNote()");
+    public boolean deleteNote(String noteId) {
+        Boolean isNoteDeleted = false;
+
+        for(Note note : notes) {
+            if (note.getNoteID().equals(noteId)){
+                notes.remove(note);
+                isNoteDeleted = true;
+            }
+            if(isNoteDeleted){
+                break;
+            }
+        }
+
+        return isNoteDeleted;
     }
 
 
     /**
      *
      */
-    @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
-    {
-        List<Composition> resultList;
-        List<String> compList = new ArrayList<>();
-        for (Account account : accounts)
-        {
-            if(account.getAccountID().equals(accountId))
-            {
-                compList.addAll(account.getViewableComps());
-                compList.addAll(account.getEditableComps());
-            }
-        }
-        resultList = findCompositionsByCompIds(compList);
-        return resultList;
-    }
-
-    private List<Composition> findCompositionsByCompIds(List<String> compIds)
+    public List<Composition> findCompositionsByAccountId(Integer accountId)
     {
         List<Composition> resultList = new ArrayList<>();
-
         for (Composition comp : compositions)
         {
-            for(String compId : compIds)
+            if(comp.getAccountId().equals(accountId))
             {
-                if(compId.equals(String.valueOf(comp.getCompositionID())))
-                {
-                    resultList.add(comp);
-                }
+                resultList.add(comp);
             }
         }
         return resultList;
@@ -111,7 +104,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
-    public List<Account> findCurrentAccount(Integer accountId)
+    public List<Account> findAccountByAccountID(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
         for (Account account : accounts)
@@ -122,6 +115,25 @@ public class Mock_DB implements IDatabase{
             }
         }
         return resultList;
+    }
+
+    /**
+     * @param compositionId Unique Id for composition.
+     * @return isCompDeleted: true if deletion was successful, false if deletion failed (composition did
+     * not exist, etc
+     */
+    @Override
+    public Boolean deleteComposition(Integer compositionId) {
+        Boolean isCompDeleted = false;
+
+        for(Composition composition : compositions) {
+            if (composition.getCompositionID().equals(compositionId)){
+                compositions.remove(composition);
+                isCompDeleted = true;
+            }
+        }
+
+        return isCompDeleted;
     }
 
     /**
@@ -141,44 +153,42 @@ public class Mock_DB implements IDatabase{
         return resultList;
     }
 
-    @Override
-    public void insertComposition(Composition composition)
-    {
-        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
-        composition.setCompositionID(compositionId);
-        compositions.add(composition);
-    }
-
-    @Override
-    public void deleteComposition(Integer compositionId)
-    {
-        List<String> compId = new ArrayList<>();
-        compId.add(String.valueOf(compositionId));
-        List<Composition> comp = findCompositionsByCompIds(compId);
-        compositions.remove(comp.get(0));
-
-    }
-
    @Override
-    public void deleteAccount(String username)
+    public Boolean deleteAccount(String username)
    {
-       List<Integer> accId = findAccountIdByUsername(username);
+       List<Account> accIds = findAccountByUsername(username);
+
+       Boolean deleted = false;
+
+       if(accIds.size() > 1){
+           //too many accounts in returned account list, should only be one, throw exception
+       }
+
+       Account tempAccount = new Account();
+       tempAccount = accIds.get(0);
+
        for (Account acc : accounts)
        {
-           if (acc.getAccountID().equals(accId.get(0)))
+           if (acc.getAccountID().equals(tempAccount.getAccountID()))
            {
                accounts.remove(acc);
+               deleted = true;
                break;
            }
        }
+       return deleted;
    }
 
    @Override
-   public void insertAccount(Account account)
+   public Integer insertAccount(String username, String password)
    {
+       Account account = new Account();
        Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
        account.setAccountID(accountId);
+       account.setUsername(username);
+       account.setPassword(password);
        accounts.add(account);
+       return accountId;
    }
 
     /**
@@ -187,16 +197,52 @@ public class Mock_DB implements IDatabase{
      * @return List of Account ID's that have the specified username
      */
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsername(String username) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account acc : accounts) {
             if(acc.getUsername().equals(username)) {
-                accountIdList.add(acc.getAccountID());
+                accountList.add(acc);
             }
         }
 
-        return accountIdList;
+        return accountList;
+    }
+
+    /**
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description   A user-editable description for the composition
+     * @return isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
+
+        for (Composition composition : compositions) {
+            if(composition.getCompositionID().equals(compositionId)){
+                composition.setDesc(description);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param title         The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
+        Boolean isCompUpdated = false;
+
+        for (Composition composition : compositions) {
+            if (composition.getCompositionID().equals(compositionId)) {
+                composition.setTitle(title);
+                isCompUpdated = true;
+            }
+        }
+
+        return isCompUpdated;
     }
 
     @Override
@@ -211,17 +257,79 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account account : accounts) {
             if(account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                accountIdList.add(account.getAccountID());
+                accountList.add(account);
             }
         }
 
-        return accountIdList;
+        return accountList;
    }
+
+    /**
+     * @param compositionId Unique ID that distinguishes a composition from others in the database.
+     * @return an ArrayList of Composition objects that match the given composition ID
+     */
+    @Override
+    public List<Composition> findCompositionsByCompositionId(Integer compositionId) {
+        List<Composition> compositionList = new ArrayList<>();
+
+        for (Composition composition: compositions) {
+            if(composition.getCompositionID().equals(compositionId)) {
+                compositionList.add(composition);
+            }
+        }
+
+        return compositionList;
+    }
+
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param year          Integer year when the composition was written
+     * @return Boolean, true indicates that update was successful, false indicates that update failed (invalid composition ID)
+     */
+    @Override
+    public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
+        for (Composition composition : compositions) {
+            if(composition.getCompositionID().equals(compositionId)){
+                composition.setYear(year);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Creates a composition from given title, description, and year. Generates unique ID
+     *
+     * @param title              The name of the composition.
+     * @param description        A string that describes the purpose etc of the composition
+     * @param year               The year the composition was written
+     * @param isViewablePublicly Integer, should be 0 to indicate that comp is not viewable Publicly, or 1
+     *                           to indicate that it is viewable publicly. Like a boolean, but actually an
+     *                           Integer
+     * @param accountId          Integer that identifies which account owns this composition
+     * @return A composition object with unique ID
+     */
+    @Override
+    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+        Composition composition = new Composition();
+        composition.setTitle(title);
+        composition.setDesc(description);
+        composition.setYear(year);
+        composition.setIsViewablePublicly(isViewablePublicly);
+        composition.setAccountId(accountId);
+
+        Integer compositionId = compositions.get(compositions.size() - 1).getCompositionID() + 1;
+        composition.setCompositionID(compositionId);
+
+        compositions.add(composition);
+        return compositionId;
+    }
+
 
     //    /**
 //     * FIXME: needs unit test
@@ -241,6 +349,78 @@ public class Mock_DB implements IDatabase{
 //        return credentialList;
 //    }
 
+    @Override
+    public void deleteDB()
+    {
+        accounts.clear();
+        sections.clear();
+        compositions.clear();
+        notes.clear();
+    }
+
+    @Override
+    public void createDB()
+    {
+        if(accounts.isEmpty() && sections.isEmpty() && compositions.isEmpty() && notes.isEmpty()) {
+            readInitialData();
+        }
+    }
+
+    @Override
+    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+        Section section = new Section();
+        Integer sectionId = sections.get(sections.size() - 1).getSectionID() + 1;
+        section.setSectionID(sectionId);
+        section.setCompID(composition_ID);
+        section.setClef(clef);
+        section.setKey(key);
+        section.setTimeSig(timeSig);
+        section.setTempo(tempo);
+        sections.add(section);
+        return true;
+    }
+
+    @Override
+    public Boolean deleteSection(Integer sectionID) {
+        for (Section section : sections) {
+            if(section.getSectionID().equals(sectionID)) {
+                sections.remove(section);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Section findSectionFromSectionID(Integer sectionID) {
+        List<Section> newSections = new ArrayList<>();
+        for(Section section : sections)
+        {
+            if(section.getSectionID().equals(sectionID)){
+                newSections.add(section);
+            }
+        }
+        return newSections.get(0);  //Sections should never be larger than 1.
+    }
+
+    @Override
+    public List<Section> findAllSections() {
+        List<Section> newSections = new ArrayList<>();
+        for (Section section : sections){
+            newSections.add(section);
+        }
+        return newSections;
+    }
+
+    @Override
+    public List<Section> findSectionsByCompositionId(Integer compositionId) {
+        return null;
+    }
+
+    @Override
+    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
+        return null;
+    }
 
 
 }

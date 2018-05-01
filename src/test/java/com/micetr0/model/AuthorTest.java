@@ -41,39 +41,30 @@ class AuthorTest {
         assertTrue(model.getUsername().equals("Drop Table Accounts"));
     }
 
-    @Test
-    void getViewableComps(){
-        List<String> comps = new ArrayList<>();
-        comps.add("comp1");
-        model.setViewableComps(comps);
-        assertTrue(model.getViewableComps().get(0).equals("comp1"));
-    }
-    @Test
-    void setViewableComps(){
-        List<String> comps = new ArrayList<>();
-        comps.add("1");
-        comps.add("2");
-        comps.add("3");
-        model.setViewableComps(comps);
-        assertTrue(model.getViewableComps().size() == 3);
 
-    }
     @Test
     void setEditableComps(){
-        List<String> comps = new ArrayList<>();
-        comps.add("comp1");
-        model.setViewableComps(comps);
-        assertTrue(model.getViewableComps().get(0).equals("comp1"));
+        List<Composition> comps = new ArrayList<>();
+        Composition composition = new Composition();
+        composition.setCompositionID(1);
+        comps.add(composition);
+        model.setEditableComps(comps);
+        assertTrue(model.getEditableComps().get(0).getCompositionID().equals(1));
 
     }
     @Test
     void getEditableComps(){
-        List<String> comps = new ArrayList<>();
-        comps.add("1");
-        comps.add("2");
-        comps.add("3");
+        List<Composition> comps = new ArrayList<>();
+        Composition composition1 = new Composition();
+        composition1.setCompositionID(1);
+        composition1.setTitle("Composition Uno");
+        Composition composition2 = new Composition();
+        composition2.setCompositionID(2);
+        composition2.setTitle("Compostiion dos");
+        comps.add(composition1);
+        comps.add(composition2);
         model.setEditableComps(comps);
-        assertTrue(model.getEditableComps().size() == 3);
+        assertTrue(model.getEditableComps().size() == 2);
     }
 
     @Test

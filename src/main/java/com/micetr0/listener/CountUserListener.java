@@ -5,6 +5,7 @@ package com.micetr0.listener;
 
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -29,6 +30,8 @@ public class CountUserListener implements HttpSessionListener{
         servletContext.setAttribute("totalUsers", totalSessionCount);
         servletContext.setAttribute("currentUsers", currentSessionCount);
 
+        HttpSession session = se.getSession();
+        session.setAttribute("numUsersOnline", currentSessionCount);
         System.out.println("Session created, " + currentSessionCount + "users online");
     }
 
@@ -43,12 +46,6 @@ public class CountUserListener implements HttpSessionListener{
         servletContext.setAttribute("currentUsers",currentSessionCount);
     }
 
-    public Integer getTotalSessionCount() {
-        return this.totalSessionCount;
-    }
 
-    public Integer getCurrentSessionCount() {
-        return this.currentSessionCount;
-    }
 
 }

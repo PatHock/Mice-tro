@@ -15,13 +15,20 @@ import java.util.List;
 public class Composition {
 
     public Composition() {
-        //empty constructor
+        title = null;
+        year = null;
+        compositionID = null;
+        desc = null;
+        accountId = null;
+        isViewablePublicly = null;
     }
 
-    private String title = "Untitled";
+    private String title;
     private Integer year;
     private Integer compositionID;
-    private String desc = null;
+    private String desc;
+    private Integer accountId;
+    private Integer isViewablePublicly;
 
 
     public String getTitle() {
@@ -34,16 +41,8 @@ public class Composition {
 
     public Integer getYear() {return year;}
 
-    public void setYear(Integer year) {this.year = year;}
-
-    public Integer getCompositionID()
-    {
-        return compositionID;
-    }
-
-    public void setCompositionID(Integer compositionID)
-    {
-        this.compositionID = compositionID;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getDesc()
@@ -54,5 +53,35 @@ public class Composition {
     public void setDesc(String desc)
     {
         this.desc = desc;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public Integer getAccountId() {
+        return this.accountId;
+    }
+
+    public void setCompositionID(Integer compositionID) {this.compositionID = compositionID;}
+
+    public Integer getCompositionID() {return compositionID;}
+
+    /**
+     *
+     * @param isViewablePublicly 0 indicates composition is not viewable publicly, 1 indicates that composition
+     *                           is viewable publicly
+     */
+    public void setIsViewablePublicly(Integer isViewablePublicly) {
+        this.isViewablePublicly = isViewablePublicly;
+    }
+
+    /**
+     *
+     * @return 0 indicates composition is not viewable publicly, 1 indicates that composition
+     * is viewable publicly
+     */
+    public Integer getIsViewablePublicly() {
+        return this.isViewablePublicly;
     }
 }
