@@ -259,7 +259,9 @@ public class MySqlDB implements IDatabase {
 
 
     @Override
-    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
+    public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
+        Integer noteId = 0;
+        return noteId;
     }
 
     @Override
@@ -366,8 +368,8 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public void deleteAccount(String username) {
-
+    public Boolean deleteAccount(String username) {
+        return false;
     }
 
     @Override

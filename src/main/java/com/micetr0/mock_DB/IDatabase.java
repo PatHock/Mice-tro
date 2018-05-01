@@ -12,7 +12,7 @@ public interface IDatabase {
      *
      * @param type
      */
-    void insertNote(String type, String pitch, Integer measureIndex, Integer measureId);
+    Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId);
 
     /**
      *
@@ -65,7 +65,7 @@ public interface IDatabase {
      *
      * @param username String - a user's unique username as entered at login
      */
-    void deleteAccount(String username);
+    Boolean deleteAccount(String username);
 
     /**
      *

@@ -45,12 +45,14 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
+    public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
         Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
 
         Note note = new Note(noteId,Defs.NoteType.valueOf(type),Defs.Pitch.valueOf(pitch),measureIndex,measureId);
 
         notes.add(note);
+
+        return noteId;
     }
 
     /**
@@ -152,11 +154,13 @@ public class Mock_DB implements IDatabase{
     }
 
    @Override
-    public void deleteAccount(String username)
+    public Boolean deleteAccount(String username)
    {
        List<Account> accIds = findAccountByUsername(username);
 
-       if(accIds.size() < 1){
+       Boolean deleted = false;
+
+       if(accIds.size() > 1){
            //too many accounts in returned account list, should only be one, throw exception
        }
 
@@ -168,9 +172,11 @@ public class Mock_DB implements IDatabase{
            if (acc.getAccountID().equals(tempAccount.getAccountID()))
            {
                accounts.remove(acc);
+               deleted = true;
                break;
            }
        }
+       return deleted;
    }
 
    @Override
@@ -192,15 +198,15 @@ public class Mock_DB implements IDatabase{
      */
     @Override
     public List<Account> findAccountByUsername(String username) {
-        List<Account> accountIdList = new ArrayList<>();
+        List<Account> accountList = new ArrayList<>();
 
         for (Account acc : accounts) {
             if(acc.getUsername().equals(username)) {
-                accountIdList.add(acc);
+                accountList.add(acc);
             }
         }
 
-        return accountIdList;
+        return accountList;
     }
 
     /**

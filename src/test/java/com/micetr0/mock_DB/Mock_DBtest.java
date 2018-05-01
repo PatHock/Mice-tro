@@ -47,7 +47,8 @@ class Mock_DBtest {
 
         assertEquals(db.findNotesByMeasureIdAndMeasureIndex(7, 3).get(0).getPitch(), pitch);
     }
-/*
+
+
     @Test
     void findAccountByAccountIDTest()
     {
@@ -55,11 +56,7 @@ class Mock_DBtest {
         assertEquals("sad_Keanu", Account.get(0).getUsername());
     }
 
-    @Test
-    void findAccountByUsernameTest(){
 
-    }
-*/
     @Test
     void findAllAccountsTest()
     {
