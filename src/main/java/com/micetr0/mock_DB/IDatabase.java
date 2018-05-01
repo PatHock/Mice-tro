@@ -2,10 +2,7 @@ package com.micetr0.mock_DB;
 
 import com.micetr0.Credential;
 import com.micetr0.definitions.Defs;
-import com.micetr0.model.Account;
-import com.micetr0.model.Composition;
-import com.micetr0.model.Note;
-import com.micetr0.model.Section;
+import com.micetr0.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -13,15 +10,17 @@ import java.util.Map;
 public interface IDatabase {
     /**
      *
-     * @param note a note POJO
+     * @param type
      */
-    void insertNote(Note note);
+    Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId);
 
     /**
      *
      * @param noteId Unique ID that is stored in the database
      */
-    void deleteNote(String noteId);
+    boolean deleteNote(String noteId);
+
+    List<Composition> findCompositionsByAccountId(Integer accountId);
 
     /**
      * Multiple notes can exist in the same index in a measure (for a chord), so noteId is the only way to properly
@@ -37,7 +36,7 @@ public interface IDatabase {
      * @param accountId Unique ID for account as stored in database.
      * @return List of compositions
      */
-    List<Composition> findCompositionsIdsByAccountId(Integer accountId);
+
 //List<Note> findNotesByMeasureId(Integer measureId);
 
     /**
@@ -51,7 +50,7 @@ public interface IDatabase {
      * @param accountId unique identifier for accounts.
      * @return list of accounts
      */
-    List<Account> findCurrentAccount(Integer accountId);
+    List<Account> findAccountByAccountID(Integer accountId);
 
 
     /**
@@ -66,7 +65,7 @@ public interface IDatabase {
      *
      * @param username String - a user's unique username as entered at login
      */
-    void deleteAccount(String username);
+    Boolean deleteAccount(String username);
 
     /**
      *
@@ -76,16 +75,16 @@ public interface IDatabase {
 
     /**
      *
-     * @param account an account POJO
+     * @param  username
      */
-    void insertAccount(Account account);
+    Integer insertAccount(String username, String password);
 
     /**
      *
      * @param username String - a user's unique username as entered at login
      * @return List of account IDs that are paired with given username
      */
-    List<Integer> findAccountIdByUsername(String username);
+    List<Account> findAccountByUsername(String username);
 
     /**
      *
@@ -117,7 +116,7 @@ public interface IDatabase {
      * @param password User's password, associated only with username and account and not unique in db
      * @return List of Account IDs with given username and password
      */
-    List<Integer> findAccountIdByUsernameAndPassword(String username, String password);
+    List<Account> findAccountByUsernameAndPassword(String username, String password);
 
     /**
      *
@@ -156,7 +155,12 @@ public interface IDatabase {
 
     Boolean deleteSection(Integer sectionID);
 
-    Section findSection(Integer sectionID);
+    Section findSectionFromSectionID(Integer sectionID);
 
     List<Section> findAllSections();
+
+    List<Section> findSectionsByCompositionId(Integer compositionId);
+
+    List<Measure> findMeasuresBySectionId(Integer SectionId);
+
 }

@@ -48,9 +48,10 @@ class AccountControllerTest {
     void deleteAccountTest()
     {
         Account newAccount = controller.createAccount("Rick", "pASSword");
-        controller.addAccount(newAccount);
-        List<Account> accounts = controller.getAllAccounts();
-        assertEquals("Rick", accounts.get(accounts.size() - 1).getUsername());
+        Integer accID = controller.addAccount(newAccount);
+        List<Account> accounts = new ArrayList<>();
+        accounts = db.findAccountByAccountID(accID);
+        assertEquals("Rick", accounts.get(0).getUsername());
         controller.deleteAccount("Rick");
         accounts = controller.getAllAccounts();
         assertNotEquals("Rick", accounts.get((accounts.size() - 1)).getUsername());

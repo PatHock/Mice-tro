@@ -55,7 +55,7 @@ public class NoteController {
         }
 
         // If we made it this far, everything is juuuust fine
-        db.insertNote(new Note(1, noteType, pitch, measureIndex, measureId));
+        db.insertNote(noteType.toString(), pitch.toString(), measureIndex, measureId);
     }
 
     /**

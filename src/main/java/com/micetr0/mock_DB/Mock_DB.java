@@ -45,12 +45,14 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public void insertNote(Note note) {
-
+    public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
         Integer noteId = notes.get(notes.size() - 1).getNoteID() + 1;
-        note.setNoteID(noteId);
+
+        Note note = new Note(noteId,Defs.NoteType.valueOf(type),Defs.Pitch.valueOf(pitch),measureIndex,measureId);
 
         notes.add(note);
+
+        return noteId;
     }
 
     /**
@@ -60,43 +62,34 @@ public class Mock_DB implements IDatabase{
      * @param noteId Unique database ID for note
      */
     @Override
-    public void deleteNote(String noteId) {
-        throw new UnsupportedOperationException("Please implement deleteNote()");
+    public boolean deleteNote(String noteId) {
+        Boolean isNoteDeleted = false;
+
+        for(Note note : notes) {
+            if (note.getNoteID().equals(noteId)){
+                notes.remove(note);
+                isNoteDeleted = true;
+            }
+            if(isNoteDeleted){
+                break;
+            }
+        }
+
+        return isNoteDeleted;
     }
 
 
     /**
      *
      */
-    @Override
-    public List<Composition> findCompositionsIdsByAccountId(Integer accountId)
-    {
-        List<Composition> resultList;
-        List<String> compList = new ArrayList<>();
-        for (Account account : accounts)
-        {
-            if(account.getAccountID().equals(accountId))
-            {
-                compList.addAll(account.getViewableComps());
-                compList.addAll(account.getEditableComps());
-            }
-        }
-        resultList = findCompositionsByCompIds(compList);
-        return resultList;
-    }
-
-    private List<Composition> findCompositionsByCompIds(List<String> compIds)
+    public List<Composition> findCompositionsByAccountId(Integer accountId)
     {
         List<Composition> resultList = new ArrayList<>();
-
         for (Composition comp : compositions)
         {
-            for(String compId : compIds)
+            if(comp.getAccountId().equals(accountId))
             {
-                if(compId.equals(String.valueOf(comp.getCompositionID())))
-                {
-                    resultList.add(comp);
-                }
+                resultList.add(comp);
             }
         }
         return resultList;
@@ -111,8 +104,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
-
-    public List<Account> findCurrentAccount(Integer accountId)
+    public List<Account> findAccountByAccountID(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
         for (Account account : accounts)
@@ -161,28 +153,42 @@ public class Mock_DB implements IDatabase{
         return resultList;
     }
 
-
-
    @Override
-    public void deleteAccount(String username)
+    public Boolean deleteAccount(String username)
    {
-       List<Integer> accId = findAccountIdByUsername(username);
+       List<Account> accIds = findAccountByUsername(username);
+
+       Boolean deleted = false;
+
+       if(accIds.size() > 1){
+           //too many accounts in returned account list, should only be one, throw exception
+       }
+
+       Account tempAccount = new Account();
+       tempAccount = accIds.get(0);
+
        for (Account acc : accounts)
        {
-           if (acc.getAccountID().equals(accId.get(0)))
+           if (acc.getAccountID().equals(tempAccount.getAccountID()))
            {
                accounts.remove(acc);
+               deleted = true;
                break;
            }
        }
+       return deleted;
    }
 
    @Override
-   public void insertAccount(Account account)
+   public Integer insertAccount(String username, String password)
    {
+       Account account = new Account();
        Integer accountId = accounts.get(accounts.size() - 1).getAccountID() + 1;
        account.setAccountID(accountId);
+       account.setUsername(username);
+       account.setPassword(password);
        accounts.add(account);
+       return accountId;
    }
 
     /**
@@ -191,16 +197,16 @@ public class Mock_DB implements IDatabase{
      * @return List of Account ID's that have the specified username
      */
     @Override
-    public List<Integer> findAccountIdByUsername(String username) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsername(String username) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account acc : accounts) {
             if(acc.getUsername().equals(username)) {
-                accountIdList.add(acc.getAccountID());
+                accountList.add(acc);
             }
         }
 
-        return accountIdList;
+        return accountList;
     }
 
     /**
@@ -251,16 +257,16 @@ public class Mock_DB implements IDatabase{
    }
 
    @Override
-    public List<Integer> findAccountIdByUsernameAndPassword(String username, String password) {
-        List<Integer> accountIdList = new ArrayList<>();
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        List<Account> accountList = new ArrayList<>();
 
         for (Account account : accounts) {
             if(account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                accountIdList.add(account.getAccountID());
+                accountList.add(account);
             }
         }
 
-        return accountIdList;
+        return accountList;
    }
 
     /**
@@ -386,7 +392,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Section findSection(Integer sectionID) {
+    public Section findSectionFromSectionID(Integer sectionID) {
         List<Section> newSections = new ArrayList<>();
         for(Section section : sections)
         {
@@ -405,6 +411,17 @@ public class Mock_DB implements IDatabase{
         }
         return newSections;
     }
+
+    @Override
+    public List<Section> findSectionsByCompositionId(Integer compositionId) {
+        return null;
+    }
+
+    @Override
+    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
+        return null;
+    }
+
 
 }
 

@@ -45,16 +45,6 @@ public class Composition {
         this.year = year;
     }
 
-    public Integer getCompositionID()
-    {
-        return compositionID;
-    }
-
-    public void setCompositionID(Integer compositionID)
-    {
-        this.compositionID = compositionID;
-    }
-
     public String getDesc()
     {
         return desc;
@@ -72,6 +62,10 @@ public class Composition {
     public Integer getAccountId() {
         return this.accountId;
     }
+
+    public void setCompositionID(Integer compositionID) {this.compositionID = compositionID;}
+
+    public Integer getCompositionID() {return compositionID;}
 
     /**
      *

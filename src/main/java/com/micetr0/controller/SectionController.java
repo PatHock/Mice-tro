@@ -56,7 +56,7 @@ public class SectionController {
     }
     public Section findSection(Integer sectionID)
     {
-        return db.findSection(sectionID);
+        return db.findSectionFromSectionID(sectionID);
 
     }
 
