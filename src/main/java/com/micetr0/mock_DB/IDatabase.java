@@ -18,7 +18,7 @@ public interface IDatabase {
      *
      * @param noteId Unique ID that is stored in the database
      */
-    boolean deleteNote(String noteId);
+    Boolean deleteNote(Integer noteId);
 
     List<Composition> findCompositionsByAccountId(Integer accountId);
 

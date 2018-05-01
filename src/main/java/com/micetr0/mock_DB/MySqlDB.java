@@ -260,23 +260,183 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
-        Integer noteId = 0;
-        return noteId;
+        return executeTransaction(conn -> {
+            PreparedStatement addNoteStmt = null;
+            PreparedStatement getNoteIdStmt = null;
+            ResultSet addedNotesResult = null;
+            Integer noteId = -1;
+
+            try{
+                addNoteStmt = conn.prepareStatement(
+                        "insert into notes (pitch, type, measureIndex, measureId) values (?,?,?,?)"
+                );
+                addNoteStmt.setString(1, pitch);
+                addNoteStmt.setString(2,type);
+                addNoteStmt.setInt(3,measureIndex);
+                addNoteStmt.setInt(4,measureId);
+
+                addNoteStmt.executeUpdate();
+
+                //Get updated note Id
+
+                getNoteIdStmt = conn.prepareStatement(
+                        "select notes.* from notes"+
+                                "where pitch = ? and type = ? and measureIndex = ? and measureId = ?"
+                );
+
+                getNoteIdStmt.setString(1,pitch);
+                getNoteIdStmt.setString(2,type);
+                getNoteIdStmt.setInt(3,measureIndex);
+                getNoteIdStmt.setInt(4,measureId);
+
+                addedNotesResult = getNoteIdStmt.executeQuery();
+
+                boolean found = false;
+
+                while(addedNotesResult.next()){
+                    found = true;
+                    noteId = addedNotesResult.getInt(1);
+                }
+
+                if(!found){
+                    System.out.println("Note was not added correctly, something went wrong");
+                }
+
+                return noteId;
+            }
+            finally{
+                DBUtil.closeQuietly(addNoteStmt);
+                DBUtil.closeQuietly(getNoteIdStmt);
+                DBUtil.closeQuietly(addedNotesResult);
+            }
+        });
     }
 
     @Override
-    public boolean deleteNote(String noteId) {
-        return false;
+    public Boolean deleteNote(Integer noteId) {
+        return executeTransaction(conn -> {
+            PreparedStatement removeNoteStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet allNotes = null;
+            //boolean for final result
+            boolean foundDeletedNote = false;
+            Boolean deleted = false;
+
+            try{
+                removeNoteStmt = conn.prepareStatement(
+                        "delete from notes where noteId = ?"
+                );
+                removeNoteStmt.setInt(1,noteId);
+
+                removeNoteStmt.executeUpdate();
+
+                checkStmt = conn.prepareStatement(
+                        "select notes.* from notes"
+                );
+
+                allNotes = checkStmt.executeQuery();
+
+                //this better be true cause we need some notes
+                boolean found = false;
+
+                while(allNotes.next()){
+                    found = true;
+                    if(allNotes.getInt(1) == noteId){
+                        //failed, note not deleted
+                        System.out.println("Note with same ID found after deleted, something went wrong");
+                        foundDeletedNote = true;
+                    }
+
+                }
+                if(found == true && foundDeletedNote == false){
+                    deleted = true;
+                }
+
+                return deleted;
+            }
+            finally{
+                DBUtil.closeQuietly(removeNoteStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(allNotes);
+            }
+        });
     }
 
     @Override
     public List<Composition> findCompositionsByAccountId(Integer accountId) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getCompsStmt = null;
+            ResultSet compsResultSet = null;
+
+            try{
+                getCompsStmt = conn.prepareStatement(
+                        "select compositions.* from compositions where accountId = ?"
+                );
+                getCompsStmt.setInt(1,accountId);
+
+                List<Composition> comps = new ArrayList<>();
+
+                compsResultSet = getCompsStmt.executeQuery();
+
+                boolean found = false;
+
+                while(compsResultSet.next()){
+                    found = true;
+
+                    Composition comp = new Composition();
+                    loadComposition(comp,compsResultSet,1);
+                    comps.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("No compositions exist for that Account ID");
+                }
+
+                return comps;
+            }
+            finally{
+                DBUtil.closeQuietly(getCompsStmt);
+                DBUtil.closeQuietly(compsResultSet);
+            }
+        });
     }
 
     @Override
     public List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getNotesStmt = null;
+            ResultSet noteResultSet = null;
+
+            try{
+                getNotesStmt = conn.prepareStatement(
+                        "select notes.* from notes where measureId = ? and measureIndex = ?"
+                );
+                getNotesStmt.setInt(1,measureId);
+                getNotesStmt.setInt(2,measureIndex);
+
+                List<Note> result = new ArrayList<>();
+
+                noteResultSet = getNotesStmt.executeQuery();
+
+                while(noteResultSet.next()){
+                    Integer noteID = noteResultSet.getInt(1);
+                    String pitch = noteResultSet.getString(2);
+
+                    String type = noteResultSet.getString(3);
+                    Integer measureIndx = noteResultSet.getInt(4);
+                    Integer measureID = noteResultSet.getInt(5);
+
+                    Note note = new Note(noteID, Defs.NoteType.valueOf(type), Defs.Pitch.valueOf(pitch), measureIndx, measureID);
+
+                    result.add(note);
+                }
+                return result;
+            }
+            finally {
+                DBUtil.closeQuietly(getNotesStmt);
+                DBUtil.closeQuietly(noteResultSet);
+            }
+        });
     }
 
     @Override
@@ -374,7 +534,37 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public List<Composition> findAllComps() {
-        return null;
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement getCompsStmt = null;
+            ResultSet compResultSet = null;
+
+            try{
+                getCompsStmt = conn.prepareStatement(
+                        "select compositions.* from compositions"
+                );
+
+                List<Composition> resultComps = new ArrayList<>();
+                compResultSet = getCompsStmt.executeQuery();
+                boolean found = false;
+
+                while(compResultSet.next()){
+                    found = true;
+                    Composition comp = new Composition();
+                    loadComposition(comp,compResultSet,1);
+                    resultComps.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("No Compositions found in database, like at all. No bueno");
+                }
+
+                return resultComps;
+            }
+            finally{
+                DBUtil.closeQuietly(getCompsStmt);
+                DBUtil.closeQuietly(compResultSet);
+            }
+        });
     }
 
     @Override
@@ -590,6 +780,15 @@ public class MySqlDB implements IDatabase {
         account.setAccountID(resultSet.getInt(index++));
         account.setUsername(resultSet.getString(index++));
         account.setPassword(resultSet.getString(index++));
+    }
+
+    private void loadComposition(Composition composition, ResultSet resultSet, int index) throws SQLException{
+        composition.setCompositionID(resultSet.getInt(index++));
+        composition.setTitle(resultSet.getString(index++));
+        composition.setYear(resultSet.getInt(index++));
+        composition.setDesc(resultSet.getString(index++));
+        composition.setAccountId(resultSet.getInt(index++));
+        composition.setIsViewablePublicly(resultSet.getInt(index++));
     }
 
 }

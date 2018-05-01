@@ -62,7 +62,7 @@ public class Mock_DB implements IDatabase{
      * @param noteId Unique database ID for note
      */
     @Override
-    public boolean deleteNote(String noteId) {
+    public Boolean deleteNote(Integer noteId) {
         Boolean isNoteDeleted = false;
 
         for(Note note : notes) {
