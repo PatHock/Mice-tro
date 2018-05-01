@@ -7,7 +7,7 @@ body {
 input[type=submit]{
     background-color: darkred;
     border: 2px solid darkred;
-    color: white;
+    //color: white;
     padding: 10px 25px;
     text-align: center;
     text-decoration: none;
@@ -20,4 +20,13 @@ input[type=submit]:hover{
     background-color: white;
     border: 2px solid darkred;
     color: darkred;
+}
+.navbar-inverse {
+    background-color: darkred;
+}
+.container .theme-showcase {
+    width: auto;
+}
+.jumbotron {
+    background-color: #464646;
 }
