@@ -93,6 +93,7 @@ public class AbcTranslatorTest {
                 + " | "
                 + translator.getNote(notes.get(0))
                 + " "
-                + translator.getNote(notes.get(1)));
+                + translator.getNote(notes.get(1))
+                + "|");
     }
 }

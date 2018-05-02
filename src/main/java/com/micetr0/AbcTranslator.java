@@ -53,6 +53,7 @@ public class AbcTranslator {
             String temp = getNote(note);
             noties = noties + " " + temp;
         }
+        noties = noties + "|";
         String out = "X: 1\n"
                 + "T: " + getCompTitle(comp) + "\n"
                 + "M: " + getTimeSig(sec) + "\n"
