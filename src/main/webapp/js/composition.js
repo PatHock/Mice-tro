@@ -19,6 +19,8 @@ let abc = "T: Cooley's\n" +
 
 function load() {
     abcjs.renderAbc("compAbcjs", abc);
+    abcjs.renderMidi("midi", abc);
+    abcjs.renderMidi("midi-download", abc, { generateDownload: true, generateInline: false });
 }
 
 $('document').ready(function(){

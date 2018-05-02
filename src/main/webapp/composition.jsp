@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <link rel="icon" href="favicon.ico">
-
-        <title>Mice-tr0 - Composition 1</title>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -36,11 +35,13 @@
 
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
-                <h1 align="center">Composition 1</h1>
+                <h1 align="center">Composition Editor</h1>
             </div>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">
                 <div id="compAbcjs"></div>
+                <div id="midi"></div>
+                <div id="midi-download"></div>
             </div>
 
             <form action="composition" method="get">
