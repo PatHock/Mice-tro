@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import com.micetr0.definitions.*;
 
 public class InitialData {
 
@@ -31,12 +30,6 @@ public class InitialData {
                 account.setUsername(i.next());
                 account.setPassword(i.next());
                 account.setAccountID(accountID);
-                String editableComps[] = i.next().split(" ");
-                List<String> editable = Arrays.asList(editableComps);
-                String viewableComps[] = i.next().split(" ");
-                List<String> viewable = Arrays.asList(viewableComps);
-                account.setEditableComps(editable);
-                account.setViewableComps(viewable);
                 accounts.add(account);
                 accountID++;
             }
@@ -62,10 +55,15 @@ public class InitialData {
                 composition.setCompositionID(compositionID);
                 compositionID++;
                 composition.setDesc(i.next());
+                composition.setAccountId(Integer.parseInt(i.next()));
+                composition.setIsViewablePublicly(Integer.parseInt(i.next()));
+
                 compositions.add(composition);
             }
-            return compositions;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return compositions;
     }
 
     public static List<Section> getSections() throws IOException{
@@ -79,11 +77,33 @@ public class InitialData {
                 }
                 Iterator<String> i = tuple.iterator();
                 Section section = new Section();
-                //set fields
+                section.setSectionID(sectionID);
+                sectionID++;
+                section.setKey(Defs.Key.valueOf(i.next()));
+                section.setTimeSig(Defs.TimeSignature.valueOf(i.next()));
+                section.setClef(Defs.Clef.valueOf(i.next()));
+                section.setTempo(Integer.parseInt(i.next()));
+                section.setCompID(Integer.parseInt(i.next()));
                 sections.add(section);
             }
             return sections;
         }
+    }
+
+    public static List<Measure> getMeasures() throws IOException{
+        List<Measure> measures = new ArrayList<>();
+        try (CSVParse parseMeasures = new CSVParse("measures.csv")){
+            Integer MeasureID = 1;
+            while(true) {
+                List<String> tuple = parseMeasures.next();
+                if(tuple == null) {
+                    break;
+                }
+                Iterator<String> i = tuple.iterator();
+                Measure measure = new Measure(Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+            }
+        }
+        return measures;
     }
 
     public static List<Note> getNotes() throws IOException{
@@ -96,7 +116,9 @@ public class InitialData {
                     break;
                 }
                 Iterator<String> i = tuple.iterator();
-                Note note = new Note(Integer.parseInt(i.next()), setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                //Note note = new Note(Integer.parseInt(i.next()), setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                Note note = new Note(NoteID, setNoteType(i.next()), setPitch(i.next()), Integer.parseInt(i.next()), Integer.parseInt(i.next()));
+                NoteID ++;
                 notes.add(note);
             }
             return notes;

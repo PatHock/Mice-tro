@@ -6,3 +6,5 @@ import {MyFunction} from './app2';
 MyFunction();
 
 
+
+

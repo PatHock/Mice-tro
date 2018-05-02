@@ -4,6 +4,8 @@ import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import com.micetr0.model.Composition;
+
 
 public class Account {
 
@@ -13,11 +15,12 @@ public class Account {
 
     private String password;
     private String username;
-
-    private List<String> viewableComps = new ArrayList<>();
-    private List<String> editableComps = new ArrayList<>();
-
     private Integer accountID;
+
+    //removed to wait for sharing strech goal implementation
+    //private List<Composition> viewableComps = new ArrayList<>();
+    private List<Composition> editableComps = new ArrayList<>();
+
 
     public String getPassword() {
         return password;
@@ -35,13 +38,9 @@ public class Account {
         this.username = username;
     }
 
-    public List<String> getViewableComps(){ return viewableComps; }
+    public List<Composition> getEditableComps(){ return editableComps; }
 
-    public void setViewableComps(List<String> viewableComps) { this.viewableComps = viewableComps; }
-
-    public List<String> getEditableComps(){ return editableComps; }
-
-    public void setEditableComps(List<String> editableComps) { this.editableComps = editableComps; }
+    public void setEditableComps(List<Composition> editableComps) { this.editableComps = editableComps; }
 
     public Integer getAccountID()
     {
@@ -52,4 +51,10 @@ public class Account {
     {
         this.accountID = accountID;
     }
+
+    /*//might need for sharing stretch goal
+    public List<Composition> getViewableComps(){ return viewableComps; }
+
+    public void setViewableComps(List<Composition> viewableComps) { this.viewableComps = viewableComps; }
+    */
 }

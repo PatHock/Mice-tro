@@ -39,10 +39,9 @@ public class CreateCompositionServlet extends HttpServlet {
 
         CompositionController controller = new CompositionController();
 
-        controller.setModel(model);
 
         //boolean used to check if values entered are valid
-        boolean valid = false;
+        boolean isValid = false;
 
         //error message for invalid user input
         String invalidInput = null;
@@ -73,26 +72,25 @@ public class CreateCompositionServlet extends HttpServlet {
 
             //check to see if info was entered, if not prompt user to enter all fields
             if((title.length() > 1) && (year.length() == 4) && (desc.length() > 1) && invalidNum == null){
-                valid = true;
+                isValid = true;
             }
 
             else{
-                valid = false;
                 invalidInput = "Please enter values for all fields";
             }
 
         }
         catch(InvalidParameterException e){
-
+            e.printStackTrace();
         }
 
         req.setAttribute("createC", model);
         req.setAttribute("invalidInput", invalidInput);
-        req.setAttribute("valid", valid);
+        req.setAttribute("valid", isValid);
         req.setAttribute("invalidNum", invalidNum);
 
 
-        if (valid == true){
+        if (isValid){
             req.getRequestDispatcher("/composition.jsp").forward(req, resp);
         }
         else{
