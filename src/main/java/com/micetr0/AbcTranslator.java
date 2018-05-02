@@ -49,9 +49,18 @@ public class AbcTranslator {
 
     public String abcBuilder(Composition comp, Section sec, List<Note> notes){
         String noties = "";
+        Integer prev = 0;
         for (Note note: notes) {
-            String temp = getNote(note);
-            noties = noties + " " + temp;
+            if(note.getMeasureId().equals(prev))
+            {
+                String temp = getNote(note);
+                noties = noties + " " + temp;
+                prev = note.getMeasureId();
+            }
+            else{
+                String temp = getNote(note);
+                noties = noties + "|" + temp;
+            }
         }
         noties = noties + "|";
         String out = "X: 1\n"
