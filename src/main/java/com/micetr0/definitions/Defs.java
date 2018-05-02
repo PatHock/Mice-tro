@@ -269,6 +269,7 @@ public class Defs {
         public Boolean isValidPitch(Pitch pitch) {
             return getPitches().contains(pitch);
         }
+
     }
 
     public enum Clef {
@@ -302,8 +303,7 @@ public class Defs {
         TimeSignature(String sig) {
             this.sig = sig;
         }
-
-        public String getTimeSig() {
+        public String getSig() {
             return this.sig;
         }
         }

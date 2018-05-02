@@ -45,7 +45,7 @@ public class SectionController {
 
     private Boolean addDBSection(Section section)
     {
-        db.insertSection(section.getSectionID(), section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getCompID());
+        db.insertSection(section.getSectionID(), section.getKey(), Defs.TimeSignature.valueOf(section.getTimeSig()),section.getClef(), section.getTempo(),section.getCompID());
         return true;
     }
 

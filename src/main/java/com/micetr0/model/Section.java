@@ -17,8 +17,12 @@ public class Section {
     private Defs.Key key = null;
     private Defs.TimeSignature timeSig = null;
 
-    public Defs.TimeSignature getTimeSig() {
-        return timeSig;
+    public String getNumTimeSig(){
+        return timeSig.getSig();
+    }
+
+    public String getTimeSig() {
+        return timeSig.toString();
     }
     public void setTimeSig(Defs.TimeSignature timeSig) {
         this.timeSig = timeSig;
