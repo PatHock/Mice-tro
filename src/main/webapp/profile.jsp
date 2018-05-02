@@ -23,14 +23,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
-                    <li class="active nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
+                    <li class="active nav-item">
+                        <a class="nav-link" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -45,33 +45,13 @@
             <form action="profile" method="post">
             </form>
 
-            <div id="compositionMenu" class="list-group">
-                <%--<a href="composition" class="list-group-item">--%>
-                    <%--<h4 class="list-group-item-heading">Title: First Composition</h4>--%>
-                    <%--<p class="list-group-item-text">Year: 1996</p>--%>
-                <%--</a>--%>
-                <%--<a href="composition" class="list-group-item">--%>
-                    <%--<h4 class="list-group-item-heading">Title: Second Composition</h4>--%>
-                    <%--<p class="list-group-item-text">Year: 2018</p>--%>
-                <%--</a>--%>
-            </div>
+            <div id="compositionMenu" class="list-group"></div>
 
-            <%--<form action="composition" method="get">--%>
-                <%--<input name="goToIndex"--%>
-                       <%--type="submit"--%>
-                       <%--value="Composition 1" />--%>
-            <%--</form>--%>
 
             <form action="createComposition" method="get">
                 <input name="goToCreateComposition"
                        type="submit"
                        value="Create New Composition " />
-            </form>
-
-            <form action="index" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Log Out" />
             </form>
 
             <form action="index" method="get">

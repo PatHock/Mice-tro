@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String text = "Very Dank, ajax works";
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
@@ -35,7 +34,6 @@ public class LoginServlet extends HttpServlet {
 
         if (ajax) {
             System.out.println("LoginServlet AJAX doGet");
-            resp.getWriter().write(text);       // Write response body.
         } else {
             System.out.println("LoginServlet doGet");
             // Handle regular (JSP) response.
