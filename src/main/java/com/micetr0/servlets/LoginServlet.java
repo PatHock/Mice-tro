@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
         AccountController controller = new AccountController();
 
-        Boolean isValidCredentials = false;
+        Integer accountId = null;
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            isValidCredentials =  controller.logIn(username, password);
+            accountId =  controller.logIn(username, password);
         } catch(DataIntegrityViolationException e) {
             // TODO: Redirect to failure page
             //resp.sendError(500, "Welp, something went wrong :(");
@@ -80,16 +80,13 @@ public class LoginServlet extends HttpServlet {
         }
 
 
-        if(isValidCredentials) {
-            HttpSession session = req.getSession();
-            session.setAttribute("username", username);
+        if(accountId != null) {
+            HttpSession session = req.getSession(true);
+            session.setAttribute("accountId", accountId);
             data.put("redirect", redirectUrl);
-            //TODO: Let ajax know to redirect, currently prints contents of profile page
-//            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
         }
         else {
             data.put("messageerror", invalidCredentialsMsg);
-//            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
         }
 
         String json = new Gson().toJson(data);

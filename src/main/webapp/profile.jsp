@@ -45,11 +45,22 @@
             <form action="profile" method="post">
             </form>
 
-            <form action="composition" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Composition 1" />
-            </form>
+            <div id="compositionMenu" class="list-group">
+                <%--<a href="composition" class="list-group-item">--%>
+                    <%--<h4 class="list-group-item-heading">Title: First Composition</h4>--%>
+                    <%--<p class="list-group-item-text">Year: 1996</p>--%>
+                <%--</a>--%>
+                <%--<a href="composition" class="list-group-item">--%>
+                    <%--<h4 class="list-group-item-heading">Title: Second Composition</h4>--%>
+                    <%--<p class="list-group-item-text">Year: 2018</p>--%>
+                <%--</a>--%>
+            </div>
+
+            <%--<form action="composition" method="get">--%>
+                <%--<input name="goToIndex"--%>
+                       <%--type="submit"--%>
+                       <%--value="Composition 1" />--%>
+            <%--</form>--%>
 
             <form action="createComposition" method="get">
                 <input name="goToCreateComposition"

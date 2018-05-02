@@ -39,6 +39,13 @@
                 <h1 align="center">Composition 1</h1>
             </div>
 
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-secondary">Add Note</button>
+                    <button type="button" class="btn btn-secondary">Add Measure</button>
+                </div>
+            </div>
+
             <div id="compWindow" class="container" style="background-color: white" align="center">
                 <div id="compAbcjs"></div>
             </div>
