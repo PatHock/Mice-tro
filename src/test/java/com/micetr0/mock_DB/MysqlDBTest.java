@@ -23,10 +23,10 @@ public class MysqlDBTest {
     public void deleteDBtest() {
         db.deleteDB();
     }
+    */
     @Test
     public void createDBtest(){
         db.createDB();
     }
-*/
 
 }

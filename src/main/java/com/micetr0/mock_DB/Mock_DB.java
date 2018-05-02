@@ -315,7 +315,7 @@ public class Mock_DB implements IDatabase{
      * @return A composition object with unique ID
      */
     @Override
-    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+    public Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly) {
         Composition composition = new Composition();
         composition.setTitle(title);
         composition.setDesc(description);
@@ -367,7 +367,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+    public Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
         Section section = new Section();
         Integer sectionId = sections.get(sections.size() - 1).getSectionID() + 1;
         section.setSectionID(sectionId);
@@ -377,7 +377,7 @@ public class Mock_DB implements IDatabase{
         section.setTimeSig(timeSig);
         section.setTempo(tempo);
         sections.add(section);
-        return true;
+        return sectionId;
     }
 
     @Override
@@ -392,7 +392,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Section findSectionFromSectionID(Integer sectionID) {
+    public List<Section> findSectionFromSectionID(Integer sectionID) {
         List<Section> newSections = new ArrayList<>();
         for(Section section : sections)
         {
@@ -400,7 +400,7 @@ public class Mock_DB implements IDatabase{
                 newSections.add(section);
             }
         }
-        return newSections.get(0);  //Sections should never be larger than 1.
+        return newSections;  //Sections should never be larger than 1.
     }
 
     @Override

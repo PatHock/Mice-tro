@@ -140,7 +140,7 @@ public interface IDatabase {
      * @param year The year the composition was written
      * @return A composition object with unique ID
      */
-    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
+    Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly);
 
 
 
@@ -151,11 +151,11 @@ public interface IDatabase {
 
     void createDB();
 
-    Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
+    Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
     Boolean deleteSection(Integer sectionID);
 
-    Section findSectionFromSectionID(Integer sectionID);
+    List<Section> findSectionFromSectionID(Integer sectionID);
 
     List<Section> findAllSections();
 

@@ -37,16 +37,16 @@ public class SectionController {
         newSection.setTempo(tempo);
         newSection.setTimeSig(timeSig);
         newSection.setSectionID(secID);
-        if(addDBSection(newSection)) {
+        if(addDBSection(newSection) > 0) {
             return newSection;
         }
         return null;
     }
 
-    private Boolean addDBSection(Section section)
+    private Integer addDBSection(Section section)
     {
-        db.insertSection(section.getSectionID(), section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getCompID());
-        return true;
+        Integer sectionId = db.insertSection(section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getCompID());
+        return sectionId;
     }
 
     public Boolean deleteSection(Integer sectionID)
@@ -54,7 +54,7 @@ public class SectionController {
         db.deleteSection(sectionID);
         return true;
     }
-    public Section findSection(Integer sectionID)
+    public List<Section> findSection(Integer sectionID)
     {
         return db.findSectionFromSectionID(sectionID);
 

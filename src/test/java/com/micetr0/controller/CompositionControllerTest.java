@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class CompositionControllerTest {
@@ -41,32 +42,6 @@ class CompositionControllerTest {
         assertFalse(controller.deleteComposition(compFergie));
         assertEquals(initialDbSize - 1, db.findAllComps().size());
 
-
-    }
-
-    @Test
-    void createCompositionTest() {
-        Integer accountId;
-
-        accountId = 14132543;
-        Composition composition = controller.createComposition(accountId);
-        Composition dbComp;
-        assertEquals(accountId, composition.getAccountId());
-
-        // test that one composition is added to the db and that it matches the one returned by createComposition
-        assertEquals(1, db.findCompositionsByCompositionId(composition.getCompositionID()).size());
-        dbComp =  db.findCompositionsByCompositionId(composition.getCompositionID()).get(0);
-
-        assertEquals(composition.getTitle(), dbComp.getTitle());
-        assertEquals(composition.getCompositionID(), dbComp.getCompositionID());
-        assertEquals(composition.getAccountId(), dbComp.getAccountId());
-        assertEquals(composition.getDesc(), dbComp.getDesc());
-        assertEquals(composition.getIsViewablePublicly(), dbComp.getIsViewablePublicly());
-        assertEquals(composition.getYear(), dbComp.getYear());
-
-        assertNotNull(composition.getDesc());
-        assertNotNull(composition.getYear());
-        assertNotNull(composition.getIsViewablePublicly());
 
     }
 
