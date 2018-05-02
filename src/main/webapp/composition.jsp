@@ -21,14 +21,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
-                    <li class="active nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
+                        <a class="nav-link" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -37,6 +37,13 @@
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
                 <h1 align="center">Composition 1</h1>
+            </div>
+
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-secondary">Add Note</button>
+                    <button type="button" class="btn btn-secondary">Add Measure</button>
+                </div>
             </div>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">

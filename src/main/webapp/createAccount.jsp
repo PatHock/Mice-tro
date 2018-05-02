@@ -21,14 +21,14 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
               <ul class="nav navbar-nav">
-                  <li class="active nav-item">
+                  <li class="nav-item">
                       <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#"></a>
+                      <a class="nav-link" href="profile">Profile</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link disabled" href="#">Disabled</a>
+                      <a class="nav-link" href="logout">Logout</a>
                   </li>
               </ul>
           </div>

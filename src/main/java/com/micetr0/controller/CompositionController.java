@@ -11,6 +11,7 @@ import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Composition;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CompositionController {
 
@@ -133,6 +134,10 @@ public class CompositionController {
         }
 
         return isCompUpdated;
+    }
+
+    public List<Composition> getCompositionsByAccountId(Integer accountId){
+        return db.findCompositionsByAccountId(accountId);
     }
 
     /**
