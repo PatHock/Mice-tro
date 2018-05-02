@@ -6,27 +6,35 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-      <!-- Bootstrap core CSS -->
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="icon" href="favicon.ico">
 
       <title>Mice-tr0 - Create Account</title>
-    <link rel="stylesheet" href="scss/style.css">
   </head>
 
   <body>
-      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
           <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
               <a class="navbar-brand" href="index">Mice-tr0</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="nav navbar-nav">
+                  <li class="active nav-item">
+                      <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#"></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link disabled" href="#">Disabled</a>
+                  </li>
+              </ul>
           </div>
       </nav>
 
-      <h1>Enter Desired Account Information:</h1>
+      <h1 style="margin-top: 1rem">Enter Desired Account Information:</h1>
 
       <form action="createAccount" method="post">
           Username:<br>
@@ -39,6 +47,7 @@
 
           <input type="submit" value="Create Account">
       </form>
-
+      <%--Webpack entry point below--%>
+      <script src="js/dist/createAccount.bundle.js"></script>
   </body>
 </html>

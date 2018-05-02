@@ -30,6 +30,7 @@ input[type=submit]:hover {
 }
 .container .theme-showcase {
     width: auto;
+    margin-top: 1rem;
 }
 .jumbotron {
     background-color: #464646;

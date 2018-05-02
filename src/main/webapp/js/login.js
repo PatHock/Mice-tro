@@ -1,11 +1,10 @@
-import 'jquery';
 import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../scss/style.css';
 import '../scss/login.css';
 
-/**
- * changed var to let
- */
+window.$ = require('jquery');
+
 $(document).on("submit", "#loginForm", function(event) {
     let $form = $(this);
 
