@@ -1,20 +1,20 @@
+import 'jquery';
+import 'bootstrap';
+import '../scss/style.css';
+import '../scss/login.css';
+
+/**
+ * changed var to let
+ */
 $(document).on("submit", "#loginForm", function(event) {
-    var $form = $(this);
+    let $form = $(this);
 
     $.post($form.attr("action"), $form.serialize(), function (responseJson) {
         if(responseJson.redirect) {
             window.location = responseJson.redirect;
         }
         else if(responseJson.messageerror) {
-            // $("#loginErrMessDiv").text(responseJson.messageerror);
-
-            // jQuery('<div/>', {
-            //     id: 'loginErrMessDiv',
-            //     class: 'alert alert-danger',
-            //     role: 'alert',
-            //     text: responseJson.messageerror
-            // }).appendTo('#loginForm');
-            var $message = $("#loginErrMsg");
+            let $message = $("#loginErrMsg");
             $("div[class='alert alert-danger']").remove();
             $("<div></div>", {
                 id: "loginErr",
@@ -22,7 +22,6 @@ $(document).on("submit", "#loginForm", function(event) {
                 text: responseJson.messageerror,
                 role: "alert"
             }).appendTo($message);
-            // $("<loginErr>").text(responseJson.messageerror).appendTo($myTag);
         }
         return;
     });

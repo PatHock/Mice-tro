@@ -1,8 +1,7 @@
-
-//$theme-colors: (
-//        "primary" : #8B0000
-//);
-//@import "../../../node_modules/bootstrap/scss/bootstrap";
+/*//$theme-colors: (*/
+/*//        "primary" : #8B0000*/
+/*//);*/
+/*//@import "~bootstrap/scss/bootstrap";*/
 
 .form-signin {
   max-width: 330px;

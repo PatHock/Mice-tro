@@ -4,10 +4,14 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        'app':  path.resolve(__dirname, "src/main/webapp/js/app.js")
+        'app':  path.resolve(__dirname, "src/main/webapp/js/app.js"),
+        'index': path.resolve(__dirname, "src/main/webapp/js/index.js"),
+        'login': path.resolve(__dirname, "src/main/webapp/js/login.js")
     },
     module: {
         rules: [
+
+
             // {
             //     test: /\.(scss)$/,
             //     use: [{
@@ -28,12 +32,15 @@ module.exports = {
             //         loader: 'sass-loader' // compiles Sass to CSS
             //     }]
             // },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
 
 
-
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-            { test: /\.scss$/, exclude: /node_modules/, loader: "sass-loader"},
-            { test: /\.sass$/, exclude: /node_modules/, loader: "sass-loader"},
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+            // { test: /\.scss$/, exclude: /node_modules/, loader: "sass-loader"},
+            // { test: /\.sass$/, exclude: /node_modules/, loader: "sass-loader"},
         ]
     },
     output: {

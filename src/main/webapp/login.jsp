@@ -8,15 +8,15 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!-- Bootstrap core CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <%--<script src="/micetr0/js/dist/app.bundle.js"></script>--%>
-        <link rel="stylesheet" href="scss/login.scss">
-        <link rel="stylesheet" href="scss/style.scss">
+        <%--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
+        <script src="js/dist/login.bundle.js"></script>
+        <%--<link rel="stylesheet" href="scss/login.css">--%>
+        <%--<link rel="stylesheet" href="scss/style.css">--%>
 
 
         <%--TODO: Put Javascript in webpack--%>
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script type="text/javascript" src="js/login.js"></script>
+        <%--<script src="http://code.jquery.com/jquery-latest.min.js"></script>--%>
+        <%--<script type="text/javascript" src="js/login.js"></script>--%>
 
         <title>Mice-tr0 - Login</title>
 

@@ -1,78 +1,61 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<!doctype html>
+<html lang="en">
 
   <head>
-      <meta charset="utf-8">
+      <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
       <!-- Bootstrap core CSS -->
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap CSS -->
+      <%--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
+      <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">--%>
+
+      <link rel="icon" href="favicon.ico">
+      <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
+      <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>--%>
+      <%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>--%>
+
 
       <title>Mice-tr0 - Home Page</title>
 
-      <script src="/micetr0/js/dist/app.bundle.js"></script>
-      <link rel="stylesheet" href="scss/style.scss">
+      <script src="js/dist/index.bundle.js"></script>
+      <%--<link rel="stylesheet" href="scss/style.css">--%>
 
   </head>
 
   <body>
-      <nav class="navbar navbar-inverse navbar-fixed-top">
+
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+
           <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                      aria-expanded="false" aria-controls="navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="index">Mice-tr0</a>
+              <a class="navbar-brand" href="#">Mice-tr0</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="nav navbar-nav">
+                  <li class="active nav-item">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#"></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link disabled" href="#">Disabled</a>
+                  </li>
+              </ul>
           </div>
       </nav>
 
-      <%--<div id="testCarousel" class="carousel slide" data-ride="carousel">--%>
-          <%--<ol class="carousel-indicators">--%>
-              <%--<li data-target="#testCarousel" data-slide-to="0" class="active"></li>--%>
-              <%--<li data-target="#testCarousel" data-slide-to="1"></li>--%>
-              <%--<li data-target="#testCarousel" data-slide-to="2"></li>--%>
-          <%--</ol>--%>
-
-          <%--<div class="carousel-inner" role="listbox">--%>
-              <%--<div class="item active">--%>
-                  <%--<img src="resources/justBarelyWhite.png" alt="First slide">--%>
-                  <%--&lt;%&ndash;<div class="carousel-caption d-none d-md-block">&ndash;%&gt;--%>
-                      <%--&lt;%&ndash;<h5>Our team motto</h5>&ndash;%&gt;--%>
-                  <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-              <%--</div>--%>
-              <%--<div class="item">--%>
-                  <%--<img src="https://www.lawrence.edu/mw/styles/large/mw/vphnzmndtr.jpeg?itok=TyFLZ5Lc" alt="Second slide">--%>
-              <%--</div>--%>
-              <%--<div class="item">--%>
-                  <%--<img src="resources/justBarelyWhite.png" alt="Third slide">--%>
-              <%--</div>--%>
-          <%--</div>--%>
-          <%--<a class="left carousel-control" href="#testCarousel" role="button" data-slide="prev">--%>
-              <%--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>--%>
-              <%--<span class="sr-only">Previous</span>--%>
-          <%--</a>--%>
-          <%--<a class="right carousel-control" href="#testCarousel" role="button" data-slide="next">--%>
-              <%--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>--%>
-              <%--<span class="sr-only">Next</span>--%>
-          <%--</a>--%>
-          <%--&lt;%&ndash;<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">&ndash;%&gt;--%>
-              <%--&lt;%&ndash;<span class="carousel-control-prev-icon" aria-hidden="true"></span>&ndash;%&gt;--%>
-              <%--&lt;%&ndash;<span class="sr-only">Previous</span>&ndash;%&gt;--%>
-          <%--&lt;%&ndash;</a>&ndash;%&gt;--%>
-          <%--&lt;%&ndash;<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">&ndash;%&gt;--%>
-              <%--&lt;%&ndash;<span class="carousel-control-next-icon" aria-hidden="true"></span>&ndash;%&gt;--%>
-              <%--&lt;%&ndash;<span class="sr-only">Next</span>&ndash;%&gt;--%>
-          <%--&lt;%&ndash;</a>&ndash;%&gt;--%>
-      <%--</div>--%>
-
       <div class="container theme-showcase" role="main">
+
           <div class="jumbotron">
               <div class="page-header">
-                  <h1 align="center"> Welcome to Mice-tr0!</h1>
+                  <h1 class="display-4" align="center"> Welcome to Mice-tr0!</h1>
+                  <hr>
               </div>
 
               <p> Mice-tr0 is a web application that will allow you to compose music right on your computer!
@@ -80,6 +63,30 @@
                   as you write it! Create an account to start composing.</p>
           </div>
 
+
+          <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+              </ol>
+              <div class="carousel-inner">
+                  <div class="carousel-item active">
+                      <img align="center" class="first-slide" src="resources/notes.jpeg" alt="First slide">
+                  </div>
+                  <div class="carousel-item">
+                      <img align="center" class="second-slide" src="resources/justBarelyWhite.png" alt="Second slide">
+
+                  </div>
+              </div>
+              <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+              </a>
+          </div>
 
           <h2> Mice-tr0 Features:</h2>
           <div class="container">

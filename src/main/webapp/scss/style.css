@@ -4,10 +4,10 @@ body {
     background-color: #323232;
     color: white;
 }
-input[type=submit]{
+input[type=submit] {
     background-color: darkred;
     border: 2px solid darkred;
-    //color: white;
+    color: white;
     padding: 10px 25px;
     text-align: center;
     text-decoration: none;
@@ -16,17 +16,30 @@ input[type=submit]{
     border-radius: 4px;
     margin: 4px 2px;
 }
-input[type=submit]:hover{
+input[type=submit]:hover {
     background-color: white;
     border: 2px solid darkred;
     color: darkred;
 }
-.navbar-inverse {
+.navbar-dark{
     background-color: darkred;
+    box-shadow: black 0 2px 0 0;
+}
+.navbar-dark .navbar-collapse .navbar-nav .active {
+    background: #5A0000;
 }
 .container .theme-showcase {
     width: auto;
 }
 .jumbotron {
     background-color: #464646;
+    color: white;
+}
+.carousel-inner > .item > img {
+  margin: 0 auto;
+  width: auto;
+  height: 30%;
+}
+hr {
+    border-color: white;
 }

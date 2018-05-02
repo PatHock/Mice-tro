@@ -10,7 +10,7 @@
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
       <title>Mice-tr0 - Create Account</title>
-    <link rel="stylesheet" href="scss/style.scss">
+    <link rel="stylesheet" href="scss/style.css">
   </head>
 
   <body>
