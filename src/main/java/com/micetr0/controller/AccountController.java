@@ -59,21 +59,20 @@ public class AccountController {
         db.deleteAccount(username);
     }
 
-    public void logOut(Account account) {
-        // jsp method?
-    }
+//    public void logOut(Account account) {
+//        // jsp method?
+//    }
 
     // https://codereview.stackexchange.com/questions/63283/password-validation-in-java
-    public Boolean logIn(String username, String password) {
+    public Integer logIn(String username, String password) {
 
         List<Account> accountIds = db.findAccountByUsernameAndPassword(username, password);
 
         switch (accountIds.size()) {
             case 0:
-                return false;
+                return null;
             case 1:
-                return true;
-
+                return accountIds.get(0).getAccountID();
             default:
                 throw new DataIntegrityViolationException("More than one account ID associated with username");
         }

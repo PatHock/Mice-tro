@@ -4,13 +4,48 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        'app':  path.resolve(__dirname, "src/main/webapp/js/app.js")
+        'app':  path.resolve(__dirname, "src/main/webapp/js/app.js"),
+        'index': path.resolve(__dirname, "src/main/webapp/js/index.js"),
+        'login': path.resolve(__dirname, "src/main/webapp/js/login.js"),
+        'profile': path.resolve(__dirname, "src/main/webapp/js/profile.js"),
+        'composition': path.resolve(__dirname, "src/main/webapp/js/composition.js"),
+        'createComposition': path.resolve(__dirname, "src/main/webapp/js/createComposition.js"),
+        'createAccount': path.resolve(__dirname, "src/main/webapp/js/createAccount.js")
     },
     module: {
         rules: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-            { test: /\.scss$/, exclude: /node_modules/, loader: "sass-loader"},
-            { test: /\.sass$/, exclude: /node_modules/, loader: "sass-loader"},
+
+            // Use commented out code when switching to sass
+
+            // {
+            //     test: /\.(scss)$/,
+            //     use: [{
+            //         loader: 'style-loader', // inject CSS to page
+            //     }, {
+            //         loader: 'css-loader', // translates CSS into CommonJS modules
+            //     }, {
+            //         loader: 'postcss-loader', // Run post css actions
+            //         options: {
+            //             plugins: function () { // post css plugins, can be exported to postcss.config.js
+            //                 return [
+            //                     require('precss'),
+            //                     require('autoprefixer')
+            //                 ];
+            //             }
+            //         }
+            //     }, {
+            //         loader: 'sass-loader' // compiles Sass to CSS
+            //     }]
+            // },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+
+
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+            // { test: /\.scss$/, exclude: /node_modules/, loader: "sass-loader"},
+            // { test: /\.sass$/, exclude: /node_modules/, loader: "sass-loader"},
         ]
     },
     output: {
