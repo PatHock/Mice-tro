@@ -15,6 +15,11 @@ $('document').ready(function(){
             appendComposition(obj);
         });
     });
+
+    $.get("profile", function(responseJson) {
+        document.getElementById("pageTitle").innerHTML = "Welcome, " + responseJson.username + " &#x1F600";
+    });
+
 });
 
 function appendComposition(obj) {
