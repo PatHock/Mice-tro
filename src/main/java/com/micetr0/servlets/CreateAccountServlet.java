@@ -46,6 +46,9 @@ public class CreateAccountServlet extends HttpServlet {
         String failedLoginError = null;
         String tried = "false";
         String failedCreation = null;
+        String usernameAlreadyExisits = null;
+        Boolean newUsername = false;
+
 
         try{
             //get username and password from entered data
@@ -59,25 +62,23 @@ public class CreateAccountServlet extends HttpServlet {
             model.setUsername(curUsername);
             model.setPassword(curPassword);
 
-            //add new account info to list
-            //List<Account> accountsList= new ArrayList<>();
-            //Account tempAccount = new Account();
-            //tempAccount.setUsername(curUsername);
-            //tempAccount.setPassword(curPassword);
-            //accountsList.add(tempAccount);
-            //FIXME Commented out spaghet
             Account newAccount = new Account();
             newAccount = controller.createAccount(curUsername, curPassword);
-            controller.addAccount(newAccount);
 
-            if (curUsername.length() < 4  || curPassword.length() < 4) {
-                failedCreation = "Please Enter a valid username and password";
-                //resp.sendRedirect("profile.jsp");
-                //System.out.println(validAccount);
+            //check to see if username already exists
+            newUsername = controller.checkNewAccount(curUsername);
+
+            //if username does not already exit, add to database if also over length requirement
+            if(newUsername == true && curUsername.length() > 4 && curPassword.length() > 4){
+                controller.addAccount(newAccount);
             }
-            else{
-                //resp.sendRedirect("login.jsp");
-                tried = "true";
+
+            else if (curUsername.length() < 4  || curPassword.length() < 4) {
+                failedCreation = "Please Enter a valid username and password longer than 3 characters";
+            }
+
+            else if(newUsername == false){
+                failedCreation = "Username already exists, please try again";
             }
         }
         catch(InvalidParameterException e){

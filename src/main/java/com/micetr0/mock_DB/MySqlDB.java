@@ -69,7 +69,7 @@ public class MySqlDB implements IDatabase {
     }
 
     private Connection connect() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","micetr0");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","Angelofmusic01");
 
         // Set autocommit to false to allow execution of
         // multiple queries/statements as part of the same transaction.
@@ -114,7 +114,7 @@ public class MySqlDB implements IDatabase {
 
                     stmt3 = conn.prepareStatement(
                             "create table sections (section_id int auto_increment primary key, " +
-                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), tempo int," +
+                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), tempo int, " +
                                     "composition_id int references compositions(composition_id));"
                     );
                     stmt3.executeUpdate();
@@ -282,7 +282,7 @@ public class MySqlDB implements IDatabase {
                 //Get updated note Id
 
                 getNoteIdStmt = conn.prepareStatement(
-                        "select notes.* from notes"+
+                        "select notes.* from notes "+
                                 "where pitch = ? and noteType = ? and measureIndex = ? and measure_id = ?"
                 );
 
@@ -489,7 +489,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getAccStmt = conn.prepareStatement(
-                        "Select accounts.* from accounts"+
+                        "Select accounts.* from accounts "+
                                 "where account_id = ?"
                 );
                 getAccStmt.setInt(1,accountId);
@@ -652,17 +652,17 @@ public class MySqlDB implements IDatabase {
             try{
                 instAccStmt = conn.prepareStatement(
                         "insert into accounts (username, password) " +
-                                "  values(?, ?) "
+                                "values(?, ?) "
                 );
                 instAccStmt.setString(1,username);
                 instAccStmt.setString(2,password);
 
                 instAccStmt.executeUpdate();
 
-                System.out.println(username + "has been added to database");
+                System.out.println(username + " has been added to database");
 
                 getAccIDStmt = conn.prepareStatement(
-                        "select accounts.* from accounts"+
+                        "select accounts.* from accounts "+
                                 "where username = ? and password = ?"
                 );
                 getAccIDStmt.setString(1,username);
@@ -709,7 +709,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getAccStmt = conn.prepareStatement(
-                        "Select accounts.* from accounts"+
+                        "Select accounts.* from accounts "+
                                 "where username = ?"
                 );
                 getAccStmt.setString(1,username);
@@ -867,7 +867,7 @@ public class MySqlDB implements IDatabase {
 
                 List<Account> resultAccounts = new ArrayList<>();
 
-                getAcctStmt.executeQuery();
+                accResultSet = getAcctStmt.executeQuery();
 
                 //for testing that result was returned i.e. accounts exist
                 Boolean found = false;
@@ -882,7 +882,7 @@ public class MySqlDB implements IDatabase {
                 }
 
                 if(!found){
-                    System.out.println("No Account was found that matched that username");
+                    System.out.println("No Account was found that matched that username and password");
                 }
 
                 return resultAccounts;
@@ -1010,7 +1010,7 @@ public class MySqlDB implements IDatabase {
             try{
                 instCompStmt = conn.prepareStatement(
                         "insert into compositions (title, description, year, account_id, viewableComp) " +
-                                "  values(?, ?, ?, ?, ?) "
+                                "values(?, ?, ?, ?, ?) "
                 );
                 instCompStmt.setString(1,title);
                 instCompStmt.setString(2,description);
@@ -1023,7 +1023,7 @@ public class MySqlDB implements IDatabase {
                 System.out.println(title + "has been added to database");
 
                 getCompIDStmt = conn.prepareStatement(
-                        "select accounts.* from accounts"+
+                        "select accounts.* from accounts "+
                                 "where title = ? and description = ? and year = ? and account_id = ? and viewableComp = ?"
                 );
                 getCompIDStmt.setString(1,title);
@@ -1086,7 +1086,7 @@ public class MySqlDB implements IDatabase {
             try{
                 instSectStmt = conn.prepareStatement(
                         "insert into sections (noteKey, timesignature, clef, tempo, composition_id) " +
-                                "  values(?, ?, ?, ?, ?) "
+                                "values(?, ?, ?, ?, ?) "
                 );
                 instSectStmt.setString(1, key.toString());
                 instSectStmt.setString(2, timeSig.toString());
@@ -1097,7 +1097,7 @@ public class MySqlDB implements IDatabase {
                 instSectStmt.executeUpdate();
 
                 getSectIDStmt = conn.prepareStatement(
-                        "select sections.* from sections"+
+                        "select sections.* from sections "+
                                 "where noteKey = ? and timesignature = ? and clef = ? and tempo = ? and composition_id = ?"
                 );
                 getSectIDStmt.setString(1, key.toString());
@@ -1189,7 +1189,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getSectStmt = conn.prepareStatement(
-                        "Select sections.* from sections"+
+                        "Select sections.* from sections "+
                                 "where section_id = ?"
                 );
                 getSectStmt.setInt(1,sectionID);
@@ -1231,7 +1231,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getSectStmt = conn.prepareStatement(
-                        "Select sections.* from sections"
+                        "select sections.* from sections"
                 );
 
                 List<Section> resultSections = new ArrayList<>();
@@ -1303,8 +1303,47 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
-        return null;
+    public List<Measure> findMeasuresBySectionId(Integer sectionId) {
+        return executeTransaction(conn -> {
+            PreparedStatement getMeasStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                getMeasStmt = conn.prepareStatement(
+                        "Select measures.* from measures "+
+                                "where section_id = ?"
+                );
+                getMeasStmt.setInt(1, sectionId);
+
+                List<Measure> resultMeasures = new ArrayList<>();
+
+                measResultSet = getMeasStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("No measure(s) was found for that section ID");
+                }
+
+                return resultMeasures;
+            }
+            finally{
+                DBUtil.closeQuietly(getMeasStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
     }
 
     private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
