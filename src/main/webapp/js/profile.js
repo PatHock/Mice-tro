@@ -16,6 +16,10 @@ $('document').ready(function(){
         });
     });
 
+    $.get("profile", function(responseJson) {
+        document.getElementById("pageTitle").innerHTML = "Welcome, " + responseJson.username + " &#x1F600";
+    });
+
 });
 
 function appendComposition(obj) {

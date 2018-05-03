@@ -38,7 +38,7 @@
 
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
-                <h1 class="display-4" align="center">Welcome</h1>
+                <h1 id="pageTitle" class="display-4" align="center"></h1>
             </div>
 
             <h2>Select Composition to Edit:</h2>
