@@ -80,6 +80,7 @@ public class LoginServlet extends HttpServlet {
 
         if(accountId != null) {
             HttpSession session = req.getSession(true);
+            session.setAttribute("username", username);
             session.setAttribute("accountId", accountId);
             data.put("redirect", redirectUrl);
         }

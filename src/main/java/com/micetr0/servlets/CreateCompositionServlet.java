@@ -1,5 +1,6 @@
 package com.micetr0.servlets;
 
+import com.google.gson.Gson;
 import com.micetr0.model.Composition;
 import com.micetr0.controller.CompositionController;
 
@@ -8,8 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @WebServlet(
@@ -34,73 +38,47 @@ public class CreateCompositionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-        Composition model = new Composition();
-
+        Integer accountId = null;
         CompositionController controller = new CompositionController();
+        String redirectUrl = req.getContextPath() + "/profile";
+        Map<String, String> data = new HashMap<>();
 
+        resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8");
 
-        //boolean used to check if values entered are valid
-        boolean isValid = false;
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
+        if (ajax) {
+            System.out.println("Ajax request on CreateCompositionServlet doPost");
 
-        //error message for invalid user input
-        String invalidInput = null;
-
-        //non-numbers input in year field
-        String invalidNum = null;
-
-        try{
-            //get data entered on page for new composition
-            String title = getString(req,"title");
-            String year = getString(req, "year");
-            String desc = getString(req, "desc");
-
-            System.out.println(title);
-            System.out.println(year);
-
-            model.setDesc(desc);
-            model.setTitle(title);
-
-            //check to see if year only contains numbers, if it does, add year to model
-            if (year.matches("[0-9]+")) {
-                Integer yearInt = Integer.parseInt(year);
-                model.setYear(yearInt);
-            }
-            else{
-                invalidNum = "Please only input numbers in YEAR COMPOSED field";
-            }
-
-            //check to see if info was entered, if not prompt user to enter all fields
-            if((title.length() > 1) && (year.length() == 4) && (desc.length() > 1) && invalidNum == null){
-                isValid = true;
-            }
-
-            else{
-                invalidInput = "Please enter values for all fields";
-            }
-
-        }
-        catch(InvalidParameterException e){
-            e.printStackTrace();
+        } else {
+            System.out.println("doPost on CreateCompositionServlet, not Ajax");
         }
 
-        req.setAttribute("createC", model);
-        req.setAttribute("invalidInput", invalidInput);
-        req.setAttribute("valid", isValid);
-        req.setAttribute("invalidNum", invalidNum);
+        HttpSession session = req.getSession();
 
-
-        if (isValid){
-            req.getRequestDispatcher("/composition.jsp").forward(req, resp);
-        }
-        else{
-            req.getRequestDispatcher("/createComposition.jsp").forward(req, resp);
+        if (session!=null) {
+            accountId = (Integer) session.getAttribute("accountId");
         }
 
-    }
+        if(accountId == null){
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+        else {
+            //TODO: add error response here
+            Composition comp = controller.createComposition(accountId);
+            if(!req.getParameter("year").isEmpty()) {
+                controller.updateYear(comp, Integer.parseInt(req.getParameter("year")));
+            }
+            controller.updateDescription(comp, req.getParameter("description"));
+            controller.updateTitle(comp, req.getParameter("title"));
 
-    private String getString(HttpServletRequest req, String name) {
-        return req.getParameter(name);
+            data.put("redirect", redirectUrl);
+        }
+
+        String json = new Gson().toJson(data);
+        System.out.println(json);
+        resp.getWriter().write(json);
+
     }
 
 }

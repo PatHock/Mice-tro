@@ -1,7 +1,10 @@
+html {
+    background-color: #323232 !important;
+}
 body {
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #323232;
+    background-color: #323232 !important;
     color: white;
 }
 input[type=submit] {
@@ -36,11 +39,11 @@ input[type=submit]:hover {
     background-color: #464646;
     color: white;
 }
-.carousel-inner > .item > img {
-  margin: 0 auto;
-  width: auto;
-  height: 30%;
-}
+/*.carousel-inner > .item > img {*/
+  /*margin: 0 auto;*/
+  /*width: auto;*/
+  /*height: 30%;*/
+/*}*/
 hr {
     border-color: white;
 }

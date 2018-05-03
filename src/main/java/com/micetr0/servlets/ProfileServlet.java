@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,13 +33,9 @@ public class ProfileServlet extends HttpServlet {
         System.out.println("Profile Servlet: doGet");
         HttpSession session = req.getSession();
         Integer accountId = null;
-        CompositionController controller = new CompositionController();
-        List<Composition> compositionList = new ArrayList<>();
-        String redirectUrl = req.getContextPath() + "/profile";
 
         resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8");
-
 
         if (session!=null) {
             accountId = (Integer) session.getAttribute("accountId");
@@ -51,7 +46,7 @@ public class ProfileServlet extends HttpServlet {
         }
         else {
             System.out.println("User with account ID " + accountId + " Is logged in");
-            // TODO: get all compositions
+            req.setAttribute("username", session.getAttribute("username"));
             req.getRequestDispatcher("/profile.jsp").forward(req, resp);
 
         }
@@ -64,7 +59,6 @@ public class ProfileServlet extends HttpServlet {
         Integer accountId = null;
         CompositionController controller = new CompositionController();
         List<Composition> compositionList;
-//        String redirectUrl = req.getContextPath() + "/profile";
 
         resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8");
@@ -76,6 +70,7 @@ public class ProfileServlet extends HttpServlet {
         } else {
             System.out.println("doPost on ProfileServlet, not Ajax");
         }
+
 
         HttpSession session = req.getSession();
 

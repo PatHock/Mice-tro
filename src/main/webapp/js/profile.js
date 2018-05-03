@@ -15,7 +15,6 @@ $('document').ready(function(){
             appendComposition(obj);
         });
     });
-
 });
 
 function appendComposition(obj) {
