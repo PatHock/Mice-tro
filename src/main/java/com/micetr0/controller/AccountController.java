@@ -37,7 +37,7 @@ public class AccountController {
         List<Account> tempAccount;
         tempAccount = db.findAccountByUsername(username);
 
-        if(tempAccount.size() == 1){
+        if(tempAccount.size() == 0){
             isNewUsername = true;
         }
 

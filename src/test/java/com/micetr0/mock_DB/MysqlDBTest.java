@@ -17,16 +17,15 @@ public class MysqlDBTest {
         db = DatabaseProvider.getInstance();
     }
 
-//TODO: implement tests
 /*
     @Test
     public void deleteDBtest() {
         db.deleteDB();
     }
-    */
+
     @Test
     public void createDBtest(){
         db.createDB();
     }
-
+*/
 }

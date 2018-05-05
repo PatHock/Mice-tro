@@ -163,4 +163,9 @@ public interface IDatabase {
 
     List<Measure> findMeasuresBySectionId(Integer SectionId);
 
-}
+    Integer insertMeasure(Integer sectionId);
+
+    List<Measure> findAllMeasures();
+
+
+    }

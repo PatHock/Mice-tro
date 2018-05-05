@@ -66,8 +66,8 @@ class AccountControllerTest {
     @Test
     void logInTest()
     {
-        assertFalse(controller.logIn("Rick", "password"));
-        assertTrue(controller.logIn("sad_Keanu", "sad_Keanu_is_Sad"));
+        assertEquals(null,controller.logIn("Rick", "password"));
+        assertTrue(0 < controller.logIn("sad_Keanu", "sad_Keanu_is_Sad"));
 
         assertThrows(DataIntegrityViolationException.class, ()-> controller.logIn("BadUsername", "BadPassword"));
     }

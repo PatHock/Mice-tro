@@ -101,33 +101,33 @@ public class MySqlDB implements IDatabase {
                 try {
                     stmt1 = conn.prepareStatement(
                             "create table accounts (account_id int auto_increment primary key," +
-                                    " username varchar(40), password varchar(40));"
+                                    " username varchar(40), password varchar(40))"
                     );
                     stmt1.executeUpdate();
 
                     stmt2 = conn.prepareStatement(
                             "create table compositions (composition_id int auto_increment primary key, " +
                                     "title varchar(40), year int, description varchar(40), " +
-                                    "account_id int references account(account_id), viewableComp int);"
+                                    "account_id int references account(account_id), viewableComp int)"
                     );
                     stmt2.executeUpdate();
 
                     stmt3 = conn.prepareStatement(
                             "create table sections (section_id int auto_increment primary key, " +
                                     "noteKey varchar(40), timesignature varchar(40), clef varchar(40), tempo int, " +
-                                    "composition_id int references compositions(composition_id));"
+                                    "composition_id int references compositions(composition_id))"
                     );
                     stmt3.executeUpdate();
 
                     stmt4 = conn.prepareStatement(
                             "create table measures (measure_id int auto_increment primary key, " +
-                                    "section_id int references sections(section_id));"
+                                    "section_id int references sections(section_id))"
                     );
                     stmt4.executeUpdate();
 
                     stmt5 = conn.prepareCall(
                             "create table notes (note_id int auto_increment primary key, pitch varchar(40), " +
-                                    "noteType varchar(40), measureindex int, measure_id int references measures(measure_id));"
+                                    "noteType varchar(40), measureindex int, measure_id int references measures(measure_id))"
                     );
                     stmt5.executeUpdate();
 
@@ -1346,7 +1346,106 @@ public class MySqlDB implements IDatabase {
         });
     }
 
-    private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
+    @Override
+    public List<Measure> findAllMeasures() {
+        return executeTransaction(conn -> {
+            PreparedStatement getMeasStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                getMeasStmt = conn.prepareStatement(
+                        "Select measures.* from measures"
+                );
+
+                List<Measure> resultMeasures = new ArrayList<Measure>();
+
+                measResultSet = getMeasStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("No measures found in databse, no bueno");
+                }
+
+                return resultMeasures;
+            }
+            finally{
+                DBUtil.closeQuietly(getMeasStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
+    }
+
+    @Override
+    public Integer insertMeasure(Integer sectionId) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement instMeasStmt = null;
+            PreparedStatement getMeasIDStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                instMeasStmt = conn.prepareStatement(
+                        "insert into measures (section_id) " +
+                                "values(?)"
+                );
+                instMeasStmt.setInt(1,sectionId);
+
+                instMeasStmt.executeUpdate();
+
+                getMeasIDStmt = conn.prepareStatement(
+                        "select measures.* from measures "+
+                                "where section_id = ?"
+                );
+                getMeasIDStmt.setInt(1,sectionId);
+
+                List<Measure> resultMeasures = new ArrayList<>();
+
+                measResultSet = getMeasIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer sectID = -1;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("measure was not added successfully");
+                }
+
+                return sectID;
+            }
+            finally{
+                DBUtil.closeQuietly(instMeasStmt);
+                DBUtil.closeQuietly(getMeasIDStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
+    }
+
+
+        private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
         account.setAccountID(resultSet.getInt(index++));
         account.setUsername(resultSet.getString(index++));
         account.setPassword(resultSet.getString(index++));
@@ -1368,10 +1467,6 @@ public class MySqlDB implements IDatabase {
         section.setClef(Defs.Clef.valueOf(resultSet.getString(index++)));
         section.setTempo(resultSet.getInt(index++));
         section.setCompID(resultSet.getInt(index++));
-    }
-
-    private void loadMeasure(Measure measure, ResultSet resultSet, int index) throws SQLException{
-
     }
 
 }
