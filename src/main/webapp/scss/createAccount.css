@@ -1,0 +1,69 @@
+form{
+    padding: 20px;
+}
+h4{
+    text-align: center;
+}
+.btn{
+    border-radius: 2px;
+}
+.form-control{
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+p{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+i{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.flip {
+    -webkit-perspective: 800;
+    perspective: 800;
+    /*text-align: center;*/
+    /*position: relative;*/
+}
+.flip .card.flipped {
+    -webkit-transform: rotatey(-180deg);
+    transform: rotatey(-180deg);
+}
+.flip .card {
+    height: auto;
+    /*width: content-box;*/
+    /*width: fit-content;*/
+    /*text-align: center;*/
+    /*display: inline-block;*/
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 0.5s;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+    background-color: #464646;
+}
+.flip .card .face {
+    -webkit-backface-visibility: hidden ;
+    backface-visibility: hidden ;
+    /*display: inline-block;*/
+    z-index: 2;
+}
+.flip .card .front {
+    /*display: inline-block;*/
+    /*position: center;*/
+    position: absolute;
+    width: 100%;
+    /*width: fit-content;*/
+    z-index: 1;
+}
+.flip .card .back {
+    /*width: fit-content;*/
+    -webkit-transform: rotatey(-180deg);
+    transform: rotatey(-180deg);
+}
+
+/*.col-md-4 {*/
+    /*height: fit-content;*/
+/*}*/

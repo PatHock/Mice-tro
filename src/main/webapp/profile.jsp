@@ -2,7 +2,7 @@
 <%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <%--minimize white flashes between page changes--%>
         <style>html{background-color: #323232;}</style>

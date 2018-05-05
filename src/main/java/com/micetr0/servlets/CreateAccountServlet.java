@@ -36,73 +36,47 @@ public class CreateAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Account model = new Account();
-
         AccountController controller = new AccountController();
 
-        //FIXME commented out
-//        controller.setModel(model);
 
-        String failedLoginError = null;
-        String tried = "false";
-        String failedCreation = null;
 
-        try{
-            //get username and password from entered data
-            String curUsername = getString(req, "username");
-            String curPassword = getString(req, "password");
 
-            System.out.println(curUsername);
-            System.out.println(curPassword);
 
-            //set password and username
-            model.setUsername(curUsername);
-            model.setPassword(curPassword);
 
-            //add new account info to list
-            //List<Account> accountsList= new ArrayList<>();
-            //Account tempAccount = new Account();
-            //tempAccount.setUsername(curUsername);
-            //tempAccount.setPassword(curPassword);
-            //accountsList.add(tempAccount);
-            //FIXME Commented out spaghet
-            Account newAccount = new Account();
-            newAccount = controller.createAccount(curUsername, curPassword);
-            controller.addAccount(newAccount);
 
-            if (curUsername.length() < 4  || curPassword.length() < 4) {
-                failedCreation = "Please Enter a valid username and password";
-                //resp.sendRedirect("profile.jsp");
-                //System.out.println(validAccount);
-            }
-            else{
-                //resp.sendRedirect("login.jsp");
-                tried = "true";
-            }
-        }
-        catch(InvalidParameterException e){
 
-        }
 
-        req.setAttribute("createAcc", model);
-        req.setAttribute("failedLoginError", failedLoginError);
-        req.setAttribute("tried", tried);
-        req.setAttribute("failedCreation", failedCreation);
-
-        if(failedCreation == null){
-            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
-        }
-        else{
-            req.getRequestDispatcher("/createAccount.jsp").forward(req, resp);
-        }
+//        try{
+//            //get username and password from entered data
+//            String curUsername = getString(req, "username");
+//            String curPassword = getString(req, "password");
+//
+//            if (curUsername.length() < 4  || curPassword.length() < 4) {
+//                failedCreation = "Please Enter a valid username and password";
+//                //resp.sendRedirect("profile.jsp");
+//                //System.out.println(validAccount);
+//            }
+//            else{
+//                //resp.sendRedirect("login.jsp");
+//                tried = "true";
+//            }
+//        }
+//        catch(InvalidParameterException e){
+//
+//        }
+//
+//        req.setAttribute("createAcc", model);
+//        req.setAttribute("failedLoginError", failedLoginError);
+//        req.setAttribute("tried", tried);
+//        req.setAttribute("failedCreation", failedCreation);
+//
+//        if(failedCreation == null){
+//            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+//        }
+//        else{
+//            req.getRequestDispatcher("/createAccount.jsp").forward(req, resp);
+//        }
 
 
     }
-
-    private String getString(HttpServletRequest req, String name) {
-        return req.getParameter(name);
-    }
-
-
-
 }

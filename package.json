@@ -17,6 +17,7 @@
     "style-loader": "^0.21.0",
     "tone": "^0.11.11",
     "update": "^0.7.4",
+    "v8-compile-cache": "^2.0.0",
     "webpack-war-plugin": "^1.0.0-beta.3"
   },
   "devDependencies": {
