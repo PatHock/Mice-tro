@@ -67,8 +67,13 @@ public class CreateCompositionServlet extends HttpServlet {
             //TODO: add error response here
             Composition comp = controller.createComposition(accountId);
             if(!req.getParameter("year").isEmpty()) {
-                controller.updateYear(comp, Integer.parseInt(req.getParameter("year")));
+                try {
+                    controller.updateYear(comp, Integer.parseInt(req.getParameter("year")));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
+
             controller.updateDescription(comp, req.getParameter("description"));
             controller.updateTitle(comp, req.getParameter("title"));
 
