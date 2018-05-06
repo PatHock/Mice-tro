@@ -96,4 +96,61 @@ public class AbcTranslatorTest {
                 + translator.getNote(notes.get(1))
                 + "|");
     }
+
+    @Test
+    public void parseABCTest(){
+        String abcPattern = "X: 1\n"
+                + "T: " + "Woahhhhh" + "\n"
+                + "M: " + "4/4" + "\n"
+                + "L: " + "1/8" +"\n"
+                + "R: reel" +"\n"
+                + "K: " + "Gm" + "\n"
+                + "DA BE|F E B A|";
+        List<String> abcComps = translator.parseABC(abcPattern);
+
+        assertTrue(abcComps.get(1).equals("T: Woahhhhh"));
+        assertTrue(abcComps.get(2).equals("M: 4/4"));
+        assertTrue(abcComps.get(3).equals("L: 1/8"));
+        assertTrue(abcComps.get(4).equals("R: reel"));
+        assertTrue(abcComps.get(5).equals("K: Gm"));
+        assertTrue(abcComps.get(6).equals("DA BE|F E B A|"));
+    }
+
+    @Test
+    public void extractNoteMeasuresTest(){
+        String abcPattern = "X: 1\n"
+                + "T: " + "Woahhhhh" + "\n"
+                + "M: " + "4/4" + "\n"
+                + "L: " + "1/8" +"\n"
+                + "R: reel" +"\n"
+                + "K: " + "Gm" + "\n"
+                + "DA BE|F E B A|";
+        List<String> measures = translator.extractNoteMeasures(abcPattern);
+
+        assertEquals(measures.get(0),"DA BE");
+        assertEquals(measures.get(1),"F E B A");
+    }
+
+    @Test
+    public void extractNotesTest(){
+        String abcPattern = "X: 1\n"
+                + "T: " + "Woahhhhh" + "\n"
+                + "M: " + "4/4" + "\n"
+                + "L: " + "1/8" +"\n"
+                + "R: reel" +"\n"
+                + "K: " + "Gm" + "\n"
+                + "_DA BC|*F EGA|";
+
+        List<String> notes = translator.extractNotes(translator.extractNoteMeasures(abcPattern));
+
+        assertEquals(notes.get(0),"_D");
+        assertEquals(notes.get(1),"A");
+        assertEquals(notes.get(2),"B");
+        assertEquals(notes.get(3),"C");
+        assertEquals(notes.get(4),"*F");
+        assertEquals(notes.get(5),"E");
+        assertEquals(notes.get(6),"G");
+        assertEquals(notes.get(7),"A");
+    }
+
 }

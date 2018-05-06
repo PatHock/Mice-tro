@@ -1,9 +1,14 @@
 package com.micetr0;
 
+import com.micetr0.definitions.Defs;
 import com.micetr0.model.Composition;
 import com.micetr0.model.Note;
 import com.micetr0.model.Section;
+import javafx.util.Pair;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AbcTranslator {
@@ -74,8 +79,28 @@ public class AbcTranslator {
         return out;
     }
 
+    /**
+     * Create a List of Strings that represent the composition
+     * @param abc   String representation of composition information
+     * @return      List of composition pieces
+     */
 
+    public List<String> parseABC(String abc){
+        List<String> abcComponents = Arrays.asList(abc.split("\\r?\\n"));
+        return abcComponents;
+    }
 
-
-
+    public List<String> extractNoteMeasures(String abc) {
+        String allNotes = parseABC(abc).get(6);
+        List<String> measures = Arrays.asList(allNotes.split("\\|"));
+        return measures;
+    }
+    public List<String> extractNotes(List<String> noteMeasures){
+        List<String> allNotes = new ArrayList<>();
+        for (String noteMeas: noteMeasures) {
+            String temp = noteMeas.replaceAll("\\s+","");
+            allNotes.addAll(Arrays.asList(temp.split("(?<= |A|B|C|D|E|F|G)")));
+        }
+        return allNotes;
+    }
 }
