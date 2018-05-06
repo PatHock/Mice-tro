@@ -156,7 +156,7 @@ public class AbcTranslatorTest {
     @Test
     public void createNotePitchTest(){
         assertEquals(translator.createNotePitch("_A0"),Defs.Pitch.A0_FLAT);
-
+        assertEquals(translator.createNotePitch("*F2"),Defs.Pitch.F2_SHARP);
 
     }
 }

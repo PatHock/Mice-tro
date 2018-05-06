@@ -143,7 +143,7 @@ public class AbcTranslator {
         int measureId = 0;
         for (String noteMeas: noteMeasures) {
             String temp = noteMeas.replaceAll("\\s+","");
-            allNotes.addAll(Arrays.asList(temp.split("(?<= |A|B|C|D|E|F|G)")));
+            allNotes.addAll(Arrays.asList(temp.split("(?<= |0|1|2|3|4|5|6)")));
         }
         return allNotes;
     }
@@ -153,7 +153,7 @@ public class AbcTranslator {
         int measureId = 0;
         for(String noteMeas: noteMeasures){
             String temp = noteMeas.replaceAll("\\s+", "");
-            List<String> preNote = Arrays.asList(temp.split("(?<= |A|B|C|D|E|F|G)"));
+            List<String> preNote = Arrays.asList(temp.split("(?<= |0|1|2|3|4|5|6)"));
             for (String note: preNote) {
                 //create note objects
             }
