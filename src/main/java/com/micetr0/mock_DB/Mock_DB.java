@@ -13,6 +13,7 @@ public class Mock_DB implements IDatabase{
     private List<Section> sections;
     private List<Composition> compositions;
     private List<Note> notes;
+    private List<Measure> measures;
 
     public Mock_DB()
     {
@@ -20,6 +21,7 @@ public class Mock_DB implements IDatabase{
         notes = new ArrayList<>();
         sections = new ArrayList<>();
         compositions = new ArrayList<>();
+        measures = new ArrayList<>();
 
         readInitialData();
 
@@ -27,6 +29,7 @@ public class Mock_DB implements IDatabase{
         System.out.println(compositions.size() + "compositions");
         System.out.println(sections.size() + "sections");
         System.out.println(notes.size() + "notes");
+        System.out.println(measures.size() + "measures");
 
     }
 
@@ -37,6 +40,7 @@ public class Mock_DB implements IDatabase{
             compositions.addAll(InitialData.getCompositions());
             sections.addAll(InitialData.getSections());
             notes.addAll(InitialData.getNotes());
+            measures.addAll(InitialData.getMeasures());
         }
         catch (IOException e)
         {
@@ -62,7 +66,7 @@ public class Mock_DB implements IDatabase{
      * @param noteId Unique database ID for note
      */
     @Override
-    public boolean deleteNote(String noteId) {
+    public Boolean deleteNote(Integer noteId) {
         Boolean isNoteDeleted = false;
 
         for(Note note : notes) {
@@ -104,6 +108,7 @@ public class Mock_DB implements IDatabase{
         }
         return resultList;
     }
+
     public List<Account> findAccountByAccountID(Integer accountId)
     {
         List<Account> resultList = new ArrayList<>();
@@ -315,7 +320,7 @@ public class Mock_DB implements IDatabase{
      * @return A composition object with unique ID
      */
     @Override
-    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
+    public Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly) {
         Composition composition = new Composition();
         composition.setTitle(title);
         composition.setDesc(description);
@@ -367,7 +372,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+    public Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
         Section section = new Section();
         Integer sectionId = sections.get(sections.size() - 1).getSectionID() + 1;
         section.setSectionID(sectionId);
@@ -377,7 +382,7 @@ public class Mock_DB implements IDatabase{
         section.setTimeSig(timeSig);
         section.setTempo(tempo);
         sections.add(section);
-        return true;
+        return sectionId;
     }
 
     @Override
@@ -392,7 +397,7 @@ public class Mock_DB implements IDatabase{
     }
 
     @Override
-    public Section findSectionFromSectionID(Integer sectionID) {
+    public List<Section> findSectionFromSectionID(Integer sectionID) {
         List<Section> newSections = new ArrayList<>();
         for(Section section : sections)
         {
@@ -400,7 +405,7 @@ public class Mock_DB implements IDatabase{
                 newSections.add(section);
             }
         }
-        return newSections.get(0);  //Sections should never be larger than 1.
+        return newSections;  //Sections should never be larger than 1.
     }
 
     @Override
@@ -422,6 +427,23 @@ public class Mock_DB implements IDatabase{
         return null;
     }
 
+    @Override
+    public Integer insertMeasure(Integer sectionId) {
+        return null;
+    }
 
+    @Override
+    public List<Measure> findAllMeasures() {
+        List<Measure> resultList = new ArrayList<>();
+        for (Measure measure : measures)
+        {
+            resultList.add(measure);
+        }
+        return resultList;    }
+
+    @Override
+    public void loadInitialData() {
+
+    }
 }
 

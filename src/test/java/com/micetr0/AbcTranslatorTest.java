@@ -181,10 +181,14 @@ public class AbcTranslatorTest {
                 + "_D4A4 B1C1|*F1 E1G1A1|";
         List<Note> notes = translator.extractNotes(translator.extractNoteMeasures(abcPattern));
 
-
         Note newNote = new Note(0,Defs.NoteType.HALF,Defs.Pitch.D4_FLAT,0,0);
 
-        assertEquals(notes.get(0),newNote);
+        assertEquals(newNote.getFrequency(),notes.get(0).getFrequency());
+        assertEquals(newNote.getMeasureId(),notes.get(0).getMeasureId());
+        assertEquals(newNote.getMeasureIndex(),notes.get(0).getMeasureIndex());
+        assertEquals(newNote.getPitch(),notes.get(0).getPitch());
+        assertEquals(newNote.getType(),notes.get(0).getType());
+
     }
 
 }
