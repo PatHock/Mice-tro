@@ -8,6 +8,17 @@ import '../scss/style.css';
 import '../scss/composition.css';
 // https://configurator.abcjs.net/visual
 
+window.onload = function () {
+    new abcjs.Editor("abc", {
+        canvas_id: "canvas",
+        generate_midi: true,
+        midi_id: "midi",
+        warnings_id: "warnings",
+        abcjsParams: {
+            generateInline: true,
+            generateDownload: false
+        }
+    });
 let abc = "T: Cooley's\n" +
     "M: 4/4\n" +
     "L: 1/8\n" +
@@ -37,11 +48,6 @@ function load() {
             responsive: "resize",
         });
 }
-
-// function alertOnClick(abcElem) {
-//     alert("Type " + abcElem.el_type);
-//     console.log(abcElem);
-// }
 
 $('document').ready(function(){
     let tuneObjectArray = load();

@@ -4,7 +4,7 @@
     "start": "webpack-dev-server --config webpack.config.js --mode development"
   },
   "dependencies": {
-    "abcjs": "^5.0.0",
+    "abcjs": "^5.0.1",
     "autoprefixer": "^8.4.1",
     "bootstrap": "^4.1.1",
     "css-loader": "^0.28.11",

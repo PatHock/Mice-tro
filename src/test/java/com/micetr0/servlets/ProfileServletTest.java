@@ -26,22 +26,22 @@ class ProfileServletTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    void doGet() {
-        when(request.getRequestDispatcher("/profile.jsp")).thenReturn(requestDispatcher);
-
-        //TODO: Handle these exceptions elsewhere, by redirecting to an error page etc
-        try{
-            new ProfileServlet().doGet(request, response);
-            verify(requestDispatcher).forward(request, response);
-        } catch(ServletException e) {
-            fail("Servlet Exception thrown", e.getCause());
-            e.printStackTrace();
-        } catch (IOException e) {
-            fail("IO Exception thrown", e.getCause());
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    void doGet() {
+//        when(request.getRequestDispatcher("/profile.jsp")).thenReturn(requestDispatcher);
+//
+//        //TODO: Handle these exceptions elsewhere, by redirecting to an error page etc
+//        try{
+//            new ProfileServlet().doGet(request, response);
+//            verify(requestDispatcher).forward(request, response);
+//        } catch(ServletException e) {
+//            fail("Servlet Exception thrown", e.getCause());
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            fail("IO Exception thrown", e.getCause());
+//            e.printStackTrace();
+//        }
+//    }
 
     @Test
     void doPost() {

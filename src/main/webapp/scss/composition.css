@@ -9,3 +9,9 @@
     vertical-align: middle;
     overflow: hidden;
 }
+
+#compText {
+    display: inline-block;
+
+}
+
