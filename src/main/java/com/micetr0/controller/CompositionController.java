@@ -90,8 +90,6 @@ public class CompositionController {
         return isCompUpdated;
     }
 
-
-
     /**
      * Attempts to update the year attribute of the given composition in the database. If this is successful,
      * the year of the composition object is updated, and updateYear returns true.

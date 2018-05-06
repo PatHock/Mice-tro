@@ -1,8 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <%--minimize white flashes between page changes--%>
+        <style>html{background-color: #323232;}</style>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +42,7 @@
 
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
-                <h1 class="display-4" align="center">Welcome</h1>
+                <h1 id="pageTitle" class="display-4" align="center"></h1>
             </div>
 
             <h2>Select Composition to Edit:</h2>

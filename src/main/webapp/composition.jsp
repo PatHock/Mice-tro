@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
+        <%--minimize white flashes between page changes--%>
+        <style>html{background-color: #323232;}</style>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,29 +53,12 @@
                 <div id="compAbcjs"></div>
             </div>
 
-            <form action="composition" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Save"/>
-            </form>
-
-            <form action="profile" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Save and Exit Composition 1"/>
-            </form>
-
             <form action="profile" method="get">
                 <input name="goToProfile"
                        type="submit"
-                       value="Exit Composition 1"/>
+                       value="Back to Profile"/>
             </form>
 
-            <form action="index" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Log Out" />
-            </form>
         </div>
 
         <script src="js/dist/composition.bundle.js"></script>

@@ -43,23 +43,28 @@ public class AccountController {
 //    }
 
     public Account createAccount(String username, String password) {
-        try {
-            Account newAccount = new Account();
-            newAccount.setUsername(username);
-            newAccount.setPassword(password);
-            return newAccount;
-        } catch (Exception e) {
-            throw e;
+        List<Account> accountList;
+        Account account;
+        Integer accountId;
+
+        // TODO: check for username, password not long enough.
+
+        accountList = db.findAccountByUsername(username);
+
+        if(accountList.size() > 0) {
+            account = null;
+        } else {
+            accountId = db.insertAccount(username, password);
+            account = db.findAccountByAccountID(accountId).get(0);
         }
+
+        return account;
     }
 
     public void deleteAccount(String username) {
         db.deleteAccount(username);
     }
 
-//    public void logOut(Account account) {
-//        // jsp method?
-//    }
 
     // https://codereview.stackexchange.com/questions/63283/password-validation-in-java
     public Integer logIn(String username, String password) {

@@ -3,6 +3,9 @@
 <html lang="en">
 
   <head>
+      <%--minimize white flashes between page changes--%>
+      <style>html{background-color: #323232;}</style>
+
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
@@ -59,11 +62,11 @@
                   <li data-target="#myCarousel" data-slide-to="1"></li>
               </ol>
               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                      <img align="center" class="first-slide" src="resources/notes.jpeg" alt="First slide">
+                  <div class="carousel-item active" align="center">
+                      <img align="center" class="first-slide" src="resources/notes_adjusted.jpg" alt="First slide">
                   </div>
-                  <div class="carousel-item">
-                      <img align="center" class="second-slide" src="resources/justBarelyWhite.png" alt="Second slide">
+                  <div class="carousel-item" align="center">
+                      <img align="center" class="second-slide" src="http://wardourstudios.co.uk/wp-content/uploads/2015/07/Sheet_Music.jpg" alt="Second slide">
 
                   </div>
               </div>
