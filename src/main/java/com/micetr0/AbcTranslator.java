@@ -79,6 +79,43 @@ public class AbcTranslator {
         return out;
     }
 
+    public Defs.NoteType createNoteType(String noteType){
+        return Defs.NoteType.valueOf(noteType);
+    }
+
+    public Defs.Pitch createNotePitch(String notePitch){
+        String post;
+        if(notePitch.startsWith("_")){
+            post = notePitch.substring(1,3)+"_FLAT";
+        }
+        else if(notePitch.startsWith("*")){
+            post = notePitch.substring(1,3)+"_SHARP";
+        }
+        else{
+            post = notePitch;
+        }
+        return Defs.Pitch.valueOf(post);
+    }
+    public Defs.TimeSignature createTimeSignature(String timeSignature){
+        return Defs.TimeSignature.valueOf(timeSignature);
+    }
+    public Defs.Key createKey(String key){
+        String post;
+        if(key.equals("G")){
+            post = "G_MAJOR";
+        }
+        else if(key.equals("C")){
+            post = "C_MAJOR";
+        }
+        else{
+            post = "D_MAJOR";
+        }
+        return Defs.Key.valueOf(post);
+    }
+    public Defs.Clef createClef(String clef){
+        return Defs.Clef.valueOf(clef);
+    }
+
     /**
      * Create a List of Strings that represent the composition
      * @param abc   String representation of composition information
@@ -95,12 +132,34 @@ public class AbcTranslator {
         List<String> measures = Arrays.asList(allNotes.split("\\|"));
         return measures;
     }
-    public List<String> extractNotes(List<String> noteMeasures){
+
+    /**
+     * Separate Individual notes and prepare to create Note objects
+     * @param noteMeasures
+     * @return
+     */
+    public List<String> extractNoteStrings(List<String> noteMeasures){
         List<String> allNotes = new ArrayList<>();
+        int measureId = 0;
         for (String noteMeas: noteMeasures) {
             String temp = noteMeas.replaceAll("\\s+","");
             allNotes.addAll(Arrays.asList(temp.split("(?<= |A|B|C|D|E|F|G)")));
         }
+        return allNotes;
+    }
+
+    public List<Note> extractNotes(List<String> noteMeasures){
+        List<Note> allNotes = new ArrayList<>();
+        int measureId = 0;
+        for(String noteMeas: noteMeasures){
+            String temp = noteMeas.replaceAll("\\s+", "");
+            List<String> preNote = Arrays.asList(temp.split("(?<= |A|B|C|D|E|F|G)"));
+            for (String note: preNote) {
+                //create note objects
+            }
+            measureId++;
+        }
+
         return allNotes;
     }
 }

@@ -132,25 +132,31 @@ public class AbcTranslatorTest {
     }
 
     @Test
-    public void extractNotesTest(){
+    public void extractNoteStringsTest(){
         String abcPattern = "X: 1\n"
                 + "T: " + "Woahhhhh" + "\n"
                 + "M: " + "4/4" + "\n"
                 + "L: " + "1/8" +"\n"
                 + "R: reel" +"\n"
                 + "K: " + "Gm" + "\n"
-                + "_DA BC|*F EGA|";
+                + "_D0A0 B0C0|*F0 E0G0A0|";
 
-        List<String> notes = translator.extractNotes(translator.extractNoteMeasures(abcPattern));
+        List<String> notes = translator.extractNoteStrings(translator.extractNoteMeasures(abcPattern));
 
-        assertEquals(notes.get(0),"_D");
-        assertEquals(notes.get(1),"A");
-        assertEquals(notes.get(2),"B");
-        assertEquals(notes.get(3),"C");
-        assertEquals(notes.get(4),"*F");
-        assertEquals(notes.get(5),"E");
-        assertEquals(notes.get(6),"G");
-        assertEquals(notes.get(7),"A");
+        assertEquals(notes.get(0),"_D0");
+        assertEquals(notes.get(1),"A0");
+        assertEquals(notes.get(2),"B0");
+        assertEquals(notes.get(3),"C0");
+        assertEquals(notes.get(4),"*F0");
+        assertEquals(notes.get(5),"E0");
+        assertEquals(notes.get(6),"G0");
+        assertEquals(notes.get(7),"A0");
     }
 
+    @Test
+    public void createNotePitchTest(){
+        assertEquals(translator.createNotePitch("_A0"),Defs.Pitch.A0_FLAT);
+
+
+    }
 }
