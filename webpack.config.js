@@ -4,13 +4,11 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        'app':  path.resolve(__dirname, "src/main/webapp/js/app.js"),
         'index': path.resolve(__dirname, "src/main/webapp/js/index.js"),
         'login': path.resolve(__dirname, "src/main/webapp/js/login.js"),
         'profile': path.resolve(__dirname, "src/main/webapp/js/profile.js"),
         'composition': path.resolve(__dirname, "src/main/webapp/js/composition.js"),
-        'createComposition': path.resolve(__dirname, "src/main/webapp/js/createComposition.js"),
-        'createAccount': path.resolve(__dirname, "src/main/webapp/js/createAccount.js")
+        'createComposition': path.resolve(__dirname, "src/main/webapp/js/createComposition.js")
     },
     module: {
         rules: [
