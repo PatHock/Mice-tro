@@ -18,7 +18,7 @@ public interface IDatabase {
      *
      * @param noteId Unique ID that is stored in the database
      */
-    boolean deleteNote(String noteId);
+    Boolean deleteNote(Integer noteId);
 
     List<Composition> findCompositionsByAccountId(Integer accountId);
 
@@ -140,7 +140,7 @@ public interface IDatabase {
      * @param year The year the composition was written
      * @return A composition object with unique ID
      */
-    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
+    Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly);
 
     /**
      * Finds notes by measure id ... Pretty Self explanatory
@@ -156,11 +156,11 @@ public interface IDatabase {
 
     void createDB();
 
-    Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
+    Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
     Boolean deleteSection(Integer sectionID);
 
-    Section findSectionFromSectionID(Integer sectionID);
+    List<Section> findSectionFromSectionID(Integer sectionID);
 
     List<Section> findAllSections();
 
@@ -168,4 +168,11 @@ public interface IDatabase {
 
     List<Measure> findMeasuresBySectionId(Integer SectionId);
 
-}
+    Integer insertMeasure(Integer sectionId);
+
+    List<Measure> findAllMeasures();
+
+    void loadInitialData();
+
+
+    }

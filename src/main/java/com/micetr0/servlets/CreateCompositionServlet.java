@@ -58,6 +58,7 @@ public class CreateCompositionServlet extends HttpServlet {
 
         if (session!=null) {
             accountId = (Integer) session.getAttribute("accountId");
+
         }
 
         if(accountId == null){

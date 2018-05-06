@@ -159,8 +159,9 @@ class Mock_DBtest {
 
     @Test
     void insertSectionTest(){
-        db.insertSection(1,Defs.Key.D_MAJOR,Defs.TimeSignature.FOUR_FOUR,Defs.Clef.TREBLE, 120, 1);
-        assertNotNull(db.findSectionFromSectionID(1));
+        Integer sectionID = 0;
+        sectionID = db.insertSection(Defs.Key.D_MAJOR,Defs.TimeSignature.FOUR_FOUR,Defs.Clef.TREBLE, 120, 1);
+        assertNotNull(db.findSectionFromSectionID(sectionID));
     }
 
     @Test

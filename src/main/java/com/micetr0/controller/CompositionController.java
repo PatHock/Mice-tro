@@ -47,7 +47,7 @@ public class CompositionController {
         title =  titlePrefixDefault + "_" +date.toLocalDate() + "-" + date.toLocalTime();
         System.out.println(title);
 
-        compId = db.insertComposition(title, descriptionDefault, year, isViewablePubliclyDefault, accountId);
+        compId = db.insertComposition(title, descriptionDefault, year, accountId, isViewablePubliclyDefault);
 
         System.out.println("Account ID is:" + db.findCompositionsByCompositionId(compId).get(0).getAccountId());
         composition.setDesc(descriptionDefault);
