@@ -69,6 +69,7 @@ public class MySqlDB implements IDatabase {
     }
 
     private Connection connect() throws SQLException {
+        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","Angelofmusic01");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/micetro","root","micetr0");
 
         // Set autocommit to false to allow execution of
@@ -101,33 +102,33 @@ public class MySqlDB implements IDatabase {
                 try {
                     stmt1 = conn.prepareStatement(
                             "create table accounts (account_id int auto_increment primary key," +
-                                    " username varchar(40), password varchar(40));"
+                                    " username varchar(40), password varchar(40))"
                     );
                     stmt1.executeUpdate();
 
                     stmt2 = conn.prepareStatement(
                             "create table compositions (composition_id int auto_increment primary key, " +
                                     "title varchar(40), year int, description varchar(40), " +
-                                    "account_id int references account(account_id), viewableComp int);"
+                                    "account_id int references account(account_id), viewableComp int)"
                     );
                     stmt2.executeUpdate();
 
                     stmt3 = conn.prepareStatement(
                             "create table sections (section_id int auto_increment primary key, " +
-                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), " +
-                                    "composition_id int references compositions(composition_id));"
+                                    "noteKey varchar(40), timesignature varchar(40), clef varchar(40), tempo int, " +
+                                    "composition_id int references compositions(composition_id))"
                     );
                     stmt3.executeUpdate();
 
                     stmt4 = conn.prepareStatement(
                             "create table measures (measure_id int auto_increment primary key, " +
-                                    "section_id int references sections(section_id));"
+                                    "section_id int references sections(section_id))"
                     );
                     stmt4.executeUpdate();
 
                     stmt5 = conn.prepareCall(
                             "create table notes (note_id int auto_increment primary key, pitch varchar(40), " +
-                                    "type varchar(40), measureindex int, measure_id int references measures(measure_id));"
+                                    "noteType varchar(40), measureindex int, measure_id int references measures(measure_id))"
                     );
                     stmt5.executeUpdate();
 
@@ -160,7 +161,7 @@ public class MySqlDB implements IDatabase {
             }
         });
     }
-
+    @Override
     public void loadInitialData() {
         executeTransaction(new Transaction<Boolean>() {
             public Boolean execute(Connection conn) throws SQLException {
@@ -192,35 +193,37 @@ public class MySqlDB implements IDatabase {
 
                 try {
                     // populate accounts table
-                    insertAccount = conn.prepareStatement("insert into accounts (userAccount, passwordAccount, EditComps, viewComps) values (?, ?, ?, ?)");
+                    insertAccount = conn.prepareStatement("insert into accounts (userName, password) values (?, ?)");
                     for (Account author : accountList) {
                         //insertAccount.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
                         insertAccount.setString(1, author.getUsername());
                         insertAccount.setString(2, author.getPassword());
-                        //insertAccount.setString(3, author.getEditableComps());
-                        //insertAccount.setArray(4, author.getViewableComps());
                         insertAccount.addBatch();
                     }
                     insertAccount.executeBatch();
 
                     // populate composition table
-                    insertComposition = conn.prepareStatement("insert into Composition (composition_id, title, year, description) values (?, ?, ?, ?)");
+                    insertComposition = conn.prepareStatement("insert into compositions (title, year, description, account_id, viewableComp) values (?, ?, ?, ?, ?)");
                     for (Composition composition : compositionList) {
                         //insertComposition.setInt(1, composition.getCompositionID());		// auto-generated primary key, don't insert this
                         insertComposition.setString(1, composition.getTitle());
                         insertComposition.setInt(2, composition.getYear());
                         insertComposition.setString(3, composition.getDesc());
+                        insertComposition.setInt(4,composition.getAccountId());
+                        insertComposition.setInt(5,composition.getIsViewablePublicly());
                         insertComposition.addBatch();
                     }
                     insertComposition.executeBatch();
                     //populate section table
-                    insertSection = conn.prepareStatement("insert into Section (section_id, key, timeSignature ,clef");
+                    insertSection = conn.prepareStatement("insert into sections (noteKey, timeSignature, clef, tempo, composition_id) values (?, ?, ?, ?, ?)");
                     for (Section section : sectionList)
                     {
                         //insertSection.setInt(1,section.getSectionID());
-                        insertSection.setString(2, section.getKey().toString());
-                        insertSection.setString(3,section.getTimeSig().toString());
-                        insertSection.setString(4,section.getClef().toString());
+                        insertSection.setString(1, section.getKey().toString());
+                        insertSection.setString(2, section.getTimeSig().toString());
+                        insertSection.setString(3, section.getClef().toString());
+                        insertSection.setInt(4, section.getTempo());
+                        insertSection.setInt(5, section.getCompID());
                         insertSection.addBatch();
                     }
                     insertSection.executeBatch();
@@ -234,14 +237,14 @@ public class MySqlDB implements IDatabase {
                     }
                     insertMeasure.executeBatch();
                     //populate note table
-                    insertNote = conn.prepareStatement("insert into Note (note_id, pitch, type, measureindex, measureid)");
+                    insertNote = conn.prepareStatement("insert into notes (pitch, noteType, measureindex, measure_id) values (?, ?, ?, ?)");
                     for(Note note : noteList)
                     {
                        // insertNote.setInt(1, note.getNoteID());
-                        insertNote.setString(2,note.getPitch().toString());
-                        insertNote.setString(3,note.getType().toString());
-                        insertNote.setInt(4,note.getMeasureIndex());
-                        insertNote.setInt(5,note.getMeasureId());
+                        insertNote.setString(1,note.getPitch().toString());
+                        insertNote.setString(2,note.getType().toString());
+                        insertNote.setInt(3,note.getMeasureIndex());
+                        insertNote.setInt(4,note.getMeasureId());
                         insertNote.addBatch();
                     }
                     insertNote.executeBatch();
@@ -260,23 +263,184 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public Integer insertNote(String type, String pitch, Integer measureIndex, Integer measureId) {
-        Integer noteId = 0;
-        return noteId;
+        return executeTransaction(conn -> {
+            PreparedStatement addNoteStmt = null;
+            PreparedStatement getNoteIdStmt = null;
+            ResultSet addedNotesResult = null;
+            Integer noteId = -1;
+
+            try{
+                addNoteStmt = conn.prepareStatement(
+                        "insert into notes (pitch, noteType, measureIndex, measure_id) values (?,?,?,?)"
+                );
+                addNoteStmt.setString(1, pitch);
+                addNoteStmt.setString(2,type);
+                addNoteStmt.setInt(3,measureIndex);
+                addNoteStmt.setInt(4,measureId);
+
+                addNoteStmt.executeUpdate();
+
+                //Get updated note Id
+
+                getNoteIdStmt = conn.prepareStatement(
+                        "select notes.* from notes "+
+                                "where pitch = ? and noteType = ? and measureIndex = ? and measure_id = ?"
+                );
+
+                getNoteIdStmt.setString(1,pitch);
+                getNoteIdStmt.setString(2,type);
+                getNoteIdStmt.setInt(3,measureIndex);
+                getNoteIdStmt.setInt(4,measureId);
+
+                addedNotesResult = getNoteIdStmt.executeQuery();
+
+                boolean found = false;
+
+                while(addedNotesResult.next()){
+                    found = true;
+                    noteId = addedNotesResult.getInt(1);
+                }
+
+                if(!found){
+                    System.out.println("Note was not added correctly, something went wrong");
+                }
+
+                return noteId;
+            }
+            finally{
+                DBUtil.closeQuietly(addNoteStmt);
+                DBUtil.closeQuietly(getNoteIdStmt);
+                DBUtil.closeQuietly(addedNotesResult);
+            }
+        });
     }
 
     @Override
-    public boolean deleteNote(String noteId) {
-        return false;
+    public Boolean deleteNote(Integer noteId) {
+        return executeTransaction(conn -> {
+            PreparedStatement removeNoteStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet allNotes = null;
+            //boolean for final result
+            boolean foundDeletedNote = false;
+            Boolean deleted = false;
+
+            try{
+                removeNoteStmt = conn.prepareStatement(
+                        "delete from notes where note_id = ?"
+                );
+                removeNoteStmt.setInt(1,noteId);
+
+                removeNoteStmt.executeUpdate();
+
+                checkStmt = conn.prepareStatement(
+                        "select notes.* from notes"
+                );
+
+                allNotes = checkStmt.executeQuery();
+
+                //this better be true cause we need some notes
+                boolean found = false;
+
+                while(allNotes.next()){
+                    found = true;
+                    if(allNotes.getInt(1) == noteId){
+                        //failed, note not deleted
+                        System.out.println("Note with same ID found after deleted, something went wrong");
+                        foundDeletedNote = true;
+                    }
+
+                }
+                if(found == true && foundDeletedNote == false){
+                    deleted = true;
+                }
+
+                return deleted;
+            }
+            finally{
+                DBUtil.closeQuietly(removeNoteStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(allNotes);
+            }
+        });
     }
 
     @Override
     public List<Composition> findCompositionsByAccountId(Integer accountId) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getCompsStmt = null;
+            ResultSet compsResultSet = null;
+
+            try{
+                getCompsStmt = conn.prepareStatement(
+                        "select * from compositions where account_id = ?"
+                );
+                getCompsStmt.setInt(1,accountId);
+
+                List<Composition> comps = new ArrayList<>();
+
+                compsResultSet = getCompsStmt.executeQuery();
+                System.out.println(comps);
+
+                boolean found = false;
+
+                while(compsResultSet.next()){
+                    found = true;
+
+                    Composition comp = new Composition();
+                    loadComposition(comp,compsResultSet,1);
+                    comps.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("No compositions exist for that Account ID");
+                }
+
+                return comps;
+            }
+            finally{
+                DBUtil.closeQuietly(getCompsStmt);
+                DBUtil.closeQuietly(compsResultSet);
+            }
+        });
     }
 
     @Override
     public List<Note> findNotesByMeasureIdAndMeasureIndex(Integer measureId, Integer measureIndex) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getNotesStmt = null;
+            ResultSet noteResultSet = null;
+
+            try{
+                getNotesStmt = conn.prepareStatement(
+                        "select notes.* from notes where measure_id = ? and measureIndex = ?"
+                );
+                getNotesStmt.setInt(1,measureId);
+                getNotesStmt.setInt(2,measureIndex);
+
+                List<Note> result = new ArrayList<>();
+
+                noteResultSet = getNotesStmt.executeQuery();
+
+                while(noteResultSet.next()){
+                    Integer noteID = noteResultSet.getInt(1);
+                    String pitch = noteResultSet.getString(2);
+
+                    String type = noteResultSet.getString(3);
+                    Integer measureIndx = noteResultSet.getInt(4);
+                    Integer measureID = noteResultSet.getInt(5);
+
+                    Note note = new Note(noteID, Defs.NoteType.valueOf(type), Defs.Pitch.valueOf(pitch), measureIndx, measureID);
+
+                    result.add(note);
+                }
+                return result;
+            }
+            finally {
+                DBUtil.closeQuietly(getNotesStmt);
+                DBUtil.closeQuietly(noteResultSet);
+            }
+        });
     }
 
     @Override
@@ -327,8 +491,8 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getAccStmt = conn.prepareStatement(
-                        "Select accounts.* from accounts"+
-                                "where accountID = ?"
+                        "Select accounts.* from accounts "+
+                                "where account_id = ?"
                 );
                 getAccStmt.setInt(1,accountId);
 
@@ -349,7 +513,7 @@ public class MySqlDB implements IDatabase {
                 }
 
                 if(!found){
-                    System.out.println("No Account was found that matched that username");
+                    System.out.println("No Account was found that matched that Account ID");
                 }
 
                 return resultAccounts;
@@ -363,18 +527,121 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public Boolean deleteComposition(Integer compositionId) {
-        return null;
-        //TODO: Implement
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement removeCompStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+            //boolean for final result
+            boolean foundDeletedNote = false;
+            Boolean deleted = false;
+
+            try{
+                removeCompStmt = conn.prepareStatement(
+                        "delete from compositions where composition_id = ?"
+                );
+                removeCompStmt.setInt(1,compositionId);
+
+                removeCompStmt.executeUpdate();
+
+                //Check to see if any compositions have the deleted ID
+                checkStmt = conn.prepareStatement(
+                        "select composititons.* from compositions where composition_id = ?"
+                );
+                checkStmt.setInt(1, compositionId);
+                checkSet = checkStmt.executeQuery();
+
+                while(checkSet.next()){
+                    foundDeletedNote = true;
+                    System.out.println("Comp not deleted, ID = " + checkSet.getInt(1));
+                }
+
+                if(!foundDeletedNote){
+                    deleted = true;
+                }
+                return deleted;
+            }
+            finally{
+                DBUtil.closeQuietly(removeCompStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
     }
 
     @Override
     public Boolean deleteAccount(String username) {
-        return false;
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement removeAcctStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+            boolean foundDeletedAccount = false;
+            Boolean deleted = false;
+
+            try{
+                removeAcctStmt = conn.prepareStatement(
+                        "delete from accounts where username = ?"
+                );
+                removeAcctStmt.setString(1,username);
+                removeAcctStmt.executeUpdate();
+
+                //check to see if account was removed. If resultset comes back empty, good to go
+                checkStmt = conn.prepareStatement(
+                        "select accounts.* from accounts where username = ?"
+                );
+                checkStmt.setString(1,username);
+                checkSet = checkStmt.executeQuery();
+
+                while(checkSet.next()){
+                    foundDeletedAccount = true;
+                    System.out.println("Account not deleted, ID = " + checkSet.getInt(1) + "Username = " +checkSet.getString(2));
+
+                }
+                if(!foundDeletedAccount){
+                    deleted = true;
+                }
+                return deleted;
+            }
+            finally{
+                DBUtil.closeQuietly(removeAcctStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
     }
 
     @Override
     public List<Composition> findAllComps() {
-        return null;
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement getCompsStmt = null;
+            ResultSet compResultSet = null;
+
+            try{
+                getCompsStmt = conn.prepareStatement(
+                        "select * from compositions"
+                );
+
+                List<Composition> resultComps = new ArrayList<>();
+                compResultSet = getCompsStmt.executeQuery();
+                boolean found = false;
+
+                while(compResultSet.next()){
+                    found = true;
+                    Composition comp = new Composition();
+                    loadComposition(comp,compResultSet,1);
+                    resultComps.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("No Compositions found in database, like at all. No bueno");
+                }
+
+                return resultComps;
+            }
+            finally{
+                DBUtil.closeQuietly(getCompsStmt);
+                DBUtil.closeQuietly(compResultSet);
+            }
+        });
     }
 
     @Override
@@ -387,17 +654,17 @@ public class MySqlDB implements IDatabase {
             try{
                 instAccStmt = conn.prepareStatement(
                         "insert into accounts (username, password) " +
-                                "  values(?, ?) "
+                                "values(?, ?) "
                 );
                 instAccStmt.setString(1,username);
                 instAccStmt.setString(2,password);
 
                 instAccStmt.executeUpdate();
 
-                System.out.println(username + "has been added to database");
+                System.out.println(username + " has been added to database");
 
                 getAccIDStmt = conn.prepareStatement(
-                        "select accounts.* from accounts"+
+                        "select accounts.* from accounts "+
                                 "where username = ? and password = ?"
                 );
                 getAccIDStmt.setString(1,username);
@@ -438,50 +705,20 @@ public class MySqlDB implements IDatabase {
 
     @Override
     public List<Account> findAccountByUsername(String username) {
-
-
-        return null;
-    }
-
-    /**
-     * @param compositionId Unique database-specific identification for a composition
-     * @param description   A user-editable description for the composition
-     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
-     */
-    @Override
-    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
-        return null;
-        //TODO: Implement
-    }
-
-    /**
-     * @param compositionId Unique Identifier for compositions.
-     * @param title         The title of a composition. Editable by the user.
-     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
-     */
-    @Override
-    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
-        return null;
-        //TODO: Implement
-    }
-
-    @Override
-    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
-        return executeTransaction((Connection conn) -> {
-            PreparedStatement getAcctStmt = null;
+        return executeTransaction(conn -> {
+            PreparedStatement getAccStmt = null;
             ResultSet accResultSet = null;
 
             try{
-                getAcctStmt = conn.prepareStatement(
-                        "select accounts.* from accounts"+
-                                "where username = ? and password = ?"
+                getAccStmt = conn.prepareStatement(
+                        "Select accounts.* from accounts "+
+                                "where username = ?"
                 );
-                getAcctStmt.setString(1, username);
-                getAcctStmt.setString(2, password);
+                getAccStmt.setString(1,username);
 
                 List<Account> resultAccounts = new ArrayList<>();
 
-                getAcctStmt.executeQuery();
+                accResultSet = getAccStmt.executeQuery();
 
                 //for testing that result was returned i.e. accounts exist
                 Boolean found = false;
@@ -502,6 +739,157 @@ public class MySqlDB implements IDatabase {
                 return resultAccounts;
             }
             finally{
+                DBUtil.closeQuietly(getAccStmt);
+                DBUtil.closeQuietly(accResultSet);
+            }
+        });
+    }
+
+
+    /**
+     * @param compositionId Unique database-specific identification for a composition
+     * @param description   A user-editable description for the composition
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionDescriptionByCompositionId(Integer compositionId, String description) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement updateCompStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+
+            Boolean newDescFound = false;
+            Boolean successfulUpdate = false;
+
+            try {
+                updateCompStmt = conn.prepareStatement(
+                        "update compositions set description = ? where composition_id = ?"
+                );
+                updateCompStmt.setString(1, description);
+                updateCompStmt.setInt(2, compositionId);
+
+                updateCompStmt.executeUpdate();
+
+                checkStmt = conn.prepareStatement(
+                        "select compositions.* from compositions where composition_id = ?"
+                );
+                checkStmt.setInt(1, compositionId);
+
+                checkSet = checkStmt.executeQuery();
+
+                Integer count = 0;
+
+                while (checkSet.next()) {
+                    count++;
+                    if (checkSet.getString(4).equals(description)) {
+                        newDescFound = true;
+                    }
+                }
+                //make sure only 1 result found
+                if (count < 2 && newDescFound == true) {
+                    successfulUpdate = true;
+                }
+
+                return successfulUpdate;
+            }
+            finally {
+                DBUtil.closeQuietly(updateCompStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
+    }
+
+    /**
+     * @param compositionId Unique Identifier for compositions.
+     * @param title         The title of a composition. Editable by the user.
+     * @return Boolean isCompUpdated: True when update operation is successful, false otherwise
+     */
+    @Override
+    public Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement updateCompStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+
+            Boolean newTitleFound = false;
+            Boolean successfulUpdate = false;
+
+            try {
+                updateCompStmt = conn.prepareStatement(
+                        "update compositions set title = ? where composition_id = ?"
+                );
+                updateCompStmt.setString(1, title);
+                updateCompStmt.setInt(2, compositionId);
+
+                updateCompStmt.executeUpdate();
+
+                checkStmt = conn.prepareStatement(
+                        "select compositions.* from compositions where composition_id = ?"
+                );
+                checkStmt.setInt(1, compositionId);
+
+                checkSet = checkStmt.executeQuery();
+
+                Integer count = 0;
+
+                while (checkSet.next()) {
+                    count++;
+                    if (checkSet.getString(2).equals(title)) {
+                        newTitleFound = true;
+                    }
+                }
+                //make sure only 1 result found
+                if (count < 2 && newTitleFound == true) {
+                    successfulUpdate = true;
+                }
+
+                return successfulUpdate;
+            }
+            finally {
+                DBUtil.closeQuietly(updateCompStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
+    }
+
+    @Override
+    public List<Account> findAccountByUsernameAndPassword(String username, String password) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement getAcctStmt = null;
+            ResultSet accResultSet = null;
+
+            try{
+                getAcctStmt = conn.prepareStatement(
+                        "select accounts.* from accounts where username = ? and password = ?"
+                );
+                getAcctStmt.setString(1, username);
+                getAcctStmt.setString(2, password);
+
+                List<Account> resultAccounts = new ArrayList<>();
+
+                accResultSet = getAcctStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(accResultSet.next()){
+                    found = true;
+
+                    Account account = new Account();
+                    loadAccount(account, accResultSet, 1);
+
+                    resultAccounts.add(account);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username and password");
+                }
+
+                return resultAccounts;
+            }
+            finally{
                 DBUtil.closeQuietly(getAcctStmt);
                 DBUtil.closeQuietly(accResultSet);
             }
@@ -514,8 +902,41 @@ public class MySqlDB implements IDatabase {
      */
     @Override
     public List<Composition> findCompositionsByCompositionId(Integer compositionId) {
-        return null;
-        //TODO: Implement
+        return executeTransaction(conn -> {
+            PreparedStatement getCompsStmt = null;
+            ResultSet compsResultSet = null;
+
+            try{
+                getCompsStmt = conn.prepareStatement(
+                        "select compositions.* from compositions where composition_id = ?"
+                );
+                getCompsStmt.setInt(1,compositionId);
+
+                List<Composition> comps = new ArrayList<>();
+
+                compsResultSet = getCompsStmt.executeQuery();
+
+                boolean found = false;
+
+                while(compsResultSet.next()){
+                    found = true;
+
+                    Composition comp = new Composition();
+                    loadComposition(comp,compsResultSet,1);
+                    comps.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("No compositions exist for that comp ID");
+                }
+
+                return comps;
+            }
+            finally{
+                DBUtil.closeQuietly(getCompsStmt);
+                DBUtil.closeQuietly(compsResultSet);
+            }
+        });
     }
 
     /**
@@ -525,8 +946,50 @@ public class MySqlDB implements IDatabase {
      */
     @Override
     public Boolean updateCompositionYearByCompositionId(Integer compositionId, Integer year) {
-        return null;
-        //TODO: Implement
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement updateCompStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+
+            Boolean newYearFound = false;
+            Boolean successfulUpdate = false;
+
+            try {
+                updateCompStmt = conn.prepareStatement(
+                        "update compositions set year = ? where composition_id = ?"
+                );
+                updateCompStmt.setInt(1, year);
+                updateCompStmt.setInt(2, compositionId);
+
+                updateCompStmt.executeUpdate();
+
+                checkStmt = conn.prepareStatement(
+                        "select compositions.* from compositions where composition_id = ?"
+                );
+                checkStmt.setInt(1, compositionId);
+
+                checkSet = checkStmt.executeQuery();
+
+                Integer count = 0;
+
+                while (checkSet.next()) {
+                    count++;
+                    if (checkSet.getInt(3) == year) {
+                        newYearFound = true;
+                    }
+                }
+                //make sure only 1 result found
+                if (count < 2 && newYearFound == true) {
+                    successfulUpdate = true;
+                }
+                return successfulUpdate;
+            }
+            finally {
+                DBUtil.closeQuietly(updateCompStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
     }
 
     /**
@@ -540,9 +1003,68 @@ public class MySqlDB implements IDatabase {
      * @return A composition object with unique ID
      */
     @Override
-    public Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId) {
-        return null;
-        //TODO: Implement
+    public Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement instCompStmt = null;
+            PreparedStatement getCompIDStmt = null;
+            ResultSet compResultSet = null;
+
+            try{
+                instCompStmt = conn.prepareStatement(
+                        "insert into compositions (title, year, description, account_id, viewableComp) " +
+                                "values(?, ?, ?, ?, ?) "
+                );
+                instCompStmt.setString(1,title);
+                instCompStmt.setInt(2,year);
+                instCompStmt.setString(3,description);
+                instCompStmt.setInt(4,accountId);
+                instCompStmt.setInt(5,isViewablePublicly);
+
+                instCompStmt.executeUpdate();
+
+                System.out.println(title + "has been added to database");
+
+                getCompIDStmt = conn.prepareStatement(
+                        "select * from compositions "+
+                                "where title = ? and year = ? and description = ? and account_id = ? and viewableComp = ?"
+                );
+                getCompIDStmt.setString(1,title);
+                getCompIDStmt.setInt(2,year);
+                getCompIDStmt.setString(3,description);
+                getCompIDStmt.setInt(4,accountId);
+                getCompIDStmt.setInt(5,isViewablePublicly);
+
+                List<Composition> resultCompositions = new ArrayList<>();
+
+                compResultSet = getCompIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer compID = -1;
+
+                while(compResultSet.next()){
+                    found = true;
+
+                    Composition comp = new Composition();
+                    loadComposition(comp, compResultSet, 1);
+                    compID = comp.getCompositionID();
+
+                    resultCompositions.add(comp);
+                }
+
+                if(!found){
+                    System.out.println("Composition was not added successfully");
+                }
+
+                return compID;
+            }
+            finally{
+                DBUtil.closeQuietly(instCompStmt);
+                DBUtil.closeQuietly(getCompIDStmt);
+                DBUtil.closeQuietly(compResultSet);
+            }
+        });
     }
 
 
@@ -557,39 +1079,396 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
-        return false;
+    public Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement instSectStmt = null;
+            PreparedStatement getSectIDStmt = null;
+            ResultSet sectResultSet = null;
+
+            try{
+                instSectStmt = conn.prepareStatement(
+                        "insert into sections (noteKey, timesignature, clef, tempo, composition_id) " +
+                                "values(?, ?, ?, ?, ?) "
+                );
+                instSectStmt.setString(1, key.toString());
+                instSectStmt.setString(2, timeSig.toString());
+                instSectStmt.setString(3, clef.toString());
+                instSectStmt.setInt(4, tempo);
+                instSectStmt.setInt(5, composition_ID);
+
+                instSectStmt.executeUpdate();
+
+                getSectIDStmt = conn.prepareStatement(
+                        "select sections.* from sections "+
+                                "where noteKey = ? and timesignature = ? and clef = ? and tempo = ? and composition_id = ?"
+                );
+                getSectIDStmt.setString(1, key.toString());
+                getSectIDStmt.setString(2, timeSig.toString());
+                getSectIDStmt.setString(3, clef.toString());
+                getSectIDStmt.setInt(4, tempo);
+                getSectIDStmt.setInt(5, composition_ID);
+
+                List<Section> resultSections = new ArrayList<>();
+
+                sectResultSet = getSectIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer sectID = -1;
+
+                while(sectResultSet.next()){
+                    found = true;
+
+                    Section section = new Section();
+                    loadSection(section,sectResultSet,1);
+                    sectID = section.getSectionID();
+
+                    resultSections.add(section);
+                }
+
+                if(!found){
+                    System.out.println("section was not added successfully");
+                }
+
+                return sectID;
+            }
+            finally{
+                DBUtil.closeQuietly(instSectStmt);
+                DBUtil.closeQuietly(getSectIDStmt);
+                DBUtil.closeQuietly(sectResultSet);
+            }
+        });
     }
 
     @Override
     public Boolean deleteSection(Integer sectionID) {
-        return false;
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement removeSectStmt = null;
+            PreparedStatement checkStmt = null;
+            ResultSet checkSet = null;
+            boolean foundDeletedSect = false;
+            Boolean deleted = false;
+
+            try{
+                removeSectStmt = conn.prepareStatement(
+                        "delete from sections where section_id = ?"
+                );
+                removeSectStmt.setInt(1,sectionID);
+
+                removeSectStmt.executeUpdate();
+
+                //check to see if account was removed. If resultset comes back empty, good to go
+                checkStmt = conn.prepareStatement(
+                        "select sections.* from sections where section_id = ?"
+                );
+                checkStmt.setInt(1,sectionID);
+                checkSet = checkStmt.executeQuery();
+
+                while(checkSet.next()){
+                    foundDeletedSect = true;
+                    System.out.println("Account not deleted, ID = " + checkSet.getInt(1) + "Username = " +checkSet.getString(2));
+
+                }
+                if(!foundDeletedSect){
+                    deleted = true;
+                }
+                return deleted;
+            }
+            finally{
+                DBUtil.closeQuietly(removeSectStmt);
+                DBUtil.closeQuietly(checkStmt);
+                DBUtil.closeQuietly(checkSet);
+            }
+        });
     }
 
     @Override
-    public Section findSectionFromSectionID(Integer sectionID) {
-        return null;
+    public List<Section> findSectionFromSectionID(Integer sectionID) {
+        return executeTransaction(conn -> {
+            PreparedStatement getSectStmt = null;
+            ResultSet sectResultSet = null;
+
+            try{
+                getSectStmt = conn.prepareStatement(
+                        "Select sections.* from sections "+
+                                "where section_id = ?"
+                );
+                getSectStmt.setInt(1,sectionID);
+
+                List<Section> resultSections = new ArrayList<>();
+
+                sectResultSet = getSectStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(sectResultSet.next()){
+                    found = true;
+
+                    Section section = new Section();
+                    loadSection(section, sectResultSet, 1);
+
+                    resultSections.add(section);
+                }
+
+                if(!found){
+                    System.out.println("No Account was found that matched that username");
+                }
+
+                return resultSections;
+            }
+            finally{
+                DBUtil.closeQuietly(getSectStmt);
+                DBUtil.closeQuietly(sectResultSet);
+            }
+        });
     }
 
     @Override
     public List<Section> findAllSections() {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getSectStmt = null;
+            ResultSet sectResultSet = null;
+
+            try{
+                getSectStmt = conn.prepareStatement(
+                        "select sections.* from sections"
+                );
+
+                List<Section> resultSections = new ArrayList<>();
+
+                sectResultSet = getSectStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(sectResultSet.next()){
+                    found = true;
+
+                    Section section = new Section();
+                    loadSection(section, sectResultSet, 1);
+
+                    resultSections.add(section);
+                }
+
+                if(!found){
+                    System.out.println("No sections were found at all (uh-oh)");
+                }
+
+                return resultSections;
+            }
+            finally{
+                DBUtil.closeQuietly(getSectStmt);
+                DBUtil.closeQuietly(sectResultSet);
+            }
+        });
     }
 
     @Override
     public List<Section> findSectionsByCompositionId(Integer compositionId) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getSectStmt = null;
+            ResultSet sectResultSet = null;
+
+            try{
+                getSectStmt = conn.prepareStatement(
+                        "select sections.* from sections where composition_id = ?"
+                );
+                getSectStmt.setInt(1, compositionId);
+
+                List<Section> resultSections = new ArrayList<>();
+
+                sectResultSet = getSectStmt.executeQuery();
+
+                boolean found = false;
+
+                while(sectResultSet.next()){
+                    found = true;
+
+                    Section section = new Section();
+                    loadSection(section, sectResultSet, 1);
+                    resultSections.add(section);
+                }
+
+                if(!found){
+                    System.out.println("No sections exist with that composition ID");
+                }
+
+                return resultSections;
+            }
+            finally{
+                DBUtil.closeQuietly(getSectStmt);
+                DBUtil.closeQuietly(sectResultSet);
+            }
+        });
     }
 
     @Override
-    public List<Measure> findMeasuresBySectionId(Integer SectionId) {
-        return null;
+    public List<Measure> findMeasuresBySectionId(Integer sectionId) {
+        return executeTransaction(conn -> {
+            PreparedStatement getMeasStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                getMeasStmt = conn.prepareStatement(
+                        "Select measures.* from measures "+
+                                "where section_id = ?"
+                );
+                getMeasStmt.setInt(1, sectionId);
+
+                List<Measure> resultMeasures = new ArrayList<>();
+
+                measResultSet = getMeasStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("No measure(s) was found for that section ID");
+                }
+
+                return resultMeasures;
+            }
+            finally{
+                DBUtil.closeQuietly(getMeasStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
     }
 
-    private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
+    @Override
+    public List<Measure> findAllMeasures() {
+        return executeTransaction(conn -> {
+            PreparedStatement getMeasStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                getMeasStmt = conn.prepareStatement(
+                        "Select measures.* from measures"
+                );
+
+                List<Measure> resultMeasures = new ArrayList<Measure>();
+
+                measResultSet = getMeasStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("No measures found in databse, no bueno");
+                }
+
+                return resultMeasures;
+            }
+            finally{
+                DBUtil.closeQuietly(getMeasStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
+    }
+
+    @Override
+    public Integer insertMeasure(Integer sectionId) {
+        return executeTransaction((Connection conn) -> {
+            PreparedStatement instMeasStmt = null;
+            PreparedStatement getMeasIDStmt = null;
+            ResultSet measResultSet = null;
+
+            try{
+                instMeasStmt = conn.prepareStatement(
+                        "insert into measures (section_id) " +
+                                "values(?)"
+                );
+                instMeasStmt.setInt(1,sectionId);
+
+                instMeasStmt.executeUpdate();
+
+                getMeasIDStmt = conn.prepareStatement(
+                        "select measures.* from measures "+
+                                "where section_id = ?"
+                );
+                getMeasIDStmt.setInt(1,sectionId);
+
+                List<Measure> resultMeasures = new ArrayList<>();
+
+                measResultSet = getMeasIDStmt.executeQuery();
+
+                //for testing that result was returned i.e. accounts exist
+                Boolean found = false;
+
+                Integer sectID = -1;
+
+                while(measResultSet.next()){
+                    found = true;
+
+                    Integer measureID = measResultSet.getInt(1);
+                    Integer sectionID = measResultSet.getInt(2);
+
+                    Measure measure = new Measure(measureID, sectionID);
+
+                    resultMeasures.add(measure);
+                }
+
+                if(!found){
+                    System.out.println("measure was not added successfully");
+                }
+
+                return sectID;
+            }
+            finally{
+                DBUtil.closeQuietly(instMeasStmt);
+                DBUtil.closeQuietly(getMeasIDStmt);
+                DBUtil.closeQuietly(measResultSet);
+            }
+        });
+    }
+
+
+        private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException {
         account.setAccountID(resultSet.getInt(index++));
         account.setUsername(resultSet.getString(index++));
         account.setPassword(resultSet.getString(index++));
+    }
+
+    private void loadComposition(Composition composition, ResultSet resultSet, int index) throws SQLException{
+        composition.setCompositionID(resultSet.getInt(index++));
+        composition.setTitle(resultSet.getString(index++));
+        composition.setYear(resultSet.getInt(index++));
+        composition.setDesc(resultSet.getString(index++));
+        composition.setAccountId(resultSet.getInt(index++));
+        composition.setIsViewablePublicly(resultSet.getInt(index++));
+    }
+
+    private void loadSection(Section section, ResultSet resultSet, int index) throws SQLException{
+        section.setSectionID(resultSet.getInt(index++));
+        section.setKey(Defs.Key.valueOf(resultSet.getString(index++)));
+        section.setTimeSig(Defs.TimeSignature.valueOf(resultSet.getString(index++)));
+        section.setClef(Defs.Clef.valueOf(resultSet.getString(index++)));
+        section.setTempo(resultSet.getInt(index++));
+        section.setCompID(resultSet.getInt(index++));
     }
 
 }

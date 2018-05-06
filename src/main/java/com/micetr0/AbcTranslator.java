@@ -79,8 +79,13 @@ public class AbcTranslator {
         return out;
     }
 
-    public Defs.NoteType createNoteType(String noteType){
-        return Defs.NoteType.valueOf(noteType);
+    public Defs.NoteType createNoteType(String note){
+        Double defaultLength = .125;
+        Integer end = Integer.parseInt(note.substring(note.length() - 1));
+
+        Double size = defaultLength * end;
+
+        return Defs.NoteType.findByKey(size);
     }
 
     public Defs.Pitch createNotePitch(String notePitch){
@@ -97,7 +102,8 @@ public class AbcTranslator {
         return Defs.Pitch.valueOf(post);
     }
     public Defs.TimeSignature createTimeSignature(String timeSignature){
-        return Defs.TimeSignature.valueOf(timeSignature);
+        Defs.TimeSignature timeSig = Defs.TimeSignature.findByKey(timeSignature);
+        return timeSig;
     }
     public Defs.Key createKey(String key){
         String post;
@@ -113,7 +119,7 @@ public class AbcTranslator {
         return Defs.Key.valueOf(post);
     }
     public Defs.Clef createClef(String clef){
-        return Defs.Clef.valueOf(clef);
+        return Defs.Clef.TREBLE;
     }
 
     /**
@@ -155,7 +161,10 @@ public class AbcTranslator {
             String temp = noteMeas.replaceAll("\\s+", "");
             List<String> preNote = Arrays.asList(temp.split("(?<= |0|1|2|3|4|5|6)"));
             for (String note: preNote) {
-                //create note objects
+                int index = 0;
+                Note newNote = new Note(0,createNoteType(note),createNotePitch(note),index,measureId);
+                index++;
+                allNotes.add(newNote);
             }
             measureId++;
         }
