@@ -9,8 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <link rel="icon" href="favicon.ico">
-
-        <title>Mice-tr0 - Composition 1</title>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -39,7 +38,7 @@
 
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
-                <h1 align="center">Composition 1</h1>
+                <h1 align="center">Composition Editor</h1>
             </div>
 
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -50,8 +49,26 @@
             </div>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">
-                <div id="compAbcjs"></div>
+                <div id="warnings"></div>
+                <hr>
+                <div id="midi"></div>
+                <div id="canvas"></div>
+                <hr>
             </div>
+
+<div id="compText" class="container" style="background-color: white" align="center">
+<textarea id="abc" cols="80" rows="15">X: 1
+T: Cooley's
+M: 4/4
+L: 1/8
+R: reel
+K: Emin
+|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|@
+EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|
+|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|
+eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|
+</textarea>
+</div>
 
             <form action="profile" method="get">
                 <input name="goToProfile"
