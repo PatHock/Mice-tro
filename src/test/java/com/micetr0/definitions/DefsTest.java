@@ -32,8 +32,8 @@ class DefsTest {
 
     @Test
     void NoteTypeTest() {
-        assertTrue(Defs.NoteType.REST_WHOLE.getSize().equals(2 * Defs.NoteType.HALF.getSize()));
-        assertFalse(Defs.NoteType.REST_EIGHTH.getSize().equals(Defs.NoteType.QUARTER.getSize()));
+        assertTrue(Defs.NoteType.WHOLE.getSize().equals(2 * Defs.NoteType.HALF.getSize()));
+        assertFalse(Defs.NoteType.EIGHTH.getSize().equals(Defs.NoteType.QUARTER.getSize()));
 
     }
 

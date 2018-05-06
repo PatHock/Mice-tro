@@ -159,4 +159,32 @@ public class AbcTranslatorTest {
         assertEquals(translator.createNotePitch("*F2"),Defs.Pitch.F2_SHARP);
 
     }
+
+    @Test
+    public void createtimeSigTest(){
+        assertEquals(translator.createTimeSignature("4/4"),Defs.TimeSignature.FOUR_FOUR);
+        assertEquals(translator.createTimeSignature("7/8"),Defs.TimeSignature.SEVEN_EIGHT);
+    }
+    @Test
+    public void createNoteTypeTest(){
+        assertEquals(translator.createNoteType("_A2"),Defs.NoteType.QUARTER);
+        assertEquals(translator.createNoteType("_A4"),Defs.NoteType.HALF);
+    }
+    @Test
+    public void extractNotesTest(){
+        String abcPattern = "X: 1\n"
+                + "T: " + "Woahhhhh" + "\n"
+                + "M: " + "4/4" + "\n"
+                + "L: " + "1/8" +"\n"
+                + "R: reel" +"\n"
+                + "K: " + "Gm" + "\n"
+                + "_D4A4 B1C1|*F1 E1G1A1|";
+        List<Note> notes = translator.extractNotes(translator.extractNoteMeasures(abcPattern));
+
+
+        Note newNote = new Note(0,Defs.NoteType.HALF,Defs.Pitch.D4_FLAT,0,0);
+
+        assertEquals(notes.get(0),newNote);
+    }
+
 }
