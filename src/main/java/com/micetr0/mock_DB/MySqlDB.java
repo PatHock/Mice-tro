@@ -373,7 +373,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getCompsStmt = conn.prepareStatement(
-                        "select compositions.* from compositions where account_id = ?"
+                        "select * from compositions where account_id = ?"
                 );
                 getCompsStmt.setInt(1,accountId);
 
@@ -616,7 +616,7 @@ public class MySqlDB implements IDatabase {
 
             try{
                 getCompsStmt = conn.prepareStatement(
-                        "select compositions.* from compositions"
+                        "select * from compositions"
                 );
 
                 List<Composition> resultComps = new ArrayList<>();
