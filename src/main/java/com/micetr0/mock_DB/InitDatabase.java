@@ -10,7 +10,7 @@ public class InitDatabase {
     public static void init(Scanner keyboard) {
         //TODO: Actually get input from user
 //        System.out.println("Which Database? 0 = fake, 1 = real (unimplemented)");
-        Integer which = 1;
+        Integer which = 0;
                 //= Integer.parseInt(keyboard.nextLine());
 
         if (which == 0) {

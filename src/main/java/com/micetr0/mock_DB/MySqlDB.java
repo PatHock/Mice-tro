@@ -380,6 +380,7 @@ public class MySqlDB implements IDatabase {
                 List<Composition> comps = new ArrayList<>();
 
                 compsResultSet = getCompsStmt.executeQuery();
+                System.out.println(comps);
 
                 boolean found = false;
 
@@ -1010,12 +1011,12 @@ public class MySqlDB implements IDatabase {
 
             try{
                 instCompStmt = conn.prepareStatement(
-                        "insert into compositions (title, description, year, account_id, viewableComp) " +
+                        "insert into compositions (title, year, description, account_id, viewableComp) " +
                                 "values(?, ?, ?, ?, ?) "
                 );
                 instCompStmt.setString(1,title);
-                instCompStmt.setString(2,description);
-                instCompStmt.setInt(3,year);
+                instCompStmt.setInt(2,year);
+                instCompStmt.setString(3,description);
                 instCompStmt.setInt(4,accountId);
                 instCompStmt.setInt(5,isViewablePublicly);
 
@@ -1024,12 +1025,12 @@ public class MySqlDB implements IDatabase {
                 System.out.println(title + "has been added to database");
 
                 getCompIDStmt = conn.prepareStatement(
-                        "select accounts.* from accounts "+
-                                "where title = ? and description = ? and year = ? and account_id = ? and viewableComp = ?"
+                        "select * from compositions "+
+                                "where title = ? and year = ? and description = ? and account_id = ? and viewableComp = ?"
                 );
                 getCompIDStmt.setString(1,title);
-                getCompIDStmt.setString(2,description);
-                getCompIDStmt.setInt(3,year);
+                getCompIDStmt.setInt(2,year);
+                getCompIDStmt.setString(3,description);
                 getCompIDStmt.setInt(4,accountId);
                 getCompIDStmt.setInt(5,isViewablePublicly);
 
