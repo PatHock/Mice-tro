@@ -18,7 +18,7 @@ window.onload = function () {
             generateInline: true,
             generateDownload: false
         }
-    });
+    })};
 let abc = "T: Cooley's\n" +
     "M: 4/4\n" +
     "L: 1/8\n" +
@@ -40,8 +40,7 @@ function load() {
             clickListener: function alertOnClick(abcElem) {
                 alert("Type " + abcElem.el_type+ "\n" +
                 "Pitch: " + abcElem.pitches[0].pitch + "\n" +
-                "Duration: " + abcElem.duration + "\n" +
-                    "Note Index: " + abcElem.measureNum
+                "Duration: " + abcElem.duration + "\n"
             );
                 console.log(abcElem);
             },
