@@ -98,7 +98,7 @@ public class AbcTranslatorTest {
         Composition composition = compositionController.createComposition(2);
 
 
-        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID(), 10);
+        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID(), 6);
         Measure measure = measureController.createMeasure(section.getSectionID());
         noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A0, Defs.Key.C_MAJOR, 0, measure.getMeasureID());
         noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A1, Defs.Key.C_MAJOR, 1, measure.getMeasureID());
@@ -115,9 +115,9 @@ public class AbcTranslatorTest {
                 + "R: reel \n"
                 + "K: " + translator.getKey(section) + "\n"
                 + " | "
-                + translator.getNote(noteController.getDbNotes(measure.getMeasureID(), 0).get(0))
+                + translator.getNote(db.findNotesByMeasureId(measure.getMeasureID()).get(0))
                 + " "
-                + translator.getNote(noteController.getDbNotes(measure.getMeasureID(), 1).get(0))
+                + translator.getNote(db.findNotesByMeasureId(measure.getMeasureID()).get(1))
                 + " | "
         );
     }

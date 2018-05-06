@@ -31,7 +31,6 @@ public class Mock_DB implements IDatabase{
         System.out.println(sections.size() + "sections");
         System.out.println(notes.size() + "notes");
         System.out.println(measures.size() + "measures");
-
     }
 
     private void readInitialData() {
@@ -366,10 +365,8 @@ public class Mock_DB implements IDatabase{
         List<Note> noteList = new ArrayList<>();
         List<Measure> measureList = new ArrayList<>();
         List<Section> sectionList = new ArrayList<>();
-        List<Composition> compositionList = new ArrayList<>();
 
-        compositionList = findCompositionsByCompositionId(compositionId);
-        sectionList = findSectionsByCompositionId(compositionList.get(0).getCompositionID());
+        sectionList = findSectionsByCompositionId(compositionId);
 
         for (Section section : sectionList) {
             measureList.addAll(findMeasuresBySectionId(section.getSectionID()));
@@ -488,8 +485,12 @@ public class Mock_DB implements IDatabase{
 
     @Override
     public Measure insertMeasure(Integer sectionId) {
-        Integer measureId = measures.size();
-        return new Measure(measureId, sectionId);
+        System.out.println(measures);
+        Integer measureId = measures.size() + 1;
+        Measure measure = new Measure(measureId, sectionId);
+        measures.add(measure);
+        System.out.println(measures);
+        return measure;
     }
 
     @Override
