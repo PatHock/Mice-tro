@@ -1,5 +1,6 @@
 package com.micetr0.mock_DB;
 
+import com.amazonaws.metrics.MetricAdmin;
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
@@ -344,30 +345,43 @@ public class Mock_DB implements IDatabase{
     @Override
     public List<Note> findNotesByMeasureId(Integer measureId) {
         List<Note> noteList = new ArrayList<>();
-        
 
+        for (Note note : notes) {
+            if (note.getMeasureId().equals(measureId)) {
+                noteList.add(note);
+            }
+        }
 
         return noteList;
     }
 
+    /**
+     * Find all of the notes in a composition.
+     *
+     * @param compositionId unique ID of a composition
+     * @return list of note objects contained in a composition
+     */
+    @Override
+    public List<Note> findNotesByCompositionId(Integer compositionId) {
+        List<Note> noteList = new ArrayList<>();
+        List<Measure> measureList = new ArrayList<>();
+        List<Section> sectionList = new ArrayList<>();
+        List<Composition> compositionList = new ArrayList<>();
 
-    //    /**
-//     * FIXME: needs unit test
-//     * @param accountId Unique integer ID for accounts in database
-//     * @return List of passwords that are associated with this account ID
-//     */
-//    @Override
-//    public List<Credential> findUsernameAndPasswordByAccountId(Integer accountId) {
-//        List<Credential> credentialList = new ArrayList<>();
-//
-//        for (Account acc : accounts) {
-//            if(accountId.equals(acc.getAccountID())) {
-//                credentialList.add(new Credential(acc.getUsername(), acc.getPassword()));
-//            }
-//        }
-//
-//        return credentialList;
-//    }
+        compositionList = findCompositionsByCompositionId(compositionId);
+        sectionList = findSectionsByCompositionId(compositionList.get(0).getCompositionID());
+
+        for (Section section : sectionList) {
+            measureList.addAll(findMeasuresBySectionId(section.getSectionID()));
+        }
+
+        for (Measure measure : measureList) {
+            noteList.addAll(findNotesByMeasureId(measure.getMeasureID()));
+        }
+
+        return noteList;
+    }
+
 
     @Override
     public void deleteDB()
@@ -434,17 +448,48 @@ public class Mock_DB implements IDatabase{
 
     @Override
     public List<Section> findSectionsByCompositionId(Integer compositionId) {
-        return null;
+        List<Section> sectionList = new ArrayList<>();
+        for (Section section : sections) {
+            if (section.getCompID().equals(compositionId)) {
+                sectionList.add(section);
+            }
+        }
+        return sectionList;
     }
 
     @Override
     public List<Measure> findMeasuresBySectionId(Integer SectionId) {
-        return null;
+        List<Measure> measureList = new ArrayList<>();
+
+        for (Measure measure : measures) {
+            if (measure.getSectionID().equals(SectionId)){
+                measureList.add(measure);
+            }
+        }
+        return measureList;
+    }
+
+    /**
+     * Finds measures with given measure ID
+     *
+     * @param measureId unique measure ID
+     * @return measures Arraylist of measures
+     */
+    @Override
+    public List<Measure> findMeasuresByMeasureId(Integer measureId) {
+        List<Measure> measureList = new ArrayList<>();
+        for (Measure measure : measures) {
+            if (measure.getMeasureID().equals(measureId)) {
+                measureList.add(measure);
+            }
+        }
+        return measureList;
     }
 
     @Override
-    public Integer insertMeasure(Integer sectionId) {
-        return null;
+    public Measure insertMeasure(Integer sectionId) {
+        Integer measureId = measures.size();
+        return new Measure(measureId, sectionId);
     }
 
     @Override

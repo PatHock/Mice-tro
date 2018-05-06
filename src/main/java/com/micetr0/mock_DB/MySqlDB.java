@@ -1078,6 +1078,17 @@ public class MySqlDB implements IDatabase {
         return null;
     }
 
+    /**
+     * Find all of the notes in a composition.
+     *
+     * @param compositionId unique ID of a composition
+     * @return list of note objects contained in a composition
+     */
+    @Override
+    public List<Note> findNotesByCompositionId(Integer compositionId) {
+        return null;
+    }
+
 
     @Override
     public void deleteDB() {
@@ -1359,6 +1370,17 @@ public class MySqlDB implements IDatabase {
         });
     }
 
+    /**
+     * Finds measures with given measure ID
+     *
+     * @param measureId unique measure ID
+     * @return measures Arraylist of measures
+     */
+    @Override
+    public List<Measure> findMeasuresByMeasureId(Integer measureId) {
+        return null;
+    }
+
     @Override
     public List<Measure> findAllMeasures() {
         return executeTransaction(conn -> {
@@ -1402,7 +1424,7 @@ public class MySqlDB implements IDatabase {
     }
 
     @Override
-    public Integer insertMeasure(Integer sectionId) {
+    public Measure insertMeasure(Integer sectionId) {
         return executeTransaction((Connection conn) -> {
             PreparedStatement instMeasStmt = null;
             PreparedStatement getMeasIDStmt = null;
@@ -1430,7 +1452,7 @@ public class MySqlDB implements IDatabase {
                 //for testing that result was returned i.e. accounts exist
                 Boolean found = false;
 
-                Integer sectID = -1;
+//                Integer sectID = -1;
 
                 while(measResultSet.next()){
                     found = true;
@@ -1447,7 +1469,7 @@ public class MySqlDB implements IDatabase {
                     System.out.println("measure was not added successfully");
                 }
 
-                return sectID;
+                return resultMeasures.get(0);
             }
             finally{
                 DBUtil.closeQuietly(instMeasStmt);

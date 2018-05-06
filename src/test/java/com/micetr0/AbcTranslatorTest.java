@@ -1,25 +1,47 @@
 package com.micetr0;
 
+import com.micetr0.controller.CompositionController;
+import com.micetr0.controller.MeasureController;
+import com.micetr0.controller.NoteController;
+import com.micetr0.controller.SectionController;
 import com.micetr0.definitions.Defs;
-import com.micetr0.model.Account;
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
+import com.micetr0.mock_DB.InitDatabase;
+import com.micetr0.mock_DB.Mock_DB;
+import com.micetr0.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.micetr0.model.Composition;
-import com.micetr0.model.Note;
-import com.micetr0.model.Section;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.dao.DataIntegrityViolationException;
 
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbcTranslatorTest {
 
-    AbcTranslator translator;
-    @BeforeEach
-    public void setUp(){
-        translator = new AbcTranslator();
+    private AbcTranslator translator;
+    private CompositionController compositionController;
+    private SectionController sectionController;
+    private MeasureController measureController;
+    private NoteController noteController;
+    private IDatabase db;
 
+
+
+    @BeforeEach
+    void setUp(){
+        DatabaseProvider.setInstance(new Mock_DB());
+        db = DatabaseProvider.getInstance();
+        translator = new AbcTranslator();
+        compositionController = new CompositionController();
+        sectionController = new SectionController();
+        measureController = new MeasureController();
+        noteController = new NoteController();
     }
 
     @Test
@@ -71,30 +93,33 @@ public class AbcTranslatorTest {
 
     @Test
     public void abcBuilderTest(){
-        Section section = new Section();
-        section.setKey(Defs.Key.C_MAJOR);
-        section.setTimeSig(Defs.TimeSignature.FOUR_FOUR);
-        Note note = new Note(0,Defs.NoteType.HALF,Defs.Pitch.A0_SHARP,0,0);
-        Note note2 = new Note(1,Defs.NoteType.HALF,Defs.Pitch.A1_FLAT,1,0);
-        List<Note> notes = new ArrayList<>();
-        notes.add(note);
-        notes.add(note2);
-        Composition comp = new Composition();
-        comp.setTitle("title");
+//        Section section = new Section();
+        String title = "One Super sick title!!!";
+        Composition composition = compositionController.createComposition(2);
 
-        String out = translator.abcBuilder(comp,section, notes);
+
+        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID(), 10);
+        Measure measure = measureController.createMeasure(section.getSectionID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A0, Defs.Key.C_MAJOR, 0, measure.getMeasureID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A1, Defs.Key.C_MAJOR, 1, measure.getMeasureID());
+
+        assertTrue(compositionController.updateTitle(composition, title));
+        assertEquals(2, db.findNotesByMeasureId(measure.getMeasureID()).size());
+
+        String out = translator.abcBuilder(composition);
 
         assertEquals(out,"X: 1\n"
-                + "T: " + translator.getCompTitle(comp) + "\n"
+                + "T: " + translator.getCompTitle(composition) + "\n"
                 + "M: " + translator.getTimeSig(section) + "\n"
                 + "L: 1/8 \n"
                 + "R: reel \n"
                 + "K: " + translator.getKey(section) + "\n"
                 + " | "
-                + translator.getNote(notes.get(0))
+                + translator.getNote(noteController.getDbNotes(measure.getMeasureID(), 0).get(0))
                 + " "
-                + translator.getNote(notes.get(1))
-                + "|");
+                + translator.getNote(noteController.getDbNotes(measure.getMeasureID(), 1).get(0))
+                + " | "
+        );
     }
 
     @Test

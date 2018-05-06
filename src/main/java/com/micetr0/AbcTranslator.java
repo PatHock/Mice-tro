@@ -1,7 +1,14 @@
 package com.micetr0;
 
+import com.micetr0.controller.CompositionController;
+import com.micetr0.controller.MeasureController;
+import com.micetr0.controller.NoteController;
+import com.micetr0.controller.SectionController;
 import com.micetr0.definitions.Defs;
+import com.micetr0.mock_DB.DatabaseProvider;
+import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Composition;
+import com.micetr0.model.Measure;
 import com.micetr0.model.Note;
 import com.micetr0.model.Section;
 import javafx.util.Pair;
@@ -13,8 +20,10 @@ import java.util.List;
 
 public class AbcTranslator {
 
+    private IDatabase db;
+
     public AbcTranslator(){
-        //blank constructor
+        db = DatabaseProvider.getInstance();
     }
 
     public String getCompTitle(Composition comp){
@@ -37,6 +46,7 @@ public class AbcTranslator {
         }
     }
 
+
     public String getKey(Section sec){
         String pre = sec.getKey().toString();
         String post;
@@ -52,10 +62,13 @@ public class AbcTranslator {
         return post;
     }
 
-    public String abcBuilder(Composition comp, Section sec, List<Note> notes){
+    public String abcBuilder(Composition comp){
         String noties = "";
         Integer prev = 0;
-        for (Note note: notes) {
+        List<Note> noteList = db.findNotesByCompositionId(comp.getCompositionID());
+        List<Section> sectionList = db.findSectionsByCompositionId(comp.getCompositionID());
+        for (Note note: noteList) {
+            System.out.println("Found a note in this composition!");
             if(note.getMeasureId().equals(prev))
             {
                 String temp = getNote(note);
@@ -67,13 +80,15 @@ public class AbcTranslator {
                 noties = noties + "|" + temp;
             }
         }
+
         noties = noties + "|";
+        System.out.println(noties);
         String out = "X: 1\n"
                 + "T: " + getCompTitle(comp) + "\n"
-                + "M: " + getTimeSig(sec) + "\n"
+                + "M: " + getTimeSig(sectionList.get(0)) + "\n"
                 + "L: 1/8 \n"
                 + "R: reel \n"
-                + "K: " + getKey(sec) + "\n"
+                + "K: " + getKey(sectionList.get(0)) + "\n"
                 + " |"
                 + noties;
         return out;

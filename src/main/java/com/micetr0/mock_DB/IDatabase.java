@@ -1,11 +1,9 @@
 package com.micetr0.mock_DB;
 
-import com.micetr0.Credential;
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IDatabase {
     /**
@@ -102,13 +100,6 @@ public interface IDatabase {
      */
     Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title);
 
-//    /**
-//     * Returns list of usernames and passwords for given account ID
-//     * Map.Entry is compatible with OpenJDK
-//     * @param accountId
-//     * @return Map.Entry<K, V> (key-value pair) with K being username and V being password
-//     */
-//    List<Credential> findUsernameAndPasswordByAccountId(Integer accountId);
 
     /**
      * Used to verify that username and password combination (login) has an account ID entry in db
@@ -150,6 +141,13 @@ public interface IDatabase {
     List<Note> findNotesByMeasureId(Integer measureId);
 
     /**
+     * Find all of the notes in a composition.
+     * @param compositionId unique ID of a composition
+     * @return list of note objects contained in a composition
+     */
+    List<Note> findNotesByCompositionId(Integer compositionId);
+
+    /**
      * create db access from front end. Ease to create and remove db
      */
     void deleteDB();
@@ -168,7 +166,14 @@ public interface IDatabase {
 
     List<Measure> findMeasuresBySectionId(Integer SectionId);
 
-    Integer insertMeasure(Integer sectionId);
+    /**
+     * Finds measures with given measure ID
+     * @param measureId unique measure ID
+     * @return measures Arraylist of measures
+     */
+    List<Measure> findMeasuresByMeasureId(Integer measureId);
+
+    Measure insertMeasure(Integer sectionId);
 
     List<Measure> findAllMeasures();
 

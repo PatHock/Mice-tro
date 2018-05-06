@@ -43,13 +43,14 @@ public class CompositionServlet extends HttpServlet {
             System.out.println("doPost on CompositionServlet");
         }
 
-        CompositionController controller;
-        Composition composition;
-        AbcTranslator translator;
+        CompositionController controller = new CompositionController();
+        Composition composition = new Composition();
+        AbcTranslator translator = new AbcTranslator();
         HttpSession session = req.getSession();
         Integer accountId = null;
         resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8");
+        String abcString;
 
         if (session!=null) {
             accountId = (Integer) session.getAttribute("accountId");
@@ -59,6 +60,8 @@ public class CompositionServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/login");
         } else {
             //TODO: add
+            abcString = translator.abcBuilder(controller.getCompositionsByAccountId(accountId).get(0));
+            System.out.println("ABC format for composition 0 is: " + abcString);
         }
     }
 
