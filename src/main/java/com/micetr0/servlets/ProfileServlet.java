@@ -1,15 +1,23 @@
 package com.micetr0.servlets;
 
-import com.micetr0.model.Composition;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.micetr0.controller.CompositionController;
+import com.micetr0.model.Composition;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 @WebServlet(
         name = "ProfileServlet",
@@ -25,56 +33,76 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        System.out.println("Profile Servlet: doGet");
+//        System.out.println("Profile Servlet: doGet");
+        HttpSession session = req.getSession();
+        Integer accountId = null;
+        String username = null;
+        CompositionController controller = new CompositionController();
+        List<Composition> compositionList = new ArrayList<>();
+        String redirectUrl = req.getContextPath() + "/profile";
+        Map<String, String> data = new HashMap<>();
 
-        req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+        resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8");
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        //LogOut user
+        if (session!=null) {
+            accountId = (Integer) session.getAttribute("accountId");
+            username = (String) session.getAttribute("username");
+        }
+
+        if(accountId == null){
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+        else {
+            System.out.println("User with account ID " + accountId + " Is logged in");
+            if (ajax) {
+                System.out.println("Ajax request on ProfileServlet doGet");
+                data.put("username", username);
+                String json = new Gson().toJson(data);
+                System.out.println(json);
+                resp.getWriter().write(json);
+            } else {
+                System.out.println("doGet on ProfileServlet, not Ajax");
+                req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+            }
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-        Composition model = new Composition();
-
+        Integer accountId = null;
         CompositionController controller = new CompositionController();
+        List<Composition> compositionList;
 
+        resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
+        resp.setCharacterEncoding("UTF-8");
+        boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
-        //Get current user information from login
-        String currUser = "aredhouse";
+        if (ajax) {
+            System.out.println("Ajax request on ProfileServlet doPost");
 
-        //Use current user name to get a list of compositions and extract their names to display
-        //Need get compositions method for input username
-        List<Composition> currCompList= new ArrayList<>();
-
-        Composition tempComp1 = new Composition();
-        tempComp1.setYear(1234);
-        tempComp1.setTitle("Composition A");
-        tempComp1.setCompositionID(1);
-        tempComp1.setDesc("Test Comp 1");
-        currCompList.add(tempComp1);
-
-        Composition tempComp2 = new Composition();
-        tempComp1.setYear(5678);
-        tempComp1.setTitle("Composition B");
-        tempComp1.setCompositionID(2);
-        tempComp1.setDesc("Test Comp 2");
-        currCompList.add(tempComp1);
-
-        List<String> compNames = new ArrayList<>();
-
-        for (Composition comp : currCompList){
-            compNames.add(comp.getTitle());
+        } else {
+            System.out.println("doPost on ProfileServlet, not Ajax");
         }
 
-        req.setAttribute("comp", model);
-        req.setAttribute("currUser", currUser);
-        req.setAttribute("compNames", compNames);
+        HttpSession session = req.getSession();
 
+        if (session!=null) {
+            accountId = (Integer) session.getAttribute("accountId");
+        }
 
+        if(accountId == null){
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+        else {
+            compositionList = controller.getCompositionsByAccountId(accountId);
 
-
+            String json = new Gson().toJson(compositionList);
+            System.out.println(json);
+            resp.getWriter().write(json);
+        }
 
     }
 }

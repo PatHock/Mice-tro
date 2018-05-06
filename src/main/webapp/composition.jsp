@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
+        <%--minimize white flashes between page changes--%>
+        <style>html{background-color: #323232;}</style>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,14 +23,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
-                    <li class="active nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
+                        <a class="nav-link" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -36,6 +39,13 @@
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
                 <h1 align="center">Composition Editor</h1>
+            </div>
+
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-secondary">Add Note</button>
+                    <button type="button" class="btn btn-secondary">Add Measure</button>
+                </div>
             </div>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">
@@ -60,31 +70,12 @@ eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|
 </textarea>
 </div>
 
-
-
-            <form action="composition" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Save"/>
-            </form>
-
-            <form action="profile" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Save and Exit Composition 1"/>
-            </form>
-
             <form action="profile" method="get">
                 <input name="goToProfile"
                        type="submit"
-                       value="Exit Composition 1"/>
+                       value="Back to Profile"/>
             </form>
 
-            <form action="index" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Log Out" />
-            </form>
         </div>
 
         <script src="js/dist/composition.bundle.js"></script>

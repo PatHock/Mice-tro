@@ -3,36 +3,90 @@
 /*//);*/
 /*//@import "~bootstrap/scss/bootstrap";*/
 
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+/*.form-signin {*/
+  /*max-width: 330px;*/
+  /*padding: 15px;*/
+  /*margin: 0 auto;*/
+/*}*/
+/*.form-signin .form-signin-heading {*/
+  /*margin-bottom: 10px;*/
+/*}*/
+/*.form-signin .form-control {*/
+  /*position: relative;*/
+  /*height: auto;*/
+  /*-webkit-box-sizing: border-box;*/
+  /*-moz-box-sizing: border-box;*/
+  /*box-sizing: border-box;*/
+  /*padding: 10px;*/
+  /*font-size: 16px;*/
+/*}*/
+/*.form-signin .form-control:focus {*/
+  /*z-index: 2;*/
+/*}*/
+/*.form-signin input[type="text"] {*/
+  /*margin-bottom: -1px;*/
+  /*border-bottom-right-radius: 0;*/
+  /*border-bottom-left-radius: 0;*/
+/*}*/
+/*.form-signin input[type="password"] {*/
+  /*margin-bottom: 10px;*/
+  /*border-top-left-radius: 0;*/
+  /*border-top-right-radius: 0;*/
+/*}*/
+/*.container {*/
+  /*width: 50%;*/
+/*}*/
+
+form{
+  padding: 20px;
 }
-.form-signin .form-signin-heading {
+h4{
+  text-align: center;
+}
+.btn{
+  border-radius: 2px;
+}
+.form-control{
+  border-radius: 2px;
   margin-bottom: 10px;
 }
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
+p{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
 }
-.form-signin .form-control:focus {
+
+i{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.flip {
+  -webkit-perspective: 800;
+  perspective: 800;
+}
+.flip .card.flipped {
+  -webkit-transform: rotatey(-180deg);
+  transform: rotatey(-180deg);
+}
+.flip .card {
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+  transform-style: preserve-3d;
+  transition: 0.5s;
+  background-color: #464646;
+}
+.flip .card .face {
+  -webkit-backface-visibility: hidden ;
+  backface-visibility: hidden ;
   z-index: 2;
 }
-.form-signin input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+.flip .card .front {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-.container {
-  width: 50%;
+.flip .card .back {
+  -webkit-transform: rotatey(-180deg);
+  transform: rotatey(-180deg);
 }

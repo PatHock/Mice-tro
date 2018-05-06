@@ -11,6 +11,7 @@ import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Composition;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CompositionController {
 
@@ -89,8 +90,6 @@ public class CompositionController {
         return isCompUpdated;
     }
 
-
-
     /**
      * Attempts to update the year attribute of the given composition in the database. If this is successful,
      * the year of the composition object is updated, and updateYear returns true.
@@ -133,6 +132,10 @@ public class CompositionController {
         }
 
         return isCompUpdated;
+    }
+
+    public List<Composition> getCompositionsByAccountId(Integer accountId){
+        return db.findCompositionsByAccountId(accountId);
     }
 
     /**

@@ -4,11 +4,12 @@
     "start": "webpack-dev-server --config webpack.config.js --mode development"
   },
   "dependencies": {
-    "abcjs": "^5.0.0",
+    "abcjs": "^5.0.1",
     "autoprefixer": "^8.4.1",
     "bootstrap": "^4.1.1",
     "css-loader": "^0.28.11",
     "jquery": "^3.3.1",
+    "mustache": "^2.3.0",
     "npm": "^6.0.0",
     "popper.js": "^1.14.3",
     "postcss-loader": "^2.1.4",
@@ -16,6 +17,7 @@
     "style-loader": "^0.21.0",
     "tone": "^0.11.11",
     "update": "^0.7.4",
+    "v8-compile-cache": "^2.0.0",
     "webpack-war-plugin": "^1.0.0-beta.3"
   },
   "devDependencies": {
@@ -23,7 +25,7 @@
     "babel-loader": "^7.1.4",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
-    "webpack": "^4.5.0",
+    "webpack": "^4.6.0",
     "webpack-cli": "^2.1.2",
     "webpack-dev-server": "^3.1.3"
   }

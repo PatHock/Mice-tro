@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
 import com.micetr0.controller.AccountController;
+import com.micetr0.model.Account;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @WebServlet(
@@ -27,7 +28,6 @@ public class LoginServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String text = "Very Dank, ajax works";
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
 
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
@@ -35,7 +35,6 @@ public class LoginServlet extends HttpServlet {
 
         if (ajax) {
             System.out.println("LoginServlet AJAX doGet");
-            resp.getWriter().write(text);       // Write response body.
         } else {
             System.out.println("LoginServlet doGet");
             // Handle regular (JSP) response.
@@ -48,14 +47,16 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         AccountController controller = new AccountController();
+        Account account;
+        HttpSession session;
 
-        Boolean isValidCredentials = false;
+        Integer accountId = null;
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String type = req.getParameter("type");
         String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
         String redirectUrl = req.getContextPath() + "/profile";
-
-        System.out.println("Login attempt from user " + username + "Password: " + password);
+        session = req.getSession(true);
 
         Map<String, String> data = new HashMap<>();
         resp.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
@@ -71,25 +72,37 @@ public class LoginServlet extends HttpServlet {
             System.out.println("doPost on LoginServlet, not Ajax");
         }
 
-        try {
-            isValidCredentials =  controller.logIn(username, password);
-        } catch(DataIntegrityViolationException e) {
-            // TODO: Redirect to failure page
-            //resp.sendError(500, "Welp, something went wrong :(");
-            System.out.println(e.getCause() + "More than one account with specified username and password");
+        if (type.equals("login")) {
+            System.out.println("Login attempt from user " + username + "Password: " + password);
+            try {
+                accountId =  controller.logIn(username, password);
+                if (accountId == null) {
+                    data.put("loginError", invalidCredentialsMsg);
+                }
+            } catch(DataIntegrityViolationException e) {
+                // TODO: Redirect to failure page
+                //resp.sendError(500, "Welp, something went wrong :(");
+                System.out.println(e.getCause() + "More than one account with specified username and password");
+            }
+        } else if (type.equals("signup")) {
+            session.removeAttribute("username");
+            session.removeAttribute("accountId");
+
+            System.out.println("Signup attempt with username " + username + "and Password: " + password);
+            account = controller.createAccount(username, password);
+            if (account == null) {
+                data.put("signupError", "That username is taken. Please try another.");
+                System.out.println("username taken.");
+            }
+            else {
+                accountId = account.getAccountID();
+            }
         }
 
-
-        if(isValidCredentials) {
-            HttpSession session = req.getSession();
+        if(accountId != null) {
             session.setAttribute("username", username);
+            session.setAttribute("accountId", accountId);
             data.put("redirect", redirectUrl);
-            //TODO: Let ajax know to redirect, currently prints contents of profile page
-//            req.getRequestDispatcher("/profile.jsp").forward(req, resp);
-        }
-        else {
-            data.put("messageerror", invalidCredentialsMsg);
-//            resp.getWriter().write(invalidCredentialsMsg);       // Write response body.
         }
 
         String json = new Gson().toJson(data);

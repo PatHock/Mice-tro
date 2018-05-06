@@ -1,8 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <%--minimize white flashes between page changes--%>
+        <style>html{background-color: #323232;}</style>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,14 +27,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
-                    <li class="active nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
+                    <li class="active nav-item">
+                        <a class="nav-link" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -38,29 +42,20 @@
 
         <div class="container theme-showcase" role="main" style="margin-top: 1rem">
             <div class="page-header">
-                <h1 class="display-4" align="center">Welcome</h1>
+                <h1 id="pageTitle" class="display-4" align="center"></h1>
             </div>
 
             <h2>Select Composition to Edit:</h2>
             <form action="profile" method="post">
             </form>
 
-            <form action="composition" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Composition 1" />
-            </form>
+            <div id="compositionMenu" class="list-group"></div>
+
 
             <form action="createComposition" method="get">
                 <input name="goToCreateComposition"
                        type="submit"
                        value="Create New Composition " />
-            </form>
-
-            <form action="index" method="get">
-                <input name="goToIndex"
-                       type="submit"
-                       value="Log Out" />
             </form>
 
             <form action="index" method="get">
