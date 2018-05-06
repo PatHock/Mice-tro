@@ -142,7 +142,12 @@ public interface IDatabase {
      */
     Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
 
-
+    /**
+     * Finds notes by measure id ... Pretty Self explanatory
+     * @param measureId unique ID of a measure
+     * @return Note object
+     */
+    List<Note> findNotesByMeasureId(Integer measureId);
 
     /**
      * create db access from front end. Ease to create and remove db

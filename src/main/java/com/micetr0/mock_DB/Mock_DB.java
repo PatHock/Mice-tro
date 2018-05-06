@@ -330,6 +330,21 @@ public class Mock_DB implements IDatabase{
         return compositionId;
     }
 
+    /**
+     * Finds notes by measure id ... Pretty Self explanatory
+     *
+     * @param measureId unique ID of a measure
+     * @return Note object
+     */
+    @Override
+    public List<Note> findNotesByMeasureId(Integer measureId) {
+        List<Note> noteList = new ArrayList<>();
+        
+
+
+        return noteList;
+    }
+
 
     //    /**
 //     * FIXME: needs unit test

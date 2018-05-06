@@ -545,6 +545,17 @@ public class MySqlDB implements IDatabase {
         //TODO: Implement
     }
 
+    /**
+     * Finds notes by measure id ... Pretty Self explanatory
+     *
+     * @param measureId unique ID of a measure
+     * @return Note object
+     */
+    @Override
+    public List<Note> findNotesByMeasureId(Integer measureId) {
+        return null;
+    }
+
 
     @Override
     public void deleteDB() {
