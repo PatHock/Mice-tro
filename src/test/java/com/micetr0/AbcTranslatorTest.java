@@ -97,14 +97,17 @@ public class AbcTranslatorTest {
         String title = "One Super sick title!!!";
         Composition composition = compositionController.createComposition(2);
 
-
-        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID(), 6);
+        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID(), sectionController.findAllSections().size()+1);
         Measure measure = measureController.createMeasure(section.getSectionID());
-        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A0, Defs.Key.C_MAJOR, 0, measure.getMeasureID());
-        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A1, Defs.Key.C_MAJOR, 1, measure.getMeasureID());
+        Measure measure2 = measureController.createMeasure(section.getSectionID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A0, Defs.Key.C_MAJOR, 1, measure.getMeasureID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A1, Defs.Key.C_MAJOR, 2, measure.getMeasureID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A2, Defs.Key.C_MAJOR, 1, measure2.getMeasureID());
+        noteController.addNote(Defs.NoteType.EIGHTH, Defs.Pitch.A3, Defs.Key.C_MAJOR, 2, measure2.getMeasureID() );
 
         assertTrue(compositionController.updateTitle(composition, title));
-        assertEquals(2, db.findNotesByMeasureId(measure.getMeasureID()).size());
+        assertEquals(3, db.findNotesByMeasureId(measure.getMeasureID()).size());
+        assertEquals(3,db.findNotesByMeasureId(measure2.getMeasureID()).size());
 
         String out = translator.abcBuilder(composition);
 
@@ -114,11 +117,15 @@ public class AbcTranslatorTest {
                 + "L: 1/8 \n"
                 + "R: reel \n"
                 + "K: " + translator.getKey(section) + "\n"
-                + " | "
-                + translator.getNote(db.findNotesByMeasureId(measure.getMeasureID()).get(0))
-                + " "
-                + translator.getNote(db.findNotesByMeasureId(measure.getMeasureID()).get(1))
-                + " | "
+                + " |"
+                + "^A6 "
+                + "A0"
+                + " A1"
+                + "|"
+                + "B4 "
+                + "A2 "
+                + "A3"
+                + "|"
         );
     }
 

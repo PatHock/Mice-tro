@@ -65,19 +65,29 @@ public class AbcTranslator {
     public String abcBuilder(Composition comp){
         String noties = "";
         Integer prev = 0;
+        int index = 0;
         List<Note> noteList = db.findNotesByCompositionId(comp.getCompositionID());
         List<Section> sectionList = db.findSectionsByCompositionId(comp.getCompositionID());
         for (Note note: noteList) {
             System.out.println("Found a note in this composition!");
-            if(note.getMeasureId().equals(prev))
-            {
+            if(index == 0){
                 String temp = getNote(note);
-                noties = noties + " " + temp;
+                noties = noties + temp;
                 prev = note.getMeasureId();
+                index ++;
             }
-            else{
-                String temp = getNote(note);
-                noties = noties + "|" + temp;
+            else {
+                if (note.getMeasureId().equals(prev)) {
+                    String temp = getNote(note);
+                    noties = noties + " " + temp;
+                    prev = note.getMeasureId();
+                    index ++;
+                } else {
+                    String temp = getNote(note);
+                    noties = noties + "|" + temp;
+                    prev = note.getMeasureId();
+                    index = 1;
+                }
             }
         }
 
