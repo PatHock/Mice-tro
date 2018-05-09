@@ -105,5 +105,12 @@ class CompositionControllerTest {
         assertEquals(description, compositionList.get(0).getDesc());
     }
 
+    @Test
+    void testGetCompositionByCompositionId() {
+        assertNotNull(controller.getCompositionByCompositionId(1));
+        assertNull(controller.getCompositionByCompositionId(20));
+
+        assertEquals(controller.getCompositionByCompositionId(1), db.findCompositionsByCompositionId(1).get(0));
+    }
 
 }

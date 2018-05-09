@@ -33,7 +33,6 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-//        System.out.println("Profile Servlet: doGet");
         HttpSession session = req.getSession();
         Integer accountId = null;
         String username = null;
@@ -102,6 +101,5 @@ public class ProfileServlet extends HttpServlet {
             System.out.println(json);
             resp.getWriter().write(json);
         }
-
     }
 }

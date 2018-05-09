@@ -51,7 +51,6 @@
 
             <div id="compositionMenu" class="list-group"></div>
 
-
             <form action="createComposition" method="get">
                 <input name="goToCreateComposition"
                        type="submit"
@@ -63,6 +62,7 @@
                        type="submit"
                        value="Delete Account" />
             </form>
+
         </div>
         <%--Webpack entry point below--%>
         <script src="js/dist/profile.bundle.js"></script>

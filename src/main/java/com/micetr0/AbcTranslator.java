@@ -95,10 +95,12 @@ public class AbcTranslator {
         System.out.println(noties);
         String out = "X: 1\n"
                 + "T: " + getCompTitle(comp) + "\n"
-                + "M: " + getTimeSig(sectionList.get(0)) + "\n"
+//                + "M: " + getTimeSig(sectionList.get(0)) + "\n"
+                + "M: " + "4/4" + "\n"  // FIXME hard-coded time signature
                 + "L: 1/8 \n"
                 + "R: reel \n"
-                + "K: " + getKey(sectionList.get(0)) + "\n"
+//                + "K: " + getKey(sectionList.get(0)) + "\n"
+                + "K: " + "C" + "\n" // FIXME hard-coded Key
                 + " |"
                 + noties;
         return out;

@@ -11,6 +11,7 @@ import com.micetr0.mock_DB.DatabaseProvider;
 import com.micetr0.mock_DB.IDatabase;
 import com.micetr0.model.Composition;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompositionController {
@@ -156,5 +157,21 @@ public class CompositionController {
         return isValidYear;
     }
 
+    /**
+     * Gets composition from database.
+     * @param compositionId unique composition ID
+     * @return Composition object. Null if no composition found
+     */
+    public Composition getCompositionByCompositionId(Integer compositionId) {
+        List<Composition> compositionList = new ArrayList<>();
+        Composition composition = null;
+
+        compositionList = db.findCompositionsByCompositionId(compositionId);
+        if (compositionList.size() == 1) {
+            composition = compositionList.get(0);
+        }
+
+        return composition;
+    }
 
 }

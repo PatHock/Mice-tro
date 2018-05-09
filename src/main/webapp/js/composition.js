@@ -13,33 +13,46 @@ import '../scss/composition.css';
     https://configurator.abcjs.net/visual
  */
 
-let abc = "T: Cooley's\n" +
-    "M: 4/4\n" +
-    "L: 1/8\n" +
-    "R: reel\n" +
-    "K: Emin\n" +
-    "|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|\n" +
-    "EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|\n" +
-    "|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|\n" +
-    "eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|";
+// let abc = "T: Cooley's\n" +
+//     "M: 4/4\n" +
+//     "L: 1/8\n" +
+//     "R: reel\n" +
+//     "K: Emin\n" +
+//     "|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|\n" +
+//     "EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|\n" +
+//     "|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|\n" +
+//     "eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|";
 
-// var tuneObjectArray;
-// var abcEditor;
 
 $('document').ready(function(){
-    // tuneObjectArray = load();
+
+
+
     const abcEditor = load();
     abcEditor.setNotDirty();
     abcEditor.setReadOnly(false);
     abcEditor.pause(false);
     abcEditor.pauseMidi(false);
-
-    console.log(abcEditor);
 });
 
 function load() {
+    $.get("composition", function(responseJson) {
+        document.getElementById("abc").innerHTML = responseJson.abc;
+    });
+
+    let compRe = RegExp("((?<=compId=)\\d+)");
+    let compId = compRe.exec(document.cookie)[0];
+
+    console.log("Composition Id is: " + compId + ", Cookie is " + document.cookie);
+    let reqParams = {compId: compId};
+    $.get("composition", $.param(reqParams), function(responseJson) {
+        let abcString = responseJson.abcString;
+        console.log(abcString);
+        $('#abcText').append(abcString);
+    });
+
     return new abcjs.Editor(
-        "abc",
+        "abcText",
         {
             paper_id: "paper",
             warnings_id: "warnings-id",
