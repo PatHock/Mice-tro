@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String type = req.getParameter("type");
+
         String invalidCredentialsMsg = "Incorrect username/password combination. Please try again.";
         String redirectUrl = req.getContextPath() + "/profile";
         session = req.getSession(true);

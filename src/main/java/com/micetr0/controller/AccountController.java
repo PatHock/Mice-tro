@@ -31,16 +31,18 @@ public class AccountController {
         return db.insertAccount(account.getUsername(),account.getPassword());
     }
 
-//    private Boolean checkCredentials(String username, String password, List<Account> accounts) {
-//        Boolean isValidAccount = false;
-//
-//        for (Account account : accounts) {
-//            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
-//                isValidAccount = true;
-//            }
-//        }
-//        return isValidAccount;
-//    }
+    //returns false if username already exists
+    public Boolean checkNewAccount(String username) {
+        Boolean isNewUsername = false;
+        List<Account> tempAccount;
+        tempAccount = db.findAccountByUsername(username);
+
+        if(tempAccount.size() == 0){
+            isNewUsername = true;
+        }
+
+        return isNewUsername;
+    }
 
     public Account createAccount(String username, String password) {
         List<Account> accountList;

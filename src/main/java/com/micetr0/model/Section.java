@@ -21,8 +21,8 @@ public class Section {
         return timeSig.getSig();
     }
 
-    public String getTimeSig() {
-        return timeSig.toString();
+    public Defs.TimeSignature getTimeSig() {
+        return timeSig;
     }
     public void setTimeSig(Defs.TimeSignature timeSig) {
         this.timeSig = timeSig;

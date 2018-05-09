@@ -10,10 +10,9 @@ import java.util.Scanner;
         @Override
         public void contextInitialized(ServletContextEvent sce) {
             // Initialize the database
-            Scanner keyboard = new Scanner(System.in);
 
             try {
-                InitDatabase.init(keyboard);
+                InitDatabase.init(false);
             } catch (UnsupportedOperationException e) {
                 System.out.println("UnsupportedOperationException: " + e.getMessage());
             }

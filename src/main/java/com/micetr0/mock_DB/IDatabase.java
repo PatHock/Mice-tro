@@ -1,11 +1,9 @@
 package com.micetr0.mock_DB;
 
-import com.micetr0.Credential;
 import com.micetr0.definitions.Defs;
 import com.micetr0.model.*;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IDatabase {
     /**
@@ -18,7 +16,7 @@ public interface IDatabase {
      *
      * @param noteId Unique ID that is stored in the database
      */
-    boolean deleteNote(String noteId);
+    Boolean deleteNote(Integer noteId);
 
     List<Composition> findCompositionsByAccountId(Integer accountId);
 
@@ -102,13 +100,6 @@ public interface IDatabase {
      */
     Boolean updateCompositionTitleByCompositionId(Integer compositionId, String title);
 
-//    /**
-//     * Returns list of usernames and passwords for given account ID
-//     * Map.Entry is compatible with OpenJDK
-//     * @param accountId
-//     * @return Map.Entry<K, V> (key-value pair) with K being username and V being password
-//     */
-//    List<Credential> findUsernameAndPasswordByAccountId(Integer accountId);
 
     /**
      * Used to verify that username and password combination (login) has an account ID entry in db
@@ -140,9 +131,21 @@ public interface IDatabase {
      * @param year The year the composition was written
      * @return A composition object with unique ID
      */
-    Integer insertComposition(String title, String description, Integer year, Integer isViewablePublicly, Integer accountId);
+    Integer insertComposition(String title, String description, Integer year, Integer accountId, Integer isViewablePublicly);
 
+    /**
+     * Finds notes by measure id ... Pretty Self explanatory
+     * @param measureId unique ID of a measure
+     * @return Note object
+     */
+    List<Note> findNotesByMeasureId(Integer measureId);
 
+    /**
+     * Find all of the notes in a composition.
+     * @param compositionId unique ID of a composition
+     * @return list of note objects contained in a composition
+     */
+    List<Note> findNotesByCompositionId(Integer compositionId);
 
     /**
      * create db access from front end. Ease to create and remove db
@@ -151,11 +154,11 @@ public interface IDatabase {
 
     void createDB();
 
-    Boolean insertSection(Integer sectionID, Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
+    Integer insertSection(Defs.Key key, Defs.TimeSignature timeSig, Defs.Clef clef, Integer tempo, Integer composition_ID);
 
     Boolean deleteSection(Integer sectionID);
 
-    Section findSectionFromSectionID(Integer sectionID);
+    List<Section> findSectionFromSectionID(Integer sectionID);
 
     List<Section> findAllSections();
 
@@ -163,4 +166,18 @@ public interface IDatabase {
 
     List<Measure> findMeasuresBySectionId(Integer SectionId);
 
-}
+    /**
+     * Finds measures with given measure ID
+     * @param measureId unique measure ID
+     * @return measures Arraylist of measures
+     */
+    List<Measure> findMeasuresByMeasureId(Integer measureId);
+
+    Measure insertMeasure(Integer sectionId);
+
+    List<Measure> findAllMeasures();
+
+    void loadInitialData();
+
+
+    }

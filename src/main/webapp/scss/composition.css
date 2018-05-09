@@ -4,7 +4,10 @@
 
 #compAbcjs {
     display: inline-block;
-    width: auto;
+    position: relative;
+    width: 100%;
+    vertical-align: middle;
+    overflow: hidden;
 }
 
 #compText {

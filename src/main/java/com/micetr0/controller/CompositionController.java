@@ -47,7 +47,7 @@ public class CompositionController {
         title =  titlePrefixDefault + "_" +date.toLocalDate() + "-" + date.toLocalTime();
         System.out.println(title);
 
-        compId = db.insertComposition(title, descriptionDefault, year, isViewablePubliclyDefault, accountId);
+        compId = db.insertComposition(title, descriptionDefault, year, accountId, isViewablePubliclyDefault);
 
         System.out.println("Account ID is:" + db.findCompositionsByCompositionId(compId).get(0).getAccountId());
         composition.setDesc(descriptionDefault);
@@ -82,11 +82,11 @@ public class CompositionController {
      */
     public Boolean updateTitle(Composition composition, String title) {
         Boolean isCompUpdated = false;
-
-        if (db.updateCompositionTitleByCompositionId(composition.getCompositionID(), title)) {
-            isCompUpdated = true;
+        if(!title.isEmpty()){
+            if (db.updateCompositionTitleByCompositionId(composition.getCompositionID(), title)) {
+                isCompUpdated = true;
+            }
         }
-
         return isCompUpdated;
     }
 
@@ -103,12 +103,17 @@ public class CompositionController {
         System.out.println("Current year is: " + date.getYear());
 
         // check to see that the date is not set in the future
-        if (isValidYear(year)) {
-            // insert year into the database and check to see if insertion was successful
-            if(db.updateCompositionYearByCompositionId(composition.getCompositionID(), year)) {
-                composition.setYear(year);
-                isCompUpdated = true;
+        try {
+            if (isValidYear(year)) {
+                // insert year into the database and check to see if insertion was successful
+                if (db.updateCompositionYearByCompositionId(composition.getCompositionID(), year)) {
+                    composition.setYear(year);
+                    isCompUpdated = true;
+                }
             }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            isCompUpdated = false;
         }
 
         return isCompUpdated;
@@ -125,12 +130,12 @@ public class CompositionController {
      */
     public Boolean updateDescription(Composition composition, String description) {
         Boolean isCompUpdated = false;
-
-        if (db.updateCompositionDescriptionByCompositionId(composition.getCompositionID(), description)) {
-            composition.setDesc(description);
-            isCompUpdated = true;
+        if(!description.isEmpty()) {
+            if (db.updateCompositionDescriptionByCompositionId(composition.getCompositionID(), description)) {
+                composition.setDesc(description);
+                isCompUpdated = true;
+            }
         }
-
         return isCompUpdated;
     }
 

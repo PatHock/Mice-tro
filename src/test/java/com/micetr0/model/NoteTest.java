@@ -8,7 +8,7 @@ import com.micetr0.definitions.Defs;
 class NoteTest {
 
     // Create new note object
-    private Note note = new Note(1,Defs.NoteType.REST_SIXTEENTH, Defs.Pitch.REST, 0, 0);
+    private Note note = new Note(1,Defs.NoteType.SIXTEENTH, Defs.Pitch.REST, 0, 0);
 
     @Test
     void initTest(){

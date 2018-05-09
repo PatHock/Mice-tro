@@ -29,24 +29,27 @@ public class SectionController {
      * @param: Clef enum type clef
      * @return:
      */
-    public Section createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, Integer compID, Integer secID){
+    public Section createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, Integer compID){
         Section newSection = new Section();
         newSection.setClef(clef);
         newSection.setKey(key);
         newSection.setCompID(compID);
         newSection.setTempo(tempo);
         newSection.setTimeSig(timeSig);
-        newSection.setSectionID(secID);
-        if(addDBSection(newSection)) {
+        Integer sectionId = addDBSection(newSection);
+        newSection.setSectionID(sectionId);
+        if(sectionId > 0) {
             return newSection;
         }
         return null;
+
+
     }
 
-    private Boolean addDBSection(Section section)
+    private Integer addDBSection(Section section)
     {
-        db.insertSection(section.getSectionID(), section.getKey(), Defs.TimeSignature.valueOf(section.getTimeSig()),section.getClef(), section.getTempo(),section.getCompID());
-        return true;
+        Integer sectionId = db.insertSection(section.getKey(), section.getTimeSig(),section.getClef(), section.getTempo(),section.getCompID());
+        return sectionId;
     }
 
     public Boolean deleteSection(Integer sectionID)
@@ -54,7 +57,7 @@ public class SectionController {
         db.deleteSection(sectionID);
         return true;
     }
-    public Section findSection(Integer sectionID)
+    public List<Section> findSection(Integer sectionID)
     {
         return db.findSectionFromSectionID(sectionID);
 

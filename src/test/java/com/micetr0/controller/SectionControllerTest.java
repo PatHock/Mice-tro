@@ -22,12 +22,12 @@ public class SectionControllerTest {
 
     @Test
     void createSectionControllerTest(){
-        assertNotNull(controller.createSection(120, Defs.Key.C_MAJOR,Defs.Clef.TREBLE,Defs.TimeSignature.EIGHT_SIXTEEN,2,5));
+        assertNotNull(controller.createSection(120, Defs.Key.C_MAJOR,Defs.Clef.TREBLE,Defs.TimeSignature.EIGHT_SIXTEEN,2));
     }
 
     @Test
     void addDBSection(){
-        controller.createSection(120, Defs.Key.C_MAJOR,Defs.Clef.TREBLE,Defs.TimeSignature.EIGHT_SIXTEEN,2,5);
+        controller.createSection(120, Defs.Key.C_MAJOR,Defs.Clef.TREBLE,Defs.TimeSignature.EIGHT_SIXTEEN,2);
         assertNotNull(controller.findSection(5));
     }
     @Test

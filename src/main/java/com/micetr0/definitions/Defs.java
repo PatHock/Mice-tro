@@ -2,6 +2,8 @@ package com.micetr0.definitions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Defs {
@@ -11,12 +13,7 @@ public class Defs {
         EIGHTH(0.125),
         QUARTER(0.25),
         HALF(0.5),
-        WHOLE(1.0),
-        REST_SIXTEENTH(0.0625),
-        REST_EIGHTH(0.125),
-        REST_QUARTER(0.25),
-        REST_HALF(0.5),
-        REST_WHOLE(1.0);
+        WHOLE(1.0);
 
         private final Double size;  // fraction of a whole note
 
@@ -26,6 +23,19 @@ public class Defs {
 
         public Double getSize() {
             return this.size;
+        }
+
+        private static final Map<Double, NoteType> map;
+
+        static {
+            map = new HashMap<Double, NoteType>();
+            for (NoteType v : NoteType.values()) {
+                map.put(v.size, v);
+            }
+        }
+
+        public static NoteType findByKey(Double size) {
+            return map.get(size);
         }
     }
 
@@ -279,33 +289,46 @@ public class Defs {
     }
 
     public enum TimeSignature {
-        TWO_FOUR ("2/4"),
-        THREE_FOUR ("3/4"),
-        FOUR_FOUR ("4/4"),
-        THREE_EIGHT ("3/8"),
-        FOUR_EIGHT ("4/8"),
-        SIX_EIGHT ("6/8"),
-        SEVEN_EIGHT ("7/8"),
-        EIGHT_EIGHT ("8/8"),
-        SEVEN_SIXTEEN ("7/16"),
-        EIGHT_SIXTEEN ("8/16"),
-        NINE_SIXTEEN ("9/16"),
-        TEN_SIXTEEN ("10/16"),
-        ELEVEN_SIXTEEN ("11/16"),
-        TWELVE_SIXTEEN ("12/16"),
-        THIRTEEN_SIXTEEN ("13/16"),
-        FOURTEEN_SIXTEEN ("14/16"),
-        FIFTEEN_SIXTEEN ("15/16"),
-        SIXTEEN_SIXTEEN ("16/16");
+        TWO_FOUR("2/4"),
+        THREE_FOUR("3/4"),
+        FOUR_FOUR("4/4"),
+        THREE_EIGHT("3/8"),
+        FOUR_EIGHT("4/8"),
+        SIX_EIGHT("6/8"),
+        SEVEN_EIGHT("7/8"),
+        EIGHT_EIGHT("8/8"),
+        SEVEN_SIXTEEN("7/16"),
+        EIGHT_SIXTEEN("8/16"),
+        NINE_SIXTEEN("9/16"),
+        TEN_SIXTEEN("10/16"),
+        ELEVEN_SIXTEEN("11/16"),
+        TWELVE_SIXTEEN("12/16"),
+        THIRTEEN_SIXTEEN("13/16"),
+        FOURTEEN_SIXTEEN("14/16"),
+        FIFTEEN_SIXTEEN("15/16"),
+        SIXTEEN_SIXTEEN("16/16");
 
         private final String sig; // in its components
 
         TimeSignature(String sig) {
             this.sig = sig;
         }
+
         public String getSig() {
             return this.sig;
         }
+
+        private static final Map<String, TimeSignature> map;
+
+        static {
+            map = new HashMap<String, TimeSignature>();
+            for (TimeSignature v : TimeSignature.values()) {
+                map.put(v.sig, v);
+            }
         }
 
+        public static TimeSignature findByKey(String sig) {
+            return map.get(sig);
+        }
+    }
 }

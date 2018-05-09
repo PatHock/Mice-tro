@@ -1,25 +1,44 @@
 package com.micetr0;
 
+import com.micetr0.controller.CompositionController;
+import com.micetr0.controller.MeasureController;
+import com.micetr0.controller.NoteController;
+import com.micetr0.controller.SectionController;
 import com.micetr0.definitions.Defs;
-import com.micetr0.model.Account;
+import com.micetr0.mock_DB.*;
+import com.micetr0.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.micetr0.model.Composition;
-import com.micetr0.model.Note;
-import com.micetr0.model.Section;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.dao.DataIntegrityViolationException;
 
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbcTranslatorTest {
 
-    AbcTranslator translator;
-    @BeforeEach
-    public void setUp(){
-        translator = new AbcTranslator();
+    private AbcTranslator translator;
+    private CompositionController compositionController;
+    private SectionController sectionController;
+    private MeasureController measureController;
+    private NoteController noteController;
+    private IDatabase db;
 
+
+
+    @BeforeEach
+    void setUp(){
+        DatabaseProvider.setInstance(new MySqlDB());
+        db = DatabaseProvider.getInstance();
+        translator = new AbcTranslator();
+        compositionController = new CompositionController();
+        sectionController = new SectionController();
+        measureController = new MeasureController();
+        noteController = new NoteController();
     }
 
     @Test
@@ -71,30 +90,40 @@ public class AbcTranslatorTest {
 
     @Test
     public void abcBuilderTest(){
-        Section section = new Section();
-        section.setKey(Defs.Key.C_MAJOR);
-        section.setTimeSig(Defs.TimeSignature.FOUR_FOUR);
-        Note note = new Note(0,Defs.NoteType.HALF,Defs.Pitch.A0_SHARP,0,0);
-        Note note2 = new Note(1,Defs.NoteType.HALF,Defs.Pitch.A1_FLAT,1,0);
-        List<Note> notes = new ArrayList<>();
-        notes.add(note);
-        notes.add(note2);
-        Composition comp = new Composition();
-        comp.setTitle("title");
+//        Section section = new Section();
+        String title = "One Super sick title!!!";
+        Composition composition = compositionController.createComposition(2);
 
-        String out = translator.abcBuilder(comp,section, notes);
+        Section section = sectionController.createSection(128, Defs.Key.C_MAJOR, Defs.Clef.TREBLE, Defs.TimeSignature.FOUR_FOUR, composition.getCompositionID());
+        Measure measure = measureController.createMeasure(section.getSectionID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A0, Defs.Key.C_MAJOR, 1, measure.getMeasureID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A1, Defs.Key.C_MAJOR, 2, measure.getMeasureID());
+        Measure measure2 = measureController.createMeasure(section.getSectionID());
+        noteController.addNote(Defs.NoteType.HALF, Defs.Pitch.A2, Defs.Key.C_MAJOR, 1, measure2.getMeasureID());
+        noteController.addNote(Defs.NoteType.EIGHTH, Defs.Pitch.A3, Defs.Key.C_MAJOR, 2, measure2.getMeasureID() );
+
+        assertTrue(compositionController.updateTitle(composition, title));
+        //assertEquals(3, db.findNotesByMeasureId(measure.getMeasureID()).size());
+        //assertEquals(3,db.findNotesByMeasureId(measure2.getMeasureID()).size());
+
+        String out = translator.abcBuilder(composition);
 
         assertEquals(out,"X: 1\n"
-                + "T: " + translator.getCompTitle(comp) + "\n"
+                + "T: " + translator.getCompTitle(composition) + "\n"
                 + "M: " + translator.getTimeSig(section) + "\n"
                 + "L: 1/8 \n"
                 + "R: reel \n"
                 + "K: " + translator.getKey(section) + "\n"
-                + " | "
-                + translator.getNote(notes.get(0))
-                + " "
-                + translator.getNote(notes.get(1))
-                + "|");
+                + " |"
+                + "^A6 "
+                + "A0"
+                + " A1"
+                + "|"
+                + "B4 "
+                + "A2 "
+                + "A3"
+                + "|"
+        );
     }
 
     @Test
@@ -159,4 +188,36 @@ public class AbcTranslatorTest {
         assertEquals(translator.createNotePitch("*F2"),Defs.Pitch.F2_SHARP);
 
     }
+
+    @Test
+    public void createtimeSigTest(){
+        assertEquals(translator.createTimeSignature("4/4"),Defs.TimeSignature.FOUR_FOUR);
+        assertEquals(translator.createTimeSignature("7/8"),Defs.TimeSignature.SEVEN_EIGHT);
+    }
+    @Test
+    public void createNoteTypeTest(){
+        assertEquals(translator.createNoteType("_A2"),Defs.NoteType.QUARTER);
+        assertEquals(translator.createNoteType("_A4"),Defs.NoteType.HALF);
+    }
+    @Test
+    public void extractNotesTest(){
+        String abcPattern = "X: 1\n"
+                + "T: " + "Woahhhhh" + "\n"
+                + "M: " + "4/4" + "\n"
+                + "L: " + "1/8" +"\n"
+                + "R: reel" +"\n"
+                + "K: " + "Gm" + "\n"
+                + "_D4A4 B1C1|*F1 E1G1A1|";
+        List<Note> notes = translator.extractNotes(translator.extractNoteMeasures(abcPattern));
+
+        Note newNote = new Note(0,Defs.NoteType.HALF,Defs.Pitch.D4_FLAT,0,0);
+
+        assertEquals(newNote.getFrequency(),notes.get(0).getFrequency());
+        assertEquals(newNote.getMeasureId(),notes.get(0).getMeasureId());
+        assertEquals(newNote.getMeasureIndex(),notes.get(0).getMeasureIndex());
+        assertEquals(newNote.getPitch(),notes.get(0).getPitch());
+        assertEquals(newNote.getType(),notes.get(0).getType());
+
+    }
+
 }

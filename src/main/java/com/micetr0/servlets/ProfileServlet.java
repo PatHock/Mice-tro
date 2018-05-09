@@ -92,7 +92,6 @@ public class ProfileServlet extends HttpServlet {
         if (session!=null) {
             accountId = (Integer) session.getAttribute("accountId");
         }
-
         if(accountId == null){
             resp.sendRedirect(req.getContextPath() + "/login");
         }
