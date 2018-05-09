@@ -18,15 +18,15 @@ public class MysqlDBTest {
     }
 
 
-//    @Test
-//    public void deleteDBtest() {
-//        db.deleteDB();
-//    }
-//
-//    @Test
-//    public void createDBtest(){
-//        db.createDB();
-//        db.loadInitialData();
-//    }
+    @Test
+    public void deleteDBtest() {
+        db.deleteDB();
+    }
+
+    @Test
+    public void createDBtest(){
+        db.createDB();
+        db.loadInitialData();
+    }
 
 }

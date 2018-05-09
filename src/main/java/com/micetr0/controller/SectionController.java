@@ -29,18 +29,21 @@ public class SectionController {
      * @param: Clef enum type clef
      * @return:
      */
-    public Section createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, Integer compID, Integer secID){
+    public Section createSection(Integer tempo, Defs.Key key, Defs.Clef clef, Defs.TimeSignature timeSig, Integer compID){
         Section newSection = new Section();
         newSection.setClef(clef);
         newSection.setKey(key);
         newSection.setCompID(compID);
         newSection.setTempo(tempo);
         newSection.setTimeSig(timeSig);
-        newSection.setSectionID(secID);
-        if(addDBSection(newSection) > 0) {
+        Integer sectionId = addDBSection(newSection);
+        newSection.setSectionID(sectionId);
+        if(sectionId > 0) {
             return newSection;
         }
         return null;
+
+
     }
 
     private Integer addDBSection(Section section)

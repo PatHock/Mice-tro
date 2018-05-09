@@ -12,7 +12,7 @@ import java.util.Scanner;
             // Initialize the database
 
             try {
-                InitDatabase.init(true);
+                InitDatabase.init(false);
             } catch (UnsupportedOperationException e) {
                 System.out.println("UnsupportedOperationException: " + e.getMessage());
             }

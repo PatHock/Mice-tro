@@ -66,8 +66,16 @@ public class AbcTranslator {
         String noties = "";
         Integer prev = 0;
         int index = 0;
-        List<Note> noteList = db.findNotesByCompositionId(comp.getCompositionID());
+        List<Note> noteList = new ArrayList<>();
         List<Section> sectionList = db.findSectionsByCompositionId(comp.getCompositionID());
+        List<Measure> measureList = new ArrayList<>();
+        for(Section section : sectionList){
+            measureList.addAll(db.findMeasuresBySectionId(section.getSectionID()));
+        }
+        for(Measure measure : measureList){
+            noteList.addAll(db.findNotesByMeasureId(measure.getMeasureID()));
+        }
+
         for (Note note: noteList) {
             System.out.println("Found a note in this composition!");
             if(index == 0){

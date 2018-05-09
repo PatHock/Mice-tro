@@ -1075,7 +1075,39 @@ public class MySqlDB implements IDatabase {
      */
     @Override
     public List<Note> findNotesByMeasureId(Integer measureId) {
-        return null;
+        return executeTransaction(conn -> {
+            PreparedStatement getNotesStmt = null;
+            ResultSet noteResultSet = null;
+
+            try{
+                getNotesStmt = conn.prepareStatement(
+                        "select notes.* from notes where measure_id = ?"
+                );
+                getNotesStmt.setInt(1,measureId);
+
+                List<Note> result = new ArrayList<>();
+
+                noteResultSet = getNotesStmt.executeQuery();
+
+                while(noteResultSet.next()){
+                    Integer noteID = noteResultSet.getInt(1);
+                    String pitch = noteResultSet.getString(2);
+
+                    String type = noteResultSet.getString(3);
+                    Integer measureIndx = noteResultSet.getInt(4);
+                    Integer measureID = noteResultSet.getInt(5);
+
+                    Note note = new Note(noteID, Defs.NoteType.valueOf(type), Defs.Pitch.valueOf(pitch), measureIndx, measureID);
+
+                    result.add(note);
+                }
+                return result;
+            }
+            finally {
+                DBUtil.closeQuietly(getNotesStmt);
+                DBUtil.closeQuietly(noteResultSet);
+            }
+        });
     }
 
     /**
@@ -1440,7 +1472,7 @@ public class MySqlDB implements IDatabase {
                 instMeasStmt.executeUpdate();
 
                 getMeasIDStmt = conn.prepareStatement(
-                        "select measures.* from measures "+
+                        "select * from measures "+
                                 "where section_id = ?"
                 );
                 getMeasIDStmt.setInt(1,sectionId);
