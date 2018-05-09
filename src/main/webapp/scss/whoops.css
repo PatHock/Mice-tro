@@ -1,0 +1,22 @@
+.bg {
+    height: 100% !important;
+    background: url("http://media.gizmodo.co.uk/wp-content/uploads/2013/06/man-sleeping-keyboard.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.caption{
+    position: absolute;
+    text-align: center;
+    color: black;
+    width: 100%;
+    left: 0;
+    top: 50%;
+}
+
+.caption-bg{
+    background-color: #323232;
+    color: white;
+    padding: 0.5rem;
+    font-size: x-large;
+    letter-spacing: 8px;
+}

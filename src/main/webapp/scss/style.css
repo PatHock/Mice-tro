@@ -35,6 +35,12 @@ input[type=submit]:hover {
     width: auto;
     margin-top: 1rem;
 }
+.sidebar{
+    margin-top: 1rem;
+    background-color: darkred;
+    max-width: 15%;
+    height: 100%;
+}
 .jumbotron {
     background-color: #464646;
     color: white;
@@ -46,4 +52,9 @@ input[type=submit]:hover {
 /*}*/
 hr {
     border-color: white;
+}
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    /*height: 100%;*/
 }

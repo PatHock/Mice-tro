@@ -37,6 +37,19 @@
             </div>
         </nav>
 
+        <%--</div>--%>
+        <%--<div class="wrapper">--%>
+            <%--<div class="sidebar">--%>
+                <%--<div class="sidebar-header" align="center">--%>
+                    <%--<h3>ABC Notation</h3>--%>
+                    <%--<hr>--%>
+                <%--</div>--%>
+                <%--<h4>What is it?</h4>--%>
+                <%--Find out by visiting the--%>
+                <%--<a href="http://abcnotation.com/blog/2010/01/31/how-to-understand-abc-the-basics/">ABC notation website</a>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
         <div class="container theme-showcase" role="main" style="margin-top: 1rem" id="main-div">
             <div class="page-header">
                 <h1 align="center">Composition Editor</h1>
@@ -75,7 +88,6 @@
                        type="submit"
                        value="Back to Profile"/>
             </form>
-
         </div>
 
         <script src="js/dist/composition.bundle.js"></script>

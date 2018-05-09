@@ -8,7 +8,8 @@ module.exports = {
         'login': path.resolve(__dirname, "src/main/webapp/js/login.js"),
         'profile': path.resolve(__dirname, "src/main/webapp/js/profile.js"),
         'composition': path.resolve(__dirname, "src/main/webapp/js/composition.js"),
-        'createComposition': path.resolve(__dirname, "src/main/webapp/js/createComposition.js")
+        'createComposition': path.resolve(__dirname, "src/main/webapp/js/createComposition.js"),
+        'whoops': path.resolve(__dirname, "src/main/webapp/js/whoops.js")
     },
     module: {
         rules: [
