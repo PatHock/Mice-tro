@@ -37,17 +37,10 @@
             </div>
         </nav>
 
-        <div class="container theme-showcase" role="main" style="margin-top: 1rem">
+        <div class="container theme-showcase" role="main" style="margin-top: 1rem" id="main-div">
             <div class="page-header">
                 <h1 align="center">Composition Editor</h1>
             </div>
-
-            <%--<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">--%>
-                <%--<div class="btn-group mr-2" role="group" aria-label="First group">--%>
-                    <%--<button type="button" class="btn btn-secondary">Add Note</button>--%>
-                    <%--<button type="button" class="btn btn-secondary">Add Measure</button>--%>
-                <%--</div>--%>
-            <%--</div>--%>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">
 
@@ -68,17 +61,14 @@
                     </div>
                 </div>
 
-                <div id="warnings"></div>
+                <div id="warnings-id"></div>
                 <hr>
                 <textarea name="abcText" id="abcText"></textarea>
                 <hr>
                 <div id="midi-download"></div>
-                <%--<div id="warnings"></div>--%>
-                <%--<hr>--%>
-                <%--<div id="midi"></div>--%>
-                <%--<div id="canvas"></div>--%>
-                <%--<hr>--%>
             </div>
+
+            <button type="button" class="btn-secondary" id="save_btn" name="Save Composition">Save Composition</button>
 
             <form action="profile" method="get">
                 <input name="goToProfile"

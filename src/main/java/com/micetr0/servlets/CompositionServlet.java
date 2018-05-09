@@ -49,7 +49,6 @@ public class CompositionServlet extends HttpServlet {
             }
         }
 
-
         // Println statements to show whether or not AJAX is working
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
         if (ajax) {

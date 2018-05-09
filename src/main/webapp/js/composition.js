@@ -13,19 +13,7 @@ import '../scss/composition.css';
     https://configurator.abcjs.net/visual
  */
 
-// let abc = "T: Cooley's\n" +
-//     "M: 4/4\n" +
-//     "L: 1/8\n" +
-//     "R: reel\n" +
-//     "K: Emin\n" +
-//     "|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|\n" +
-//     "EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|\n" +
-//     "|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|\n" +
-//     "eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|";
-
-
 $('document').ready(function(){
-
 
 
     const abcEditor = load();
@@ -33,6 +21,12 @@ $('document').ready(function(){
     abcEditor.setReadOnly(false);
     abcEditor.pause(false);
     abcEditor.pauseMidi(false);
+
+    // $('#main-div').on("click", ".btn-secondary", function() {
+    //     $.post("composition", document.getElementById("abcText").innerText, function (responseJson) {
+    //
+    //     });
+    // });
 });
 
 function load() {
@@ -57,6 +51,7 @@ function load() {
             paper_id: "paper",
             warnings_id: "warnings-id",
             indicate_changed: true,
+            generate_warnings: true,
             generate_midi: true,
             midi_download_id: "midi-download",
             midi_id: "midi",
@@ -70,6 +65,7 @@ function load() {
                 generateDownload: true,
             },
         });
+
 }
 
 function getNoteFromClasses(classes) {

@@ -12,10 +12,13 @@
 
 #compText {
     display: inline-block;
-
 }
 
 #midi-inline {
+    color: black;
+}
+
+#warnings-id {
     color: black;
 }
 
@@ -61,4 +64,9 @@ div {
     color: #f4f4f4;
     border: 1px solid transparent;
     box-sizing: border-box;
+}
+
+.btn-secondary {
+    /*height: 10em;*/
+    /*width: 10em;*/
 }
