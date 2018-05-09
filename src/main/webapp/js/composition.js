@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'abcjs/abcjs-midi.css';
 import abcjs from "abcjs/midi";
 
 window.$ = require('jquery');
@@ -6,20 +7,11 @@ window.$ = require('jquery');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../scss/style.css';
 import '../scss/composition.css';
-// https://configurator.abcjs.net/visual
 
-// window.onload = function () {
-//     new abcjs.Editor("abc", {
-//         canvas_id: "canvas",
-//         generate_midi: true,
-//         midi_id: "midi",
-//         warnings_id: "warnings",
-//         abcjsParams: {
-//             generateInline: true,
-//             generateDownload: false
-//         }
-//     })};
 
+/* The only possible way to understand abcjs...
+    https://configurator.abcjs.net/visual
+ */
 
 let abc = "T: Cooley's\n" +
     "M: 4/4\n" +
@@ -31,35 +23,41 @@ let abc = "T: Cooley's\n" +
     "|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|\n" +
     "eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|";
 
-var tuneObjectArray;
-
-function load() {
-    return abcjs.renderAbc(
-        "compAbcjs",
-        abc,
-        {
-            add_classes: true,
-            clickListener:
-                function(abcElem, tuneNumber, classes) {
-                   let note = getNoteFromClasses(classes);
-                    console.log(note);
-
-                    alert("Type " + abcElem.el_type+ "\n" +
-                        "Pitch: " + abcElem.pitches[0].pitch + "\n" +
-                        "Duration: " + abcElem.duration + "\n" +
-                        "Measure Number: " + note.measureNum + "\n" +
-                        "Measure Index: " + note.measureIndex
-                    );
-                },
-            responsive: "resize",
-        });
-}
+// var tuneObjectArray;
+// var abcEditor;
 
 $('document').ready(function(){
-    tuneObjectArray = load();
-    console.log(tuneObjectArray);
-    // console.log(getAbsoluteMeasureNumber(2, 1));
+    // tuneObjectArray = load();
+    const abcEditor = load();
+    abcEditor.setNotDirty();
+    abcEditor.setReadOnly(false);
+    abcEditor.pause(false);
+    abcEditor.pauseMidi(false);
+
+    console.log(abcEditor);
 });
+
+function load() {
+    return new abcjs.Editor(
+        "abc",
+        {
+            paper_id: "paper",
+            warnings_id: "warnings-id",
+            indicate_changed: true,
+            generate_midi: true,
+            midi_download_id: "midi-download",
+            midi_id: "midi",
+            abcjsParams: {
+                // Add any other MIDI options from "Audio" page.
+                add_classes: true,
+                clickListener: function(abcElem, tuneNumber, classes) {
+                    console.log(abcElem, tuneNumber, classes);
+                },
+                responsive: "resize",
+                generateDownload: true,
+            },
+        });
+}
 
 function getNoteFromClasses(classes) {
     var note = {};
@@ -104,3 +102,23 @@ function getAbsoluteMeasureNumber(lineNumber, measureNumber) {
 
     return  absMeasNumber;
 }
+
+// return abcjs.renderAbc(
+//     "compAbcjs",
+//     abc,
+//     {
+//         add_classes: true,
+//         clickListener:
+//             function(abcElem, tuneNumber, classes) {
+//                 let note = getNoteFromClasses(classes);
+//                 console.log(note);
+//
+//                 alert("Type " + abcElem.el_type+ "\n" +
+//                     "Pitch: " + abcElem.pitches[0].pitch + "\n" +
+//                     "Duration: " + abcElem.duration + "\n" +
+//                     "Measure Number: " + note.measureNum + "\n" +
+//                     "Measure Index: " + note.measureIndex
+//                 );
+//             },
+//         responsive: "resize",
+//     });

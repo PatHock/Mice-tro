@@ -15,3 +15,50 @@
 
 }
 
+#midi-inline {
+    color: black;
+}
+
+textarea {
+    width: 100%;
+    height: 15em;
+    white-space: normal;
+    text-align: justify;
+}
+
+.abcjs-inline-midi {
+    height: 26px;
+    padding: 0 5px;
+    border-radius: 3px;
+    color: #f4f4f4;
+    background-color: #424242;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+}
+
+/*.abcjs-midi-reset {*/
+    /*height: 20px;*/
+    /*width: 20px;*/
+/*}*/
+
+.abcjs-inline-midi .abcjs-btn {
+    width: 28px;
+    height: 26px;
+    display: inline-block;
+    margin-right: 2px;
+    float: left;
+    padding: 0;
+    background: none;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 14px;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #f4f4f4;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}

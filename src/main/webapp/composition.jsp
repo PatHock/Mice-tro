@@ -42,36 +42,53 @@
                 <h1 align="center">Composition Editor</h1>
             </div>
 
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-secondary">Add Note</button>
-                    <button type="button" class="btn btn-secondary">Add Measure</button>
-                </div>
-            </div>
+            <%--<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">--%>
+                <%--<div class="btn-group mr-2" role="group" aria-label="First group">--%>
+                    <%--<button type="button" class="btn btn-secondary">Add Note</button>--%>
+                    <%--<button type="button" class="btn btn-secondary">Add Measure</button>--%>
+                <%--</div>--%>
+            <%--</div>--%>
 
             <div id="compWindow" class="container" style="background-color: white" align="center">
 
-                <div id="compAbcjs"></div>
+                <div id="paper" class="paper amber lighten-4 abcjs-containerpaper"></div>
+                <hr>
+
+                <div id="midi">
+                    <div class="abcjs-inline-midi abcjs-midi-0">
+                        <span class="abcjs-data" style="display: none;"></span>
+                        <button type="button" class="abcjs-midi-reset abcjs-btn"
+                                title="Click to go to beginning of composition"></button>
+                        <button type="button" class="abcjs-midi-start abcjs-btn" title="Click to play/pause"></button>
+                        <button type="button" class="abcjs-midi-progress-background"
+                                title="Click to change playback position.">
+                            <span class="abcjs-midi-progress-indicator"></span>
+                        </button>
+                        <span class="abcjs-midi-clock">0:00</span>
+                    </div>
+                </div>
+
+                <div id="warnings"></div>
+                <hr>
+                <textarea name="abc" id="abc">
+T: Cooley's
+M: 4/4
+L: 1/8
+R: reel
+K: Emin
+|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|
+EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|
+|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|
+eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|
+                </textarea>
+                <hr>
+                <div id="midi-download"></div>
                 <%--<div id="warnings"></div>--%>
                 <%--<hr>--%>
                 <%--<div id="midi"></div>--%>
                 <%--<div id="canvas"></div>--%>
                 <%--<hr>--%>
             </div>
-
-<%--<div id="compText" class="container" style="background-color: white" align="center">--%>
-<%--<textarea id="abc" cols="80" rows="15">X: 1--%>
-<%--T: Cooley's--%>
-<%--M: 4/4--%>
-<%--L: 1/8--%>
-<%--R: reel--%>
-<%--K: Emin--%>
-<%--|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|@--%>
-<%--EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|--%>
-<%--|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|--%>
-<%--eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|--%>
-<%--</textarea>--%>
-<%--</div>--%>
 
             <form action="profile" method="get">
                 <input name="goToProfile"
