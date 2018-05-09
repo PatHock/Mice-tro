@@ -1459,7 +1459,7 @@ public class MySqlDB implements IDatabase {
     public Measure insertMeasure(Integer sectionId) {
         return executeTransaction((Connection conn) -> {
             PreparedStatement instMeasStmt = null;
-            PreparedStatement getMeasIDStmt = null;
+            PreparedStatement getMeasureStmt = null;
             ResultSet measResultSet = null;
 
             try{
@@ -1471,15 +1471,16 @@ public class MySqlDB implements IDatabase {
 
                 instMeasStmt.executeUpdate();
 
-                getMeasIDStmt = conn.prepareStatement(
-                        "select * from measures "+
-                                "where section_id = ?"
+                getMeasureStmt = conn.prepareStatement(
+                        "select * from measures where section_id = ?"
                 );
-                getMeasIDStmt.setInt(1,sectionId);
+
+
+                getMeasureStmt.setInt(1,sectionId);
 
                 List<Measure> resultMeasures = new ArrayList<>();
 
-                measResultSet = getMeasIDStmt.executeQuery();
+                measResultSet = getMeasureStmt.executeQuery();
 
                 //for testing that result was returned i.e. accounts exist
                 Boolean found = false;
@@ -1505,7 +1506,6 @@ public class MySqlDB implements IDatabase {
             }
             finally{
                 DBUtil.closeQuietly(instMeasStmt);
-                DBUtil.closeQuietly(getMeasIDStmt);
                 DBUtil.closeQuietly(measResultSet);
             }
         });
